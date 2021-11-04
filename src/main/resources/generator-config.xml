@@ -5,6 +5,8 @@
 
 <generatorConfiguration>
     <context id="testTables" targetRuntime="MyBatis3">
+        <!--覆盖mapper.xml-->
+        <plugin type="org.mybatis.generator.plugins.UnmergeableXmlMappersPlugin" />
         <commentGenerator>
             <property name="suppressAllComments" value="true"/>
         </commentGenerator>
@@ -37,11 +39,13 @@
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
         
-        <table tableName="goods"
+        <!--<table tableName="goods"
                enableCountByExample="false"
                enableUpdateByExample="false"
                enableDeleteByExample="false"
                enableSelectByExample="false"
-               selectByExampleQueryId="false"/>
+               selectByExampleQueryId="false"/>-->
+        
+        <table tableName="goods"/>
     </context>
 </generatorConfiguration>
