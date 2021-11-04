@@ -5,11 +5,10 @@
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="pid" jdbcType="BIGINT" property="pid" />
-    <result column="desc" jdbcType="VARCHAR" property="desc" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
     <result column="cover" jdbcType="VARCHAR" property="cover" />
     <result column="view_count" jdbcType="BIGINT" property="viewCount" />
     <result column="follow_count" jdbcType="BIGINT" property="followCount" />
-    <result column="status" jdbcType="BIT" property="status" />
     <result column="create_time" jdbcType="BIGINT" property="createTime" />
     <result column="update_time" jdbcType="BIGINT" property="updateTime" />
   </resultMap>
@@ -72,7 +71,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, name, pid, desc, cover, view_count, follow_count, status, create_time, update_time
+    id, name, pid, description, cover, view_count, follow_count, create_time, update_time
   </sql>
   <select id="selectByExample" parameterType="com.dorohedoro.wiki.bean.GoodsExample" resultMap="BaseResultMap">
     select
@@ -106,13 +105,13 @@
   </delete>
   <insert id="insert" parameterType="com.dorohedoro.wiki.bean.Goods">
     insert into goods (id, name, pid, 
-      desc, cover, view_count, 
-      follow_count, status, create_time, 
-      update_time)
+      description, cover, view_count, 
+      follow_count, create_time, update_time
+      )
     values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{pid,jdbcType=BIGINT}, 
-      #{desc,jdbcType=VARCHAR}, #{cover,jdbcType=VARCHAR}, #{viewCount,jdbcType=BIGINT}, 
-      #{followCount,jdbcType=BIGINT}, #{status,jdbcType=BIT}, #{createTime,jdbcType=BIGINT}, 
-      #{updateTime,jdbcType=BIGINT})
+      #{description,jdbcType=VARCHAR}, #{cover,jdbcType=VARCHAR}, #{viewCount,jdbcType=BIGINT}, 
+      #{followCount,jdbcType=BIGINT}, #{createTime,jdbcType=BIGINT}, #{updateTime,jdbcType=BIGINT}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.dorohedoro.wiki.bean.Goods">
     insert into goods
@@ -126,8 +125,8 @@
       <if test="pid != null">
         pid,
       </if>
-      <if test="desc != null">
-        desc,
+      <if test="description != null">
+        description,
       </if>
       <if test="cover != null">
         cover,
@@ -137,9 +136,6 @@
       </if>
       <if test="followCount != null">
         follow_count,
-      </if>
-      <if test="status != null">
-        status,
       </if>
       <if test="createTime != null">
         create_time,
@@ -158,8 +154,8 @@
       <if test="pid != null">
         #{pid,jdbcType=BIGINT},
       </if>
-      <if test="desc != null">
-        #{desc,jdbcType=VARCHAR},
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
       </if>
       <if test="cover != null">
         #{cover,jdbcType=VARCHAR},
@@ -169,9 +165,6 @@
       </if>
       <if test="followCount != null">
         #{followCount,jdbcType=BIGINT},
-      </if>
-      <if test="status != null">
-        #{status,jdbcType=BIT},
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=BIGINT},
@@ -199,8 +192,8 @@
       <if test="record.pid != null">
         pid = #{record.pid,jdbcType=BIGINT},
       </if>
-      <if test="record.desc != null">
-        desc = #{record.desc,jdbcType=VARCHAR},
+      <if test="record.description != null">
+        description = #{record.description,jdbcType=VARCHAR},
       </if>
       <if test="record.cover != null">
         cover = #{record.cover,jdbcType=VARCHAR},
@@ -210,9 +203,6 @@
       </if>
       <if test="record.followCount != null">
         follow_count = #{record.followCount,jdbcType=BIGINT},
-      </if>
-      <if test="record.status != null">
-        status = #{record.status,jdbcType=BIT},
       </if>
       <if test="record.createTime != null">
         create_time = #{record.createTime,jdbcType=BIGINT},
@@ -230,11 +220,10 @@
     set id = #{record.id,jdbcType=BIGINT},
       name = #{record.name,jdbcType=VARCHAR},
       pid = #{record.pid,jdbcType=BIGINT},
-      desc = #{record.desc,jdbcType=VARCHAR},
+      description = #{record.description,jdbcType=VARCHAR},
       cover = #{record.cover,jdbcType=VARCHAR},
       view_count = #{record.viewCount,jdbcType=BIGINT},
       follow_count = #{record.followCount,jdbcType=BIGINT},
-      status = #{record.status,jdbcType=BIT},
       create_time = #{record.createTime,jdbcType=BIGINT},
       update_time = #{record.updateTime,jdbcType=BIGINT}
     <if test="_parameter != null">
@@ -250,8 +239,8 @@
       <if test="pid != null">
         pid = #{pid,jdbcType=BIGINT},
       </if>
-      <if test="desc != null">
-        desc = #{desc,jdbcType=VARCHAR},
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
       </if>
       <if test="cover != null">
         cover = #{cover,jdbcType=VARCHAR},
@@ -261,9 +250,6 @@
       </if>
       <if test="followCount != null">
         follow_count = #{followCount,jdbcType=BIGINT},
-      </if>
-      <if test="status != null">
-        status = #{status,jdbcType=BIT},
       </if>
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=BIGINT},
@@ -278,11 +264,10 @@
     update goods
     set name = #{name,jdbcType=VARCHAR},
       pid = #{pid,jdbcType=BIGINT},
-      desc = #{desc,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
       cover = #{cover,jdbcType=VARCHAR},
       view_count = #{viewCount,jdbcType=BIGINT},
       follow_count = #{followCount,jdbcType=BIGINT},
-      status = #{status,jdbcType=BIT},
       create_time = #{createTime,jdbcType=BIGINT},
       update_time = #{updateTime,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}

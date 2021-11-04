@@ -7,15 +7,13 @@ public class Goods {
 
     private Long pid;
 
-    private String desc;
+    private String description;
 
     private String cover;
 
     private Long viewCount;
 
     private Long followCount;
-
-    private Boolean status;
 
     private Long createTime;
 
@@ -45,12 +43,12 @@ public class Goods {
         this.pid = pid;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc == null ? null : desc.trim();
+    public void setDescription(String description) {
+        this.description = description == null ? null : description.trim();
     }
 
     public String getCover() {
@@ -75,14 +73,6 @@ public class Goods {
 
     public void setFollowCount(Long followCount) {
         this.followCount = followCount;
-    }
-
-    public Boolean getStatus() {
-        return status;
-    }
-
-    public void setStatus(Boolean status) {
-        this.status = status;
     }
 
     public Long getCreateTime() {
