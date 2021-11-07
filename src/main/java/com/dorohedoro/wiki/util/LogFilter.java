@@ -24,11 +24,10 @@ public class LogFilter implements Filter {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         log.info("********** LogFilter开始 **********");
         log.info("请求地址: {} {}", httpRequest.getRequestURL().toString(), httpRequest.getMethod());
-        log.info("远程地址: {} {}", httpRequest.getRemoteAddr());
+        log.info("远程地址: {}", httpRequest.getRemoteAddr());
 
         long startTime = Instant.now().toEpochMilli();
         chain.doFilter(request, response);
-        long endTime = Instant.now().toEpochMilli();
-        log.info("********** LogFilter结束 耗时:{}ms **********", endTime - startTime);
+        log.info("********** LogFilter结束 耗时:{}ms **********", Instant.now().toEpochMilli() - startTime);
     }
 }
