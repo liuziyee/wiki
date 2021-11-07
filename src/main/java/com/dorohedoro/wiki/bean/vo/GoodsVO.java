@@ -1,4 +1,4 @@
-package com.dorohedoro.wiki.vo;
+package com.dorohedoro.wiki.bean.vo;
 
 import lombok.Data;
 
@@ -11,7 +11,7 @@ import lombok.Data;
 public class GoodsVO {
     private String name;
 
-    private Long pid;
+    private Long categoryId;
 
     private String description;
 
@@ -21,7 +21,10 @@ public class GoodsVO {
 
     private Long followCount;
 
+    private Long commentCount;
+
     private Long createTime;
 
     private Long updateTime;
+
 }

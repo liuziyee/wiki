@@ -4,11 +4,12 @@
   <resultMap id="BaseResultMap" type="com.dorohedoro.wiki.bean.Goods">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="pid" jdbcType="BIGINT" property="pid" />
+    <result column="category_id" jdbcType="BIGINT" property="categoryId" />
     <result column="description" jdbcType="VARCHAR" property="description" />
     <result column="cover" jdbcType="VARCHAR" property="cover" />
     <result column="view_count" jdbcType="BIGINT" property="viewCount" />
     <result column="follow_count" jdbcType="BIGINT" property="followCount" />
+    <result column="comment_count" jdbcType="BIGINT" property="commentCount" />
     <result column="create_time" jdbcType="BIGINT" property="createTime" />
     <result column="update_time" jdbcType="BIGINT" property="updateTime" />
   </resultMap>
@@ -71,7 +72,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, name, pid, description, cover, view_count, follow_count, create_time, update_time
+    id, name, category_id, description, cover, view_count, follow_count, comment_count, 
+    create_time, update_time
   </sql>
   <select id="selectByExample" parameterType="com.dorohedoro.wiki.bean.GoodsExample" resultMap="BaseResultMap">
     select
@@ -104,14 +106,14 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.dorohedoro.wiki.bean.Goods">
-    insert into goods (id, name, pid, 
+    insert into goods (id, name, category_id, 
       description, cover, view_count, 
-      follow_count, create_time, update_time
-      )
-    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{pid,jdbcType=BIGINT}, 
+      follow_count, comment_count, create_time, 
+      update_time)
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{categoryId,jdbcType=BIGINT}, 
       #{description,jdbcType=VARCHAR}, #{cover,jdbcType=VARCHAR}, #{viewCount,jdbcType=BIGINT}, 
-      #{followCount,jdbcType=BIGINT}, #{createTime,jdbcType=BIGINT}, #{updateTime,jdbcType=BIGINT}
-      )
+      #{followCount,jdbcType=BIGINT}, #{commentCount,jdbcType=BIGINT}, #{createTime,jdbcType=BIGINT}, 
+      #{updateTime,jdbcType=BIGINT})
   </insert>
   <insert id="insertSelective" parameterType="com.dorohedoro.wiki.bean.Goods">
     insert into goods
@@ -122,8 +124,8 @@
       <if test="name != null">
         name,
       </if>
-      <if test="pid != null">
-        pid,
+      <if test="categoryId != null">
+        category_id,
       </if>
       <if test="description != null">
         description,
@@ -136,6 +138,9 @@
       </if>
       <if test="followCount != null">
         follow_count,
+      </if>
+      <if test="commentCount != null">
+        comment_count,
       </if>
       <if test="createTime != null">
         create_time,
@@ -151,8 +156,8 @@
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
       </if>
-      <if test="pid != null">
-        #{pid,jdbcType=BIGINT},
+      <if test="categoryId != null">
+        #{categoryId,jdbcType=BIGINT},
       </if>
       <if test="description != null">
         #{description,jdbcType=VARCHAR},
@@ -165,6 +170,9 @@
       </if>
       <if test="followCount != null">
         #{followCount,jdbcType=BIGINT},
+      </if>
+      <if test="commentCount != null">
+        #{commentCount,jdbcType=BIGINT},
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=BIGINT},
@@ -189,8 +197,8 @@
       <if test="record.name != null">
         name = #{record.name,jdbcType=VARCHAR},
       </if>
-      <if test="record.pid != null">
-        pid = #{record.pid,jdbcType=BIGINT},
+      <if test="record.categoryId != null">
+        category_id = #{record.categoryId,jdbcType=BIGINT},
       </if>
       <if test="record.description != null">
         description = #{record.description,jdbcType=VARCHAR},
@@ -203,6 +211,9 @@
       </if>
       <if test="record.followCount != null">
         follow_count = #{record.followCount,jdbcType=BIGINT},
+      </if>
+      <if test="record.commentCount != null">
+        comment_count = #{record.commentCount,jdbcType=BIGINT},
       </if>
       <if test="record.createTime != null">
         create_time = #{record.createTime,jdbcType=BIGINT},
@@ -219,11 +230,12 @@
     update goods
     set id = #{record.id,jdbcType=BIGINT},
       name = #{record.name,jdbcType=VARCHAR},
-      pid = #{record.pid,jdbcType=BIGINT},
+      category_id = #{record.categoryId,jdbcType=BIGINT},
       description = #{record.description,jdbcType=VARCHAR},
       cover = #{record.cover,jdbcType=VARCHAR},
       view_count = #{record.viewCount,jdbcType=BIGINT},
       follow_count = #{record.followCount,jdbcType=BIGINT},
+      comment_count = #{record.commentCount,jdbcType=BIGINT},
       create_time = #{record.createTime,jdbcType=BIGINT},
       update_time = #{record.updateTime,jdbcType=BIGINT}
     <if test="_parameter != null">
@@ -236,8 +248,8 @@
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="pid != null">
-        pid = #{pid,jdbcType=BIGINT},
+      <if test="categoryId != null">
+        category_id = #{categoryId,jdbcType=BIGINT},
       </if>
       <if test="description != null">
         description = #{description,jdbcType=VARCHAR},
@@ -251,6 +263,9 @@
       <if test="followCount != null">
         follow_count = #{followCount,jdbcType=BIGINT},
       </if>
+      <if test="commentCount != null">
+        comment_count = #{commentCount,jdbcType=BIGINT},
+      </if>
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=BIGINT},
       </if>
@@ -263,11 +278,12 @@
   <update id="updateByPrimaryKey" parameterType="com.dorohedoro.wiki.bean.Goods">
     update goods
     set name = #{name,jdbcType=VARCHAR},
-      pid = #{pid,jdbcType=BIGINT},
+      category_id = #{categoryId,jdbcType=BIGINT},
       description = #{description,jdbcType=VARCHAR},
       cover = #{cover,jdbcType=VARCHAR},
       view_count = #{viewCount,jdbcType=BIGINT},
       follow_count = #{followCount,jdbcType=BIGINT},
+      comment_count = #{commentCount,jdbcType=BIGINT},
       create_time = #{createTime,jdbcType=BIGINT},
       update_time = #{updateTime,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}

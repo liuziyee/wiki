@@ -234,63 +234,63 @@ public class GoodsExample {
             return (Criteria) this;
         }
 
-        public Criteria andPidIsNull() {
-            addCriterion("pid is null");
+        public Criteria andCategoryIdIsNull() {
+            addCriterion("category_id is null");
             return (Criteria) this;
         }
 
-        public Criteria andPidIsNotNull() {
-            addCriterion("pid is not null");
+        public Criteria andCategoryIdIsNotNull() {
+            addCriterion("category_id is not null");
             return (Criteria) this;
         }
 
-        public Criteria andPidEqualTo(Long value) {
-            addCriterion("pid =", value, "pid");
+        public Criteria andCategoryIdEqualTo(Long value) {
+            addCriterion("category_id =", value, "categoryId");
             return (Criteria) this;
         }
 
-        public Criteria andPidNotEqualTo(Long value) {
-            addCriterion("pid <>", value, "pid");
+        public Criteria andCategoryIdNotEqualTo(Long value) {
+            addCriterion("category_id <>", value, "categoryId");
             return (Criteria) this;
         }
 
-        public Criteria andPidGreaterThan(Long value) {
-            addCriterion("pid >", value, "pid");
+        public Criteria andCategoryIdGreaterThan(Long value) {
+            addCriterion("category_id >", value, "categoryId");
             return (Criteria) this;
         }
 
-        public Criteria andPidGreaterThanOrEqualTo(Long value) {
-            addCriterion("pid >=", value, "pid");
+        public Criteria andCategoryIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("category_id >=", value, "categoryId");
             return (Criteria) this;
         }
 
-        public Criteria andPidLessThan(Long value) {
-            addCriterion("pid <", value, "pid");
+        public Criteria andCategoryIdLessThan(Long value) {
+            addCriterion("category_id <", value, "categoryId");
             return (Criteria) this;
         }
 
-        public Criteria andPidLessThanOrEqualTo(Long value) {
-            addCriterion("pid <=", value, "pid");
+        public Criteria andCategoryIdLessThanOrEqualTo(Long value) {
+            addCriterion("category_id <=", value, "categoryId");
             return (Criteria) this;
         }
 
-        public Criteria andPidIn(List<Long> values) {
-            addCriterion("pid in", values, "pid");
+        public Criteria andCategoryIdIn(List<Long> values) {
+            addCriterion("category_id in", values, "categoryId");
             return (Criteria) this;
         }
 
-        public Criteria andPidNotIn(List<Long> values) {
-            addCriterion("pid not in", values, "pid");
+        public Criteria andCategoryIdNotIn(List<Long> values) {
+            addCriterion("category_id not in", values, "categoryId");
             return (Criteria) this;
         }
 
-        public Criteria andPidBetween(Long value1, Long value2) {
-            addCriterion("pid between", value1, value2, "pid");
+        public Criteria andCategoryIdBetween(Long value1, Long value2) {
+            addCriterion("category_id between", value1, value2, "categoryId");
             return (Criteria) this;
         }
 
-        public Criteria andPidNotBetween(Long value1, Long value2) {
-            addCriterion("pid not between", value1, value2, "pid");
+        public Criteria andCategoryIdNotBetween(Long value1, Long value2) {
+            addCriterion("category_id not between", value1, value2, "categoryId");
             return (Criteria) this;
         }
 
@@ -551,6 +551,66 @@ public class GoodsExample {
 
         public Criteria andFollowCountNotBetween(Long value1, Long value2) {
             addCriterion("follow_count not between", value1, value2, "followCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommentCountIsNull() {
+            addCriterion("comment_count is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommentCountIsNotNull() {
+            addCriterion("comment_count is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommentCountEqualTo(Long value) {
+            addCriterion("comment_count =", value, "commentCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommentCountNotEqualTo(Long value) {
+            addCriterion("comment_count <>", value, "commentCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommentCountGreaterThan(Long value) {
+            addCriterion("comment_count >", value, "commentCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommentCountGreaterThanOrEqualTo(Long value) {
+            addCriterion("comment_count >=", value, "commentCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommentCountLessThan(Long value) {
+            addCriterion("comment_count <", value, "commentCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommentCountLessThanOrEqualTo(Long value) {
+            addCriterion("comment_count <=", value, "commentCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommentCountIn(List<Long> values) {
+            addCriterion("comment_count in", values, "commentCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommentCountNotIn(List<Long> values) {
+            addCriterion("comment_count not in", values, "commentCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommentCountBetween(Long value1, Long value2) {
+            addCriterion("comment_count between", value1, value2, "commentCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommentCountNotBetween(Long value1, Long value2) {
+            addCriterion("comment_count not between", value1, value2, "commentCount");
             return (Criteria) this;
         }
 

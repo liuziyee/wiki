@@ -5,7 +5,7 @@ public class Goods {
 
     private String name;
 
-    private Long pid;
+    private Long categoryId;
 
     private String description;
 
@@ -14,6 +14,8 @@ public class Goods {
     private Long viewCount;
 
     private Long followCount;
+
+    private Long commentCount;
 
     private Long createTime;
 
@@ -35,12 +37,12 @@ public class Goods {
         this.name = name == null ? null : name.trim();
     }
 
-    public Long getPid() {
-        return pid;
+    public Long getCategoryId() {
+        return categoryId;
     }
 
-    public void setPid(Long pid) {
-        this.pid = pid;
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
     }
 
     public String getDescription() {
@@ -73,6 +75,14 @@ public class Goods {
 
     public void setFollowCount(Long followCount) {
         this.followCount = followCount;
+    }
+
+    public Long getCommentCount() {
+        return commentCount;
+    }
+
+    public void setCommentCount(Long commentCount) {
+        this.commentCount = commentCount;
     }
 
     public Long getCreateTime() {
