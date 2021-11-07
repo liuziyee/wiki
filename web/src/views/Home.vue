@@ -94,7 +94,7 @@ export default defineComponent({
   setup() {
     const goods = ref();
     onMounted(() => {
-      axios.get("http://localhost:8880/goods/list").then((response) => {
+      axios.get("/goods/list").then((response) => {
         goods.value = response.data.data;
       })
     });
