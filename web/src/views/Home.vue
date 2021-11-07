@@ -4,7 +4,6 @@
       <a-layout-sider width="200" style="background: #fff">
         <a-menu
             mode="inline"
-            v-model:selectedKeys="selectedKeys2"
             v-model:openKeys="openKeys"
             :style="{ height: '100%', borderRight: 0 }"
         >
@@ -57,8 +56,15 @@
 
 <script lang="ts">
 import {defineComponent} from 'vue';
+import axios from 'axios';
 
 export default defineComponent({
   name: 'Home',
+  setup() {
+    console.log("setup is here");
+    axios.get("http://localhost:8880/goods/list?name=B80").then((response) => {
+      console.log(response);
+    })
+  }
 });
 </script>

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.Instant;
 import java.util.List;
 
 /**
@@ -25,12 +26,13 @@ public class GoodsController {
     private GoodsService goodsService;
 
     @GetMapping("/list")
-    public ResponseBean getGoodsList(@RequestBody Goods goods) {
+    public ResponseBean getGoodsList(Goods goods) {
         List<GoodsVO> goodsList = goodsService.getGoodsList(goods);
 
         ResponseBean<List<GoodsVO>> res = new ResponseBean<>();
         res.setCode(AppEnum.ResultCode.normal.v());
         res.setData(goodsList);
+        res.setServerTime(Instant.now().toEpochMilli());
         return res;
     }
 }
