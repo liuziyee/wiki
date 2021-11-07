@@ -11,6 +11,8 @@ import com.dorohedoro.wiki.vo.GoodsVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.time.LocalDateTime;
@@ -31,7 +33,9 @@ public class GoodsService {
     public List<GoodsVO> getGoodsList(Goods goods) {
         GoodsExample goodsExample = new GoodsExample();
         GoodsExample.Criteria criteria = goodsExample.createCriteria();
-        criteria.andNameLike("%" + goods.getName() + "%");
+        if (!ObjectUtils.isEmpty(goods.getName())) {
+            criteria.andNameLike("%" + goods.getName() + "%");
+        }
         List<Goods> goodsList = goodsMapper.selectByExample(goodsExample);
 
         List<GoodsVO> goodsVOList = BeanUtil.copyList(goodsList, GoodsVO.class);
