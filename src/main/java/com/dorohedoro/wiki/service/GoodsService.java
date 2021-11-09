@@ -27,13 +27,13 @@ public class GoodsService {
     @Autowired
     private GoodsMapper goodsMapper;
 
-    public PageBean<GoodsVO> getGoodsList(Goods req) {
+    public PageBean<GoodsVO> getGoodsList(Goods reqBean) {
         GoodsExample goodsExample = new GoodsExample();
         GoodsExample.Criteria criteria = goodsExample.createCriteria();
-        if (!ObjectUtils.isEmpty(req.getName())) {
-            criteria.andNameLike("%" + req.getName() + "%");
+        if (!ObjectUtils.isEmpty(reqBean.getName())) {
+            criteria.andNameLike("%" + reqBean.getName() + "%");
         }
-        PageHelper.startPage(req.getPage(), req.getSize());
+        PageHelper.startPage(reqBean.getPage(), reqBean.getSize());
         List<Goods> goodsList = goodsMapper.selectByExample(goodsExample);
 
         List<GoodsVO> goodsVOList = BeanUtil.copyList(goodsList, GoodsVO.class);
@@ -44,4 +44,13 @@ public class GoodsService {
         return pageBean;
     }
 
+    public void addOrUpdGoods(Goods reqBean) {
+        Long id = reqBean.getId();
+        if (id == null || id.equals(0)) {
+            goodsMapper.insertSelective(reqBean);
+        } else {
+            goodsMapper.updateByPrimaryKeySelective(reqBean);
+        }
+    }
 }
+

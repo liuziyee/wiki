@@ -8,10 +8,7 @@ import com.dorohedoro.wiki.util.AppEnum;
 import com.dorohedoro.wiki.bean.GoodsVO;
 import com.github.pagehelper.Page;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.time.Instant;
@@ -29,8 +26,8 @@ public class GoodsController {
     private GoodsService goodsService;
 
     @GetMapping("/list")
-    public ResponseBean getGoodsList(@Valid Goods req) {
-        PageBean<GoodsVO> pageBean = goodsService.getGoodsList(req);
+    public ResponseBean getGoodsList(@Valid Goods reqBean) {
+        PageBean<GoodsVO> pageBean = goodsService.getGoodsList(reqBean);
 
         ResponseBean<PageBean> res = new ResponseBean<>();
         res.setCode(AppEnum.ResultCode.success.v());
@@ -38,4 +35,14 @@ public class GoodsController {
         res.setServerTime(Instant.now().toEpochMilli());
         return res;
     }
+
+    @PostMapping("/addOrUpd")
+    public ResponseBean addOrUpdGoods(@RequestBody Goods reqBean) {
+        ResponseBean res = new ResponseBean();
+        goodsService.addOrUpdGoods(reqBean);
+        res.setCode(AppEnum.ResultCode.success.v());
+        return res;
+    }
+    
+    
 }

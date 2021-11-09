@@ -18,8 +18,8 @@
         <el-table-column label="关注数" prop="followCount" min-width="10%" />
         <el-table-column label="评论数" prop="commentCount" min-width="10%" />
         <el-table-column fixed="right" label="做点什么" width="120">
-          <template #default>
-            <el-button type="text" size="small">编辑</el-button>
+          <template #default="scope">
+            <el-button type="text" size="small" @click="edit(scope.row)">编辑</el-button>
             <el-button type="text" size="small">删除</el-button>
           </template>
         </el-table-column>
@@ -33,6 +33,31 @@
           @current-change="handlePageChange"
       >
       </el-pagination>
+
+      <el-dialog
+          v-model="dialogVisible"
+          width="40%"
+          :before-close="handleClose"
+      >
+        <el-form :model="record">
+          <el-form-item label="封面">
+            <el-input v-model="record.cover"/>
+          </el-form-item>
+          <el-form-item label="名称">
+            <el-input v-model="record.name"/>
+          </el-form-item>
+          <el-form-item label="类目">
+            <el-input v-model="record.categoryId"/>
+          </el-form-item>
+          <el-form-item label="描述">
+            <el-input v-model="record.description"/>
+          </el-form-item>
+        </el-form>
+        <template #footer>
+          <el-button type="info" @click="dialogVisible = false">取消</el-button>
+          <el-button type="success" @click="addOrUpd">保存</el-button>
+        </template>
+      </el-dialog>
     </a-layout-content>
   </a-layout>
 </template>
@@ -40,7 +65,7 @@
 <script lang="ts">
   import {defineComponent,onMounted,ref} from 'vue';
   import axios from 'axios';
-  import {ElMessage} from 'element-plus';
+  import {message} from 'ant-design-vue';
   
   export default defineComponent({
     name: 'RootGoods',
@@ -51,24 +76,24 @@
         pageSize: 5,
         total: 0
       });
-      const loading = ref(false);
+
+      const dialogVisible = ref(false);
+      const record = ref({});
       
       const handleQuery = (params: any) => {
-        loading.value = true;
         axios.get("/goods/list", {
           params: {
             page: params.page,
             size: params.size
           }
         }).then((response) => {
-          loading.value = false;
           let respBean = response.data;
           if (respBean.code != 0) {
-            ElMessage.error(respBean.msg);
+            message.error(respBean.msg);
           }
           let pageBean = respBean.data;
           goods.value = pageBean.list;
-          ElMessage.success("success");
+          message.success("success");
           
           
           pagination.value.current = params.page;
@@ -83,6 +108,27 @@
         });
       };
 
+      const edit = (row: any) => {
+        record.value = row;
+        dialogVisible.value = true;
+      };
+      
+      const addOrUpd = () => {
+        axios.post("/goods/addOrUpd", record.value).then((response) => {
+          let respBean = response.data;
+          if (respBean.code != 0) {
+            message.error(respBean.msg);
+            return;
+          }
+          message.success("success");
+          dialogVisible.value = false;
+          handleQuery({
+            page: pagination.value.current,
+            size: pagination.value.pageSize
+          })
+        })
+      };
+
       onMounted(() => {
         handleQuery({
           page: pagination.value.current,
@@ -93,8 +139,11 @@
       return {
         goods,
         pagination,
-        loading,
-        handlePageChange
+        record,
+        dialogVisible,
+        handlePageChange,
+        edit,
+        addOrUpd
       }
     }
   })

@@ -99,7 +99,7 @@
           }
           let pageBean = respBean.data;
           goods.value = pageBean.list;
-          message.success("success", 1);
+          message.success("success");
         })
       });
   
