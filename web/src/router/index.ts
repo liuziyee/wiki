@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import Home from '../views/home.vue'
 import About from '../views/about.vue'
-import AdminGoods from '../views/admin/admin-goods.vue'
+import RootGoods from '../views/admin/root-goods.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -19,9 +19,9 @@ const routes: Array<RouteRecordRaw> = [
     // component: () => import(/* webpackChunkName: "about" */ '../views/about.vue')
   },
   {
-    path: '/admin/goods',
-    name: 'AdminGoods',
-    component: AdminGoods
+    path: '/root/goods',
+    name: 'RootGoods',
+    component: RootGoods
   }
 ]
 

@@ -2,9 +2,13 @@ package com.dorohedoro.wiki.service;
 
 import com.dorohedoro.wiki.bean.Goods;
 import com.dorohedoro.wiki.bean.GoodsExample;
+import com.dorohedoro.wiki.bean.PageBean;
 import com.dorohedoro.wiki.mapper.GoodsMapper;
 import com.dorohedoro.wiki.util.BeanUtil;
-import com.dorohedoro.wiki.bean.vo.GoodsVO;
+import com.dorohedoro.wiki.bean.GoodsVO;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
@@ -17,21 +21,27 @@ import java.util.List;
  * @Date 2021/11/4 9:45c 
  */
 @Service
+@Slf4j
 public class GoodsService {
 
     @Autowired
     private GoodsMapper goodsMapper;
 
-    public List<GoodsVO> getGoodsList(Goods goods) {
+    public PageBean<GoodsVO> getGoodsList(Goods req) {
         GoodsExample goodsExample = new GoodsExample();
         GoodsExample.Criteria criteria = goodsExample.createCriteria();
-        if (!ObjectUtils.isEmpty(goods.getName())) {
-            criteria.andNameLike("%" + goods.getName() + "%");
+        if (!ObjectUtils.isEmpty(req.getName())) {
+            criteria.andNameLike("%" + req.getName() + "%");
         }
+        PageHelper.startPage(req.getPage(), req.getSize());
         List<Goods> goodsList = goodsMapper.selectByExample(goodsExample);
 
         List<GoodsVO> goodsVOList = BeanUtil.copyList(goodsList, GoodsVO.class);
-        return goodsVOList;
+        PageBean<GoodsVO> pageBean = new PageBean<>();
+        pageBean.setList(goodsVOList);
+        PageInfo<Goods> pageInfo = new PageInfo<>(goodsList);
+        pageBean.setTotal(pageInfo.getTotal());
+        return pageBean;
     }
 
 }

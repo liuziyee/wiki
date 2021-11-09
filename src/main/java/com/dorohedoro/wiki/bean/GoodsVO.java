@@ -1,5 +1,6 @@
-package com.dorohedoro.wiki.bean.vo;
+package com.dorohedoro.wiki.bean;
 
+import com.dorohedoro.wiki.bean.PageBean;
 import lombok.Data;
 
 /**

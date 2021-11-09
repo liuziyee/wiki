@@ -10,8 +10,8 @@
           <a-sub-menu key="sub1">
             <template #title>
               <span>
-                <user-outlined/>
-                subnav 1
+                <SmileOutlined />
+                数码
               </span>
             </template>
             <a-menu-item key="1">option1</a-menu-item>
@@ -22,8 +22,8 @@
           <a-sub-menu key="sub2">
             <template #title>
               <span>
-                <laptop-outlined/>
-                subnav 2
+                <SmileOutlined />
+                玩具
               </span>
             </template>
             <a-menu-item key="5">option5</a-menu-item>
@@ -34,8 +34,8 @@
           <a-sub-menu key="sub3">
             <template #title>
               <span>
-                <notification-outlined/>
-                subnav 3
+                <SmileOutlined />
+                日用
               </span>
             </template>
             <a-menu-item key="9">option9</a-menu-item>
@@ -94,8 +94,14 @@
     setup() {
       const goods = ref();
       onMounted(() => {
-        axios.get("/goods/list").then((response) => {
-          goods.value = response.data.data;
+        axios.get("/goods/list", {
+          params: {
+            page: 1,
+            size: 100
+          }
+        }).then((response) => {
+          let pageBean = response.data.data;
+          goods.value = pageBean.list;
         })
       });
   
@@ -108,7 +114,7 @@
       const actions: Record<string, string>[] = [
         { type: 'EyeOutlined', text: '156' },
         { type: 'GithubOutlined', text: '156' },
-        { type: 'CommentOutlined', text: '2' },
+        { type: 'SmileOutlined', text: '2' },
       ];
   
       return {

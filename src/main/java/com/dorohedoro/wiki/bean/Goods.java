@@ -1,6 +1,6 @@
 package com.dorohedoro.wiki.bean;
 
-public class Goods {
+public class Goods extends PageBean {
     private Long id;
 
     private String name;

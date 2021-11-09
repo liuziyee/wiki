@@ -5,25 +5,25 @@
     >
       <a-table
         :column="columns"
-        :row-key="record => record.id"
         :data-source="goods"
+        :rowKey="(record,index)=>{return index}"
         :pagination="pagination"
         :loading="loading"
         @change="handlePageChange"
       >
-       <template #cover="{ text: cover }">
-         <img v-if="cover" :src="cover" alt="avatar"/>
-       </template>
-       <template v-slot:action="{ text, record}">
-         <a-space size="small">
-           <a-button type="primary">
-             编辑
-           </a-button>
-           <a-button type="danger">
-             删除
-           </a-button>
-         </a-space>
-       </template> 
+        <template #cover="{ text: cover }">
+          <img v-if="cover" :src="cover" alt="avatar"/>
+        </template>
+        <template v-slot:action="{ text, record }">
+          <a-space size="small">
+            <a-button type="primary">
+              编辑
+            </a-button>
+            <a-button type="danger">
+              删除
+            </a-button>
+          </a-space>
+        </template>
       </a-table>
     </a-layout-content>
   </a-layout>
@@ -34,16 +34,15 @@
   import axios from 'axios';
   
   export default defineComponent({
-    name: 'AdminEbook',
+    name: 'RootGoods',
     setup() {
       const goods = ref();
       const pagination = ref({
         current: 1,
-        pagesize: 2,
+        pageSize: 3,
         total: 0
       });
       const loading = ref(false);
-      
       const columns = [
         {
           title: '封面',
@@ -56,7 +55,7 @@
         },
         {
           title:'类目',
-          dataIndex: 'pid'
+          dataIndex: 'categoryId'
         },
         {
           title: '浏览数',
@@ -64,7 +63,7 @@
         },
         {
           title: '关注数',
-          dataIndex: 'viewCount'
+          dataIndex: 'followCount'
         },
         {
           title: '评论数',
@@ -75,15 +74,23 @@
           key: 'action',
           slots: { customRender: 'action'}
         }
-      ]
+      ];
       
       const handleQuery = (params: any) => {
         loading.value = true;
-        axios.get("/goods/list", params).then((response) => {
+        axios.get("/goods/list", {
+          params: {
+            page: params.page,
+            size: params.size
+          }
+        }).then((response) => {
           loading.value = false;
-          goods.value = response.data.data;
+          let pageBean = response.data.data;
+          goods.value = pageBean.list;
+          console.log(goods.value);
           
           pagination.value.current = params.page;
+          pagination.value.total = pageBean.total;
         });
       };
       
@@ -96,7 +103,10 @@
       };
 
       onMounted(() => {
-        handleQuery({});
+        handleQuery({
+          page: pagination.value.current,
+          size: pagination.value.pageSize
+        });
       });
       
       return {
@@ -106,7 +116,6 @@
         loading,
         handlePageChange
       }
-      
     }
   })
 </script>
