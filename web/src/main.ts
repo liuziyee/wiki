@@ -4,8 +4,10 @@ import router from './router'
 import store from './store'
 import Antd from 'ant-design-vue'
 import 'ant-design-vue/dist/antd.css'
-import * as Icons from '@ant-design/icons-vue'
-import axios from 'axios';
+import ElementPlus from 'element-plus'
+import 'element-plus/dist/index.css'
+import * as AntIcons from '@ant-design/icons-vue'
+import axios from 'axios'
 
 axios.defaults.baseURL = process.env.VUE_APP_SERVER;
 
@@ -27,9 +29,9 @@ axios.interceptors.response.use(response => {
 });
 
 const app = createApp(App);
-app.use(store).use(router).use(Antd).mount('#app');
+app.use(store).use(router).use(Antd).use(ElementPlus).mount('#app');
 
-const icons: any = Icons;
+const icons: any = AntIcons;
 for (const i in icons) {
     app.component(i, icons[i]);
 }
