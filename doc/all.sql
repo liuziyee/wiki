@@ -19,6 +19,23 @@ insert into `goods`(id, name, category_id, description) values(3, 'Apple Mac Min
 insert into `goods`(id, name, category_id, description) values(4, '佳明 fēnix 6S Pro', 0, '腕式光学心率计和Pulse Ox脉搏血氧传感器,内置导航传感器,包括三轴电子罗盘,陀螺仪和气压高度,支持多个全球导航卫星系统(GPS、北斗、GLONASS)');
 insert into `goods`(id, name, category_id, description) values(5, 'ThreeZero 异兽魔都 开曼 雕像', 0, 'M1芯片,配备两个超高速的雷雳/USB4端口,两个USB-A端口,HDMI2.0,Wi-Fi6及千兆以太网');
 
+drop table if exists `categor`;
+create table `category` (
+    `id` bigint not null comment 'id',
+    `parent_id` bigint not null default 0 comment '父id',
+    `name` varchar(50) not null comment '名称',
+    `sort_flag` int comment '排序权重'
+) engine=innodb default charset=utf8mb4 comment='类目表';
+
+insert into `category`(id, parent_id, name, sort_flag) values(100, 0, '数码', 5);
+insert into `category`(id, parent_id, name, sort_flag) values(101, 100, '硬盘', 10);
+insert into `category`(id, parent_id, name, sort_flag) values(102, 100, '可穿戴设备', 15);
+insert into `category`(id, parent_id, name, sort_flag) values(200, 0, '玩具', 20);
+insert into `category`(id, parent_id, name, sort_flag) values(201, 200, '可动', 25);
+insert into `category`(id, parent_id, name, sort_flag) values(202, 200, '扭蛋', 30);
+insert into `category`(id, parent_id, name, sort_flag) values(300, 0, '电玩', 35);
+insert into `category`(id, parent_id, name, sort_flag) values(301, 300, '游戏', 40);
+insert into `category`(id, parent_id, name, sort_flag) values(302, 300, '主机', 45);
 
 
 

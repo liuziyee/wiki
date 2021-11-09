@@ -9,10 +9,7 @@
         >
           <a-sub-menu key="sub1">
             <template #title>
-              <span>
-                <SmileOutlined />
-                数码
-              </span>
+              <span>数码</span>
             </template>
             <a-menu-item key="1">option1</a-menu-item>
             <a-menu-item key="2">option2</a-menu-item>
@@ -21,10 +18,7 @@
           </a-sub-menu>
           <a-sub-menu key="sub2">
             <template #title>
-              <span>
-                <SmileOutlined />
-                玩具
-              </span>
+              <span>玩具</span>
             </template>
             <a-menu-item key="5">option5</a-menu-item>
             <a-menu-item key="6">option6</a-menu-item>
@@ -33,10 +27,7 @@
           </a-sub-menu>
           <a-sub-menu key="sub3">
             <template #title>
-              <span>
-                <SmileOutlined />
-                日用
-              </span>
+              <span>电玩</span>
             </template>
             <a-menu-item key="9">option9</a-menu-item>
             <a-menu-item key="10">option10</a-menu-item>
@@ -74,6 +65,7 @@
 <script lang="ts">
   import {defineComponent,onMounted,ref} from 'vue';
   import axios from 'axios';
+  import {message} from 'ant-design-vue';
   
   const listData: Record<string, string>[] = [];
   
@@ -97,11 +89,17 @@
         axios.get("/goods/list", {
           params: {
             page: 1,
-            size: 100
+            size: 1000
           }
         }).then((response) => {
-          let pageBean = response.data.data;
+          let respBean = response.data;
+          if (respBean.code != 0) {
+            message.error(respBean.msg);
+            return;
+          }
+          let pageBean = respBean.data;
           goods.value = pageBean.list;
+          message.success("success", 1);
         })
       });
   

@@ -1,8 +1,6 @@
 package com.dorohedoro.wiki.util;
 
-import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.serializer.PropertyPreFilter;
-import com.alibaba.fastjson.support.spring.PropertyPreFilters;
+import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -51,7 +49,8 @@ public class LogAspect {
             arguments[i] = args[i];
         }
 
-        log("请求参数", arguments);
+        Gson gson = new Gson();
+        log.info("{}", gson.toJson(arguments));
     }
 
     @Around("logPointCut()")
@@ -59,16 +58,9 @@ public class LogAspect {
         long startTime = Instant.now().toEpochMilli();
         Object res = proceedingJoinPoint.proceed();
 
-        log("响应数据", res);
-        log.info("<<<<<<<<<<结束 耗时:{}>>>>>>>>>>", Instant.now().toEpochMilli() - startTime);
+        Gson gson = new Gson();
+        log.info("{}", gson.toJson(res));
+        log.info("<<<<<<<<<<结束 耗时:{}ms>>>>>>>>>>", Instant.now().toEpochMilli() - startTime);
         return res;
-    }
-
-    public <T> void log(String msg, T obj) {
-        String[] excludeProperties = {"password", "file"};
-        PropertyPreFilters filters = new PropertyPreFilters();
-        PropertyPreFilters.MySimplePropertyPreFilter excludeFilter = filters.addFilter();
-        excludeFilter.addExcludes(excludeProperties);
-        log.info("{}: {}", msg, JSONObject.toJSONString(obj, excludeFilter));
     }
 }

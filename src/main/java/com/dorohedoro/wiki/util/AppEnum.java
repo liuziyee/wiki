@@ -7,11 +7,11 @@ package com.dorohedoro.wiki.util;
  */
 public class AppEnum {
     public enum ResultCode {
-        normal {public Integer v() {
+        success {public Integer v() {
                 return 0;
             }},
-        auth {public Integer v() {return 1000;}},
-        no_data {public Integer v() {return 1001;}};
+        valid {public Integer v() { return 10;}},
+        auth {public Integer v() {return 20;}};
         
         public abstract Integer v();
     }

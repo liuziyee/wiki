@@ -11,7 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import javax.validation.Valid;
 import java.time.Instant;
 import java.util.List;
 
@@ -27,11 +29,11 @@ public class GoodsController {
     private GoodsService goodsService;
 
     @GetMapping("/list")
-    public ResponseBean getGoodsList(Goods req) {
+    public ResponseBean getGoodsList(@Valid Goods req) {
         PageBean<GoodsVO> pageBean = goodsService.getGoodsList(req);
 
         ResponseBean<PageBean> res = new ResponseBean<>();
-        res.setCode(AppEnum.ResultCode.normal.v());
+        res.setCode(AppEnum.ResultCode.success.v());
         res.setData(pageBean);
         res.setServerTime(Instant.now().toEpochMilli());
         return res;
