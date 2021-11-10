@@ -3,6 +3,9 @@
     <a-layout-content
         :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }"
     >
+      <p>
+        <el-button type="warning" size="mini" @click="dialogVisible = true; record = {};">新增</el-button>
+      </p>
       <el-table :data="goods" stripe style="width: 100%">
         <el-table-column label="封面" min-width="10%">
           <template #default="scope">
@@ -37,7 +40,6 @@
       <el-dialog
           v-model="dialogVisible"
           width="40%"
-          :before-close="handleClose"
       >
         <el-form :model="record">
           <el-form-item label="封面">
@@ -55,7 +57,7 @@
         </el-form>
         <template #footer>
           <el-button type="info" @click="dialogVisible = false">取消</el-button>
-          <el-button type="success" @click="addOrUpd">保存</el-button>
+          <el-button type="success" :loading="loading" @click="addOrUpd">保存</el-button>
         </template>
       </el-dialog>
     </a-layout-content>
@@ -79,6 +81,7 @@
 
       const dialogVisible = ref(false);
       const record = ref({});
+      const loading = ref(false);
       
       const handleQuery = (params: any) => {
         axios.get("/goods/list", {
@@ -114,12 +117,14 @@
       };
       
       const addOrUpd = () => {
+        loading.value = true;
         axios.post("/goods/addOrUpd", record.value).then((response) => {
           let respBean = response.data;
           if (respBean.code != 0) {
             message.error(respBean.msg);
             return;
           }
+          loading.value = false;
           message.success("success");
           dialogVisible.value = false;
           handleQuery({
@@ -141,6 +146,7 @@
         pagination,
         record,
         dialogVisible,
+        loading,
         handlePageChange,
         edit,
         addOrUpd

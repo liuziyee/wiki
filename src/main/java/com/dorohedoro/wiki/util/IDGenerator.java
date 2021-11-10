@@ -72,5 +72,4 @@ public class IDGenerator {
         private static long getNewStamp() {
             return System.currentTimeMillis();
         }
-        
 }

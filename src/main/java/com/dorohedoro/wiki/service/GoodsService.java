@@ -6,6 +6,7 @@ import com.dorohedoro.wiki.bean.PageBean;
 import com.dorohedoro.wiki.mapper.GoodsMapper;
 import com.dorohedoro.wiki.util.BeanUtil;
 import com.dorohedoro.wiki.bean.GoodsVO;
+import com.dorohedoro.wiki.util.IDGenerator;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
@@ -47,6 +48,8 @@ public class GoodsService {
     public void addOrUpdGoods(Goods reqBean) {
         Long id = reqBean.getId();
         if (id == null || id.equals(0)) {
+            reqBean.setId(IDGenerator.nextId());
+            System.out.println(IDGenerator.nextId());
             goodsMapper.insertSelective(reqBean);
         } else {
             goodsMapper.updateByPrimaryKeySelective(reqBean);
