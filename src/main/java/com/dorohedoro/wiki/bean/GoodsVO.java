@@ -1,6 +1,8 @@
 package com.dorohedoro.wiki.bean;
 
 import com.dorohedoro.wiki.bean.PageBean;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
 
 /**
@@ -10,6 +12,8 @@ import lombok.Data;
  */
 @Data
 public class GoodsVO {
+    //Long转为String
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long id;
     
     private String name;

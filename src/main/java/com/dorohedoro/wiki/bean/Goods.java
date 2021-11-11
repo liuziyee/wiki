@@ -21,6 +21,8 @@ public class Goods extends PageBean {
 
     private Long updateTime;
 
+    private Long deleted;
+
     public Long getId() {
         return id;
     }
@@ -99,5 +101,13 @@ public class Goods extends PageBean {
 
     public void setUpdateTime(Long updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public Long getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Long deleted) {
+        this.deleted = deleted;
     }
 }

@@ -733,6 +733,66 @@ public class GoodsExample {
             addCriterion("update_time not between", value1, value2, "updateTime");
             return (Criteria) this;
         }
+
+        public Criteria andDeletedIsNull() {
+            addCriterion("deleted is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedIsNotNull() {
+            addCriterion("deleted is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedEqualTo(Long value) {
+            addCriterion("deleted =", value, "deleted");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedNotEqualTo(Long value) {
+            addCriterion("deleted <>", value, "deleted");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedGreaterThan(Long value) {
+            addCriterion("deleted >", value, "deleted");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedGreaterThanOrEqualTo(Long value) {
+            addCriterion("deleted >=", value, "deleted");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedLessThan(Long value) {
+            addCriterion("deleted <", value, "deleted");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedLessThanOrEqualTo(Long value) {
+            addCriterion("deleted <=", value, "deleted");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedIn(List<Long> values) {
+            addCriterion("deleted in", values, "deleted");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedNotIn(List<Long> values) {
+            addCriterion("deleted not in", values, "deleted");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedBetween(Long value1, Long value2) {
+            addCriterion("deleted between", value1, value2, "deleted");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedNotBetween(Long value1, Long value2) {
+            addCriterion("deleted not between", value1, value2, "deleted");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

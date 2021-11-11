@@ -15,15 +15,24 @@
             ></el-image>
           </template>
         </el-table-column>
-        <el-table-column label="名称" prop="name" min-width="10%" />
+        <el-table-column label="名称" prop="name" min-width="25%" />
         <el-table-column label="类目" prop="categoryId" min-width="10%" />
         <el-table-column label="浏览数" prop="followCount" min-width="10%" />
         <el-table-column label="关注数" prop="followCount" min-width="10%" />
         <el-table-column label="评论数" prop="commentCount" min-width="10%" />
-        <el-table-column fixed="right" label="做点什么" width="120">
+        <el-table-column fixed="right" label="做点什么">
           <template #default="scope">
-            <el-button type="text" size="small" @click="edit(scope.row)">编辑</el-button>
-            <el-button type="text" size="small">删除</el-button>
+            <el-button type="text" size="mini" @click="handleEdit(scope.row)">编辑</el-button>
+              <el-popconfirm
+                    confirm-button-text="Yes"
+                    cancel-button-text="No"
+                    title="are you sure?"
+                    @confirm="handleDel(scope.row.id)"
+                >
+                  <template #reference>
+                    <el-button type="text" size="mini">删除</el-button>
+                  </template>
+              </el-popconfirm>
           </template>
         </el-table-column>
       </el-table>
@@ -57,7 +66,7 @@
         </el-form>
         <template #footer>
           <el-button type="info" @click="dialogVisible = false">取消</el-button>
-          <el-button type="success" :loading="loading" @click="addOrUpd">保存</el-button>
+          <el-button type="success" :loading="loading" @click="handleAddOrUpd">保存</el-button>
         </template>
       </el-dialog>
     </a-layout-content>
@@ -111,14 +120,14 @@
         });
       };
 
-      const edit = (row: any) => {
+      const handleEdit = (row: any) => {
         record.value = row;
         dialogVisible.value = true;
       };
       
-      const addOrUpd = () => {
+      const handleAddOrUpd = () => {
         loading.value = true;
-        axios.post("/goods/addOrUpd", record.value).then((response) => {
+        axios.post("/goods/handleAddOrUpd", record.value).then((response) => {
           let respBean = response.data;
           if (respBean.code != 0) {
             message.error(respBean.msg);
@@ -132,6 +141,21 @@
             size: pagination.value.pageSize
           })
         })
+      };
+      
+      const handleDel = (id: any) => {
+        axios.get("/goods/del/" + id).then((response) => {
+          let respBean = response.data;
+          if (respBean.code != 0) {
+            message.error(respBean.msg);
+            return;
+          }
+          message.success("success");
+          handleQuery({
+            page: pagination.value.current,
+            size: pagination.value.pageSize
+          })
+        });
       };
 
       onMounted(() => {
@@ -148,8 +172,9 @@
         dialogVisible,
         loading,
         handlePageChange,
-        edit,
-        addOrUpd
+        handleEdit,
+        handleAddOrUpd,
+        handleDel
       }
     }
   })

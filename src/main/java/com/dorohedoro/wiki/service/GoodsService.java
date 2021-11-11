@@ -34,6 +34,8 @@ public class GoodsService {
         if (!ObjectUtils.isEmpty(reqBean.getName())) {
             criteria.andNameLike("%" + reqBean.getName() + "%");
         }
+        criteria.andDeletedEqualTo(0L);
+        
         PageHelper.startPage(reqBean.getPage(), reqBean.getSize());
         List<Goods> goodsList = goodsMapper.selectByExample(goodsExample);
 
@@ -54,6 +56,13 @@ public class GoodsService {
         } else {
             goodsMapper.updateByPrimaryKeySelective(reqBean);
         }
+    }
+
+    public void del(Long id) {
+        Goods goods = new Goods();
+        goods.setId(id);
+        goods.setDeleted(1L);
+        goodsMapper.updateByPrimaryKeySelective(goods);
     }
 }
 

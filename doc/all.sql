@@ -10,8 +10,11 @@ create table `goods` (
     `comment_count` bigint(20) not null default 0 comment '评论数',
     `create_time` bigint(20) not null default 0 comment '创建时间',
     `update_time` bigint(20) not null default 0 comment '更新时间',
+
     primary key (`id`)
 ) engine=innodb default charset=utf8mb4 comment='物品表';
+
+alter table `goods` add column `deleted` bigint(20) default 0 comment '0:U,1:D';
 
 insert into `goods`(id, name, category_id, description) values(1, '闪迪至尊极速™ 移动固态硬盘 V2', 0, '这款大容量移动固态硬盘提供快速的NVMe™固态性能，具有1050MB/秒2的读取速度和1000MB/秒2的写入速度');
 insert into `goods`(id, name, category_id, description) values(2, '西部数据 WD_BLACK P10 Game Drive', 0, 'WD_BLACK™ P10 Game Drive 配备高达 5TB 的存储空间，可以保存多达125个游戏');

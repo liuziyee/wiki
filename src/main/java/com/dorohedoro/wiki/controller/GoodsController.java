@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.time.Instant;
 import java.util.List;
 
@@ -43,6 +44,12 @@ public class GoodsController {
         res.setCode(AppEnum.ResultCode.success.v());
         return res;
     }
-    
-    
+
+    @GetMapping("/del/{id}")
+    public ResponseBean del(@PathVariable("id") Long id) {
+        goodsService.del(id);
+        ResponseBean res = new ResponseBean();
+        res.setCode(AppEnum.ResultCode.success.v());
+        return res;
+    }
 }

@@ -15,7 +15,8 @@ public class AppEnum {
         
         public abstract Integer v();
     }
-
-    public enum RedisKey {}
+    
+    //public enum RedisKey {}
+    
     
 }
