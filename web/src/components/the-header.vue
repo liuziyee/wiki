@@ -1,28 +1,25 @@
 <template>
-  <a-layout-header class="header">
-    <div class="logo" />
-    <a-menu
-        theme="dark"
-        mode="horizontal"
-        :style="{ lineHeight: '64px' }"
-    >
-      <a-menu-item key="/">
-        <router-link to="/">首页</router-link>
-      </a-menu-item>
-      <a-menu-item key="/root/goods">
-        <router-link to="/root/goods">非礼勿视</router-link>
-      </a-menu-item>
-      <a-menu-item key="/about">
-        <router-link to="/about">关于</router-link>
-      </a-menu-item>
-    </a-menu>
-  </a-layout-header>
+  <el-container>
+    <el-header>
+      <el-menu
+          class="router-menu"
+          mode="horizontal"
+          background-color="#708090"
+          text-color="#ffffff"
+          router="true"
+      >
+        <el-menu-item index="/">首页</el-menu-item>
+        <el-menu-item index="/root/goods">你瞅啥</el-menu-item>
+        <el-menu-item index="/about">关于</el-menu-item>
+      </el-menu>
+    </el-header>
+  </el-container>
 </template>
 
 <script lang="ts">
-  import { defineComponent } from 'vue';
+  import { defineComponent, ref } from 'vue';
   
   export default defineComponent({
-    name: 'the-header'
+    name: 'the-header',
   });
 </script>

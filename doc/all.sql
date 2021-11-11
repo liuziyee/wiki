@@ -35,7 +35,7 @@ create table `category` (
 
 insert into `category`(id, parent_id, name, sort_flag) values(100, 0, '数码', 5);
 insert into `category`(id, parent_id, name, sort_flag) values(101, 100, '硬盘', 10);
-insert into `category`(id, parent_id, name, sort_flag) values(102, 100, '可穿戴设备', 15);
+insert into `category`(id, parent_id, name, sort_flag) values(102, 100, '可穿戴', 15);
 insert into `category`(id, parent_id, name, sort_flag) values(200, 0, '玩具', 20);
 insert into `category`(id, parent_id, name, sort_flag) values(201, 200, '可动', 25);
 insert into `category`(id, parent_id, name, sort_flag) values(202, 200, '扭蛋', 30);

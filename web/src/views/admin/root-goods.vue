@@ -1,11 +1,15 @@
 <template>
-  <a-layout>
-    <a-layout-content
-        :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }"
-    >
-      <p>
-        <el-button type="warning" size="mini" @click="dialogVisible = true; record = {};">新增</el-button>
-      </p>
+  <el-container>
+    <el-main>
+      <el-form :inline="true" :model="param">
+        <el-form-item>
+          <el-input v-model="param.name" size="mini" placeholder="名称"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="info" size="mini" @click="handleQuery">查询</el-button>
+          <el-button type="warning" size="mini" @click="dialogVisible = true; record = {};">新增</el-button>
+        </el-form-item>
+      </el-form>
       <el-table :data="goods" stripe style="width: 100%">
         <el-table-column label="封面" min-width="10%">
           <template #default="scope">
@@ -24,9 +28,9 @@
           <template #default="scope">
             <el-button type="text" size="mini" @click="handleEdit(scope.row)">编辑</el-button>
               <el-popconfirm
-                    confirm-button-text="Yes"
-                    cancel-button-text="No"
-                    title="are you sure?"
+                    confirm-button-text="嗯"
+                    cancel-button-text="不了"
+                    title="要删掉吗?"
                     @confirm="handleDel(scope.row.id)"
                 >
                   <template #reference>
@@ -69,15 +73,15 @@
           <el-button type="success" :loading="loading" @click="handleAddOrUpd">保存</el-button>
         </template>
       </el-dialog>
-    </a-layout-content>
-  </a-layout>
+    </el-main>
+  </el-container>
 </template>
 
 <script lang="ts">
   import {defineComponent,onMounted,ref} from 'vue';
   import axios from 'axios';
   import {message} from 'ant-design-vue';
-  
+
   export default defineComponent({
     name: 'RootGoods',
     setup() {
@@ -91,43 +95,41 @@
       const dialogVisible = ref(false);
       const record = ref({});
       const loading = ref(false);
+      const param = ref({name: ''});
       
-      const handleQuery = (params: any) => {
+      const handleQuery = () => {
         axios.get("/goods/list", {
           params: {
-            page: params.page,
-            size: params.size
+            page: pagination.value.current,
+            size: pagination.value.pageSize,
+            name: param.value.name
           }
         }).then((response) => {
           let respBean = response.data;
           if (respBean.code != 0) {
             message.error(respBean.msg);
           }
-          let pageBean = respBean.data;
-          goods.value = pageBean.list;
           message.success("success");
           
-          
-          pagination.value.current = params.page;
+          let pageBean = respBean.data;
+          goods.value = pageBean.list;
           pagination.value.total = pageBean.total;
         });
       };
       
       const handlePageChange = (page: any) => {
-        handleQuery({
-          page: page,
-          size: pagination.value.pageSize
-        });
+        pagination.value.current = page;
+        handleQuery();
       };
 
-      const handleEdit = (row: any) => {
-        record.value = row;
+      const handleEdit = (obj: any) => {
+        record.value = JSON.parse((JSON.stringify(obj)));
         dialogVisible.value = true;
       };
       
       const handleAddOrUpd = () => {
         loading.value = true;
-        axios.post("/goods/handleAddOrUpd", record.value).then((response) => {
+        axios.post("/goods/addOrUpd", record.value).then((response) => {
           let respBean = response.data;
           if (respBean.code != 0) {
             message.error(respBean.msg);
@@ -136,10 +138,7 @@
           loading.value = false;
           message.success("success");
           dialogVisible.value = false;
-          handleQuery({
-            page: pagination.value.current,
-            size: pagination.value.pageSize
-          })
+          handleQuery();
         })
       };
       
@@ -151,18 +150,12 @@
             return;
           }
           message.success("success");
-          handleQuery({
-            page: pagination.value.current,
-            size: pagination.value.pageSize
-          })
+          handleQuery();
         });
       };
 
       onMounted(() => {
-        handleQuery({
-          page: pagination.value.current,
-          size: pagination.value.pageSize
-        });
+        handleQuery();
       });
       
       return {
@@ -171,10 +164,12 @@
         record,
         dialogVisible,
         loading,
+        param,
         handlePageChange,
         handleEdit,
         handleAddOrUpd,
-        handleDel
+        handleDel,
+        handleQuery
       }
     }
   })
