@@ -1,6 +1,6 @@
 <template>
   <el-container>
-    <el-aside width="200px">
+    <el-aside width="150px">
       <el-menu
           default-active="2"
           class="el-menu-vertical-demo"
@@ -25,33 +25,57 @@
     </el-aside>
     <el-main>
       <div class="grid">
-        <a-layout>
-          <a-layout-content
-              :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }"
-          >
-            <a-list item-layout="vertical" size="large" :grid="{ gutter: 20, column: 4}" :data-source="goods">
-              <template #renderItem="{ item }">
-                <a-list-item key="item.name">
-                  <template #actions>
+        <el-row :gutter="30">
+          <el-col :span="5" v-for="(item, index) in goods" :key="index" style="margin-bottom:30px">
+            <el-card :body-style="{ padding: '0px', height: '300px'}" shadow="hover">
+              <el-image
+                  :src="item.cover"
+              />
+              <div style="padding: 15px">
+                <el-form>
+                  <el-form-item>
+                    <span>{{ item.name }}</span>
+                  </el-form-item>
+                  <el-form-item>
+                    <el-tag size="mini" type="info" style="margin-right: 8px">浏览{{item.viewCount}}</el-tag>
+                    <el-tag size="mini" type="info" style="margin-right: 8px">关注{{item.followCount}}</el-tag>
+                    <el-tag size="mini" type="info" style="margin-right: 8px">评论{{item.commentCount}}</el-tag>
+                  </el-form-item>
+                </el-form>
+              </div>
+            </el-card>
+          </el-col>
+        </el-row>
+      </div>
+    </el-main>
+  </el-container>
+
+  <div class="grid">
+    <a-layout>
+      <a-layout-content
+          :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }"
+      >
+        <a-list item-layout="vertical" size="large" :grid="{ gutter: 20, column: 4}" :data-source="goods">
+          <template #renderItem="{ item }">
+            <a-list-item key="item.name">
+              <template #actions>
                 <span v-for="{ type, text } in actions" :key="type">
                   <component v-bind:is="type" style="margin-right: 8px" />
                   {{ text }}
                 </span>
-                  </template>
-                  <a-list-item-meta :description="item.description">
-                    <template #title>
-                      <a :href="item.href">{{ item.name }}</a>
-                    </template>
-                    <template #avatar><a-avatar :src="item.cover" /></template>
-                  </a-list-item-meta>
-                </a-list-item>
               </template>
-            </a-list>
-          </a-layout-content>
-        </a-layout>
-      </div>
-    </el-main>
-  </el-container>
+              <a-list-item-meta :description="item.description">
+                <template #title>
+                  <a :href="item.href">{{ item.name }}</a>
+                </template>
+                <template #avatar><a-avatar :src="item.cover" /></template>
+              </a-list-item-meta>
+            </a-list-item>
+          </template>
+        </a-list>
+      </a-layout-content>
+    </a-layout>
+  </div>
 </template>
 
 <script lang="ts">
@@ -62,7 +86,8 @@
   export default defineComponent({
     name: 'Home',
     setup() {
-      const goods = ref();
+      const goods = ref([]);
+      const data = ref();
       onMounted(() => {
         axios.get("/goods/list", {
           params: {
@@ -77,6 +102,7 @@
           }
           let pageBean = respBean.data;
           goods.value = pageBean.list;
+          
           message.success("success");
         })
       });
@@ -87,27 +113,25 @@
         },
         pageSize: 3,
       };
-      const actions: Record<string, string>[] = [
-        { type: 'EyeOutlined', text: '156' },
-        { type: 'GithubOutlined', text: '156' },
-        { type: 'SmileOutlined', text: '2' },
+      const info: any = [
+        { type: 1, count: '156' },
+        { type: 2, count: '156' },
+        { type: 3, count: '2' },
       ];
   
       return {
         goods,
         pagination,
-        actions
+        info
       }
     }
   });
 </script>
 
 <style scoped>
-  .ant-avatar {
-    width: 50px;
-    height: 50px;
-    line-height: 50px;
-    border-radius: 10%;
-    margin: 5px 0;
+  .grid {
+    overflow-x: hidden;
+    padding: 0 30px;
+    box-sizing: border-box;
   }
 </style>
