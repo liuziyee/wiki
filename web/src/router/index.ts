@@ -1,7 +1,9 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import Home from '../views/home.vue'
 import About from '../views/about.vue'
-import RootGoods from '../views/admin/root-goods.vue'
+import Root from '../views/root/root.vue'
+import RootGoods from '../views/root/root-goods.vue'
+import RootCategory from '../views/root/root-category.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -19,9 +21,21 @@ const routes: Array<RouteRecordRaw> = [
     // component: () => import(/* webpackChunkName: "about" */ '../views/about.vue')
   },
   {
-    path: '/root/goods',
-    name: 'RootGoods',
-    component: RootGoods
+    path: '/root',
+    name: 'Root',
+    component: Root,
+    children: [
+      {
+        path: 'goods',
+        name: 'Goods',
+        component: RootGoods
+      },
+      {
+        path: 'category',
+        name: 'Category',
+        component: RootCategory
+      }
+    ]
   }
 ]
 

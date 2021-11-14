@@ -10,7 +10,6 @@ create table `goods` (
     `comment_count` bigint(20) not null default 0 comment '评论数',
     `create_time` bigint(20) not null default 0 comment '创建时间',
     `update_time` bigint(20) not null default 0 comment '更新时间',
-
     primary key (`id`)
 ) engine=innodb default charset=utf8mb4 comment='物品表';
 
@@ -20,18 +19,16 @@ insert into `goods`(id, name, category_id, description) values(1, '闪迪至尊�
 insert into `goods`(id, name, category_id, description) values(2, '西部数据 WD_BLACK P10 Game Drive', 0, 'WD_BLACK™ P10 Game Drive 配备高达 5TB 的存储空间，可以保存多达125个游戏');
 insert into `goods`(id, name, category_id, description) values(3, 'Apple Mac Mini', 0, 'M1芯片,配备两个超高速的雷雳/USB4端口,两个USB-A端口,HDMI2.0,Wi-Fi6及千兆以太网');
 insert into `goods`(id, name, category_id, description) values(4, '佳明 fēnix 6S Pro', 0, '腕式光学心率计和Pulse Ox脉搏血氧传感器,内置导航传感器,包括三轴电子罗盘,陀螺仪和气压高度,支持多个全球导航卫星系统(GPS、北斗、GLONASS)');
-insert into `goods`(id, name, category_id, description) values(5, '佳明 fēnix 6S Pro', 0, 'M1芯片,配备两个超高速的雷雳/USB4端口,两个USB-A端口,HDMI2.0,Wi-Fi6及千兆以太网');
-insert into `goods`(id, name, category_id, description) values(6, '佳明 fēnix 6S Pro', 0, 'M1芯片,配备两个超高速的雷雳/USB4端口,两个USB-A端口,HDMI2.0,Wi-Fi6及千兆以太网');
-insert into `goods`(id, name, category_id, description) values(7, '佳明 fēnix 6S Pro', 0, 'M1芯片,配备两个超高速的雷雳/USB4端口,两个USB-A端口,HDMI2.0,Wi-Fi6及千兆以太网');
-insert into `goods`(id, name, category_id, description) values(8, '佳明 fēnix 6S Pro', 0, 'M1芯片,配备两个超高速的雷雳/USB4端口,两个USB-A端口,HDMI2.0,Wi-Fi6及千兆以太网');
 
-drop table if exists `categor`;
+drop table if exists `category`;
 create table `category` (
     `id` bigint not null comment 'id',
     `parent_id` bigint not null default 0 comment '父id',
     `name` varchar(50) not null comment '名称',
-    `sort_flag` int comment '排序权重'
-) engine=innodb default charset=utf8mb4 comment='类目表';
+    `sort_flag` int comment '排序权重',
+    `deleted` bigint(20) default 0 comment '0:Y,1:D',
+    primary key (`id`)
+) engine=innodb default charset=utf8mb4 comment='分类表';
 
 insert into `category`(id, parent_id, name, sort_flag) values(100, 0, '数码', 5);
 insert into `category`(id, parent_id, name, sort_flag) values(101, 100, '硬盘', 10);

@@ -3,11 +3,11 @@
     <el-main>
       <el-form :inline="true" :model="param">
         <el-form-item>
-          <el-input v-model="param.name" size="mini" placeholder="名称"></el-input>
+          <el-input v-model="param.name" size="mini"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="info" size="mini" @click="handleQuery">查询</el-button>
-          <el-button type="warning" size="mini" @click="dialogVisible = true; record = {};">新增</el-button>
+          <el-check-tag checked @click="handleQuery" style="margin-right: 8px">查询</el-check-tag>
+          <el-check-tag checked @click="dialogVisible = true; record = {};">新增</el-check-tag>
         </el-form-item>
       </el-form>
       <el-table :data="goods" stripe style="width: 100%">
@@ -20,7 +20,7 @@
           </template>
         </el-table-column>
         <el-table-column label="名称" prop="name" min-width="25%" />
-        <el-table-column label="类目" prop="categoryId" min-width="10%" />
+        <el-table-column label="分类" prop="categoryId" min-width="10%" />
         <el-table-column label="浏览数" prop="followCount" min-width="10%" />
         <el-table-column label="关注数" prop="followCount" min-width="10%" />
         <el-table-column label="评论数" prop="commentCount" min-width="10%" />
@@ -61,7 +61,7 @@
           <el-form-item label="名称">
             <el-input v-model="record.name"/>
           </el-form-item>
-          <el-form-item label="类目">
+          <el-form-item label="分类">
             <el-input v-model="record.categoryId"/>
           </el-form-item>
           <el-form-item label="描述">
@@ -69,8 +69,8 @@
           </el-form-item>
         </el-form>
         <template #footer>
-          <el-button type="info" @click="dialogVisible = false">取消</el-button>
-          <el-button type="success" :loading="loading" @click="handleAddOrUpd">保存</el-button>
+          <el-button type="info" size="small" @click="dialogVisible = false">取消</el-button>
+          <el-button type="success" size="small" :loading="loading" @click="handleAddOrUpd">保存</el-button>
         </template>
       </el-dialog>
     </el-main>
@@ -88,7 +88,7 @@
       const goods = ref();
       const pagination = ref({
         current: 1,
-        pageSize: 5,
+        pageSize: 10,
         total: 0
       });
 

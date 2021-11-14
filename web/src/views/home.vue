@@ -4,22 +4,28 @@
       <el-menu
           default-active="2"
           class="el-menu-vertical-demo"
-          @open="handleOpen"
-          @close="handleClose"
       >
         <el-sub-menu index="1">
           <template #title>
-            <span>数码</span>
+            <el-check-tag>数码</el-check-tag>
           </template>
-            <el-menu-item index="1-1">硬盘</el-menu-item>
-            <el-menu-item index="1-2">可穿戴</el-menu-item>
+          <el-menu-item index="1-1">
+            <el-check-tag>硬盘</el-check-tag>
+          </el-menu-item>
+          <el-menu-item index="1-2">
+            <el-check-tag>可穿戴</el-check-tag>
+          </el-menu-item>
         </el-sub-menu>
         <el-sub-menu index="2">
           <template #title>
-            <span>玩具</span>
+            <el-check-tag>玩具</el-check-tag>
           </template>
-          <el-menu-item index="2-1">可动</el-menu-item>
-          <el-menu-item index="2-2">扭蛋</el-menu-item>
+          <el-menu-item index="2-1">
+            <el-check-tag>可动</el-check-tag>
+          </el-menu-item>
+          <el-menu-item index="2-2">
+            <el-check-tag>扭蛋</el-check-tag>
+          </el-menu-item>
         </el-sub-menu>
       </el-menu>
     </el-aside>

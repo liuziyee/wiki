@@ -46,6 +46,7 @@
                enableSelectByExample="false"
                selectByExampleQueryId="false"/>-->
 
-        <table tableName="goods"/>
+        <!--<table tableName="goods"/>-->
+        <table tableName="category"/>
     </context>
 </generatorConfiguration>
