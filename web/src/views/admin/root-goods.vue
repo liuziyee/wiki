@@ -24,7 +24,7 @@
         <el-table-column label="浏览数" prop="followCount" min-width="10%" />
         <el-table-column label="关注数" prop="followCount" min-width="10%" />
         <el-table-column label="评论数" prop="commentCount" min-width="10%" />
-        <el-table-column fixed="right" label="做点什么">
+        <el-table-column fixed="right" label="操作">
           <template #default="scope">
             <el-button type="text" size="mini" @click="handleEdit(scope.row)">编辑</el-button>
               <el-popconfirm

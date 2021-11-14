@@ -25,18 +25,16 @@
     </el-aside>
     <el-main>
       <div class="grid">
-        <el-row :gutter="30">
-          <el-col :span="5" v-for="(item, index) in goods" :key="index" style="margin-bottom:30px">
-            <el-card :body-style="{ padding: '0px', height: '300px'}" shadow="hover">
-              <el-image
-                  :src="item.cover"
-              />
-              <div style="padding: 15px">
+        <el-row :gutter="30" class="row">
+          <el-col :span="4" v-for="(item, index) in goods" :key="index" style="margin-bottom: 30px">
+            <el-card :body-style="{ padding: '0px'}" shadow="hover" class="card">
+              <el-image :src="item.cover" class="image"/>
+              <div style="padding:15px">
                 <el-form>
-                  <el-form-item>
-                    <span>{{ item.name }}</span>
+                  <el-form-item style="margin-bottom: 0px;">
+                    <el-check-tag checked>{{ item.name }}</el-check-tag>
                   </el-form-item>
-                  <el-form-item>
+                  <el-form-item  style="margin-bottom: 0px;">
                     <el-tag size="mini" type="info" style="margin-right: 8px">浏览{{item.viewCount}}</el-tag>
                     <el-tag size="mini" type="info" style="margin-right: 8px">关注{{item.followCount}}</el-tag>
                     <el-tag size="mini" type="info" style="margin-right: 8px">评论{{item.commentCount}}</el-tag>
@@ -49,34 +47,21 @@
       </div>
     </el-main>
   </el-container>
-
-  <div class="grid">
-    <a-layout>
-      <a-layout-content
-          :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }"
-      >
-        <a-list item-layout="vertical" size="large" :grid="{ gutter: 20, column: 4}" :data-source="goods">
-          <template #renderItem="{ item }">
-            <a-list-item key="item.name">
-              <template #actions>
-                <span v-for="{ type, text } in actions" :key="type">
-                  <component v-bind:is="type" style="margin-right: 8px" />
-                  {{ text }}
-                </span>
-              </template>
-              <a-list-item-meta :description="item.description">
-                <template #title>
-                  <a :href="item.href">{{ item.name }}</a>
-                </template>
-                <template #avatar><a-avatar :src="item.cover" /></template>
-              </a-list-item-meta>
-            </a-list-item>
-          </template>
-        </a-list>
-      </a-layout-content>
-    </a-layout>
-  </div>
 </template>
+
+<style>
+.row {
+  display: flex;
+  flex-wrap: wrap;
+}
+.card {
+  height: 100%;
+}
+.image {
+  width: 100%;
+  display: block;
+}
+</style>
 
 <script lang="ts">
   import {defineComponent,onMounted,ref} from 'vue';
