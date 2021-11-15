@@ -1,5 +1,8 @@
 package com.dorohedoro.wiki.bean;
 
+import lombok.Data;
+
+@Data
 public class Goods extends PageBean {
     private Long id;
 

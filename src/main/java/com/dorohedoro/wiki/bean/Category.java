@@ -1,5 +1,10 @@
 package com.dorohedoro.wiki.bean;
 
+import lombok.Data;
+
+import java.util.List;
+
+@Data
 public class Category extends PageBean {
     private Long id;
 
@@ -10,7 +15,7 @@ public class Category extends PageBean {
     private Integer sortFlag;
 
     private Long deleted;
-
+    
     public Long getId() {
         return id;
     }

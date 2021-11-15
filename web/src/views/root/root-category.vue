@@ -4,7 +4,12 @@
       <p>
         <el-check-tag checked @click="dialogVisible = true; record = {};">新增</el-check-tag>
       </p>
-      <el-table :data="category" stripe style="width: 100%">
+      <el-table :data="category"
+                style="width: 100%"
+                row-key="id"
+                :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
+                stripe
+      >
         <el-table-column label="名称" prop="name" min-width="10%" />
         <el-table-column label="父分类" prop="parentId" min-width="10%" />
         <el-table-column label="排序权重" prop="sortFlag" min-width="10%" />

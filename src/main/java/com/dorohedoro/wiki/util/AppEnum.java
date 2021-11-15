@@ -15,8 +15,13 @@ public class AppEnum {
         
         public abstract Integer v();
     }
-    
-    //public enum RedisKey {}
-    
+
+    public enum YesOrNo {
+        no  {public Long v() {return 0L;}},
+        yes {public Long v() {return 1L;}},
+        all {public Long v() {return -1L;}};
+
+        public abstract Long v();
+    }
     
 }

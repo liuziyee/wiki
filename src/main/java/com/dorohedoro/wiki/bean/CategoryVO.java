@@ -2,7 +2,11 @@ package com.dorohedoro.wiki.bean;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import lombok.Data;
 
+import java.util.List;
+
+@Data
 public class CategoryVO {
     @JsonSerialize(using = ToStringSerializer.class)
     private Long id;
@@ -14,6 +18,8 @@ public class CategoryVO {
     private Integer sortFlag;
 
     private Long deleted;
+    
+    private List<CategoryVO> children;
 
     public Long getId() {
         return id;

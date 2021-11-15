@@ -5,6 +5,7 @@ import com.dorohedoro.wiki.bean.CategoryExample;
 import com.dorohedoro.wiki.bean.CategoryVO;
 import com.dorohedoro.wiki.bean.PageBean;
 import com.dorohedoro.wiki.mapper.CategoryMapper;
+import com.dorohedoro.wiki.util.AppEnum;
 import com.dorohedoro.wiki.util.BeanUtil;
 import com.dorohedoro.wiki.util.IDGenerator;
 import com.github.pagehelper.PageHelper;
@@ -12,9 +13,12 @@ import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @Description
@@ -31,13 +35,13 @@ public class CategoryService {
     public List<CategoryVO> getCategoryList() {
         CategoryExample categoryExample = new CategoryExample();
         CategoryExample.Criteria criteria = categoryExample.createCriteria();
-        criteria.andDeletedEqualTo(0L);
+        criteria.andDeletedEqualTo(AppEnum.YesOrNo.no.v());
         categoryExample.setOrderByClause("sort_flag asc");
         
         List<Category> categoryList = categoryMappper.selectByExample(categoryExample);
         List<CategoryVO> categoryVOList = BeanUtil.copyList(categoryList, CategoryVO.class);
-       
-        return categoryVOList;
+
+        return toTree(0L, categoryVOList);
     }
 
     public void addOrUpdCategory(Category reqBean) {
@@ -54,8 +58,27 @@ public class CategoryService {
     public void del(Long id) {
         Category category = new Category();
         category.setId(id);
-        category.setDeleted(1L);
+        category.setDeleted(AppEnum.YesOrNo.yes.v());
         categoryMappper.updateByPrimaryKeySelective(category);
+    }
+
+    public List<CategoryVO> toTree(Long parentId, List<CategoryVO> allList) {
+        if (CollectionUtils.isEmpty(allList)) {
+            return null;
+        }
+
+        List<CategoryVO> res = new ArrayList<>();
+        for (CategoryVO vo : allList) {
+            if (vo.getParentId().equals(parentId)) {
+                res.add(vo);
+
+                List<CategoryVO> children = toTree(vo.getId(), allList);
+                if (!CollectionUtils.isEmpty(children)) {
+                    vo.setChildren(children);
+                }
+            }
+        }
+        return res;
     }
 }
 

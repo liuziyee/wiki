@@ -2,8 +2,8 @@
   <el-container>
     <el-aside width="150px">
       <el-menu
-          default-active="2"
-          class="el-menu-vertical-demo"
+          default-active="1"
+          style="border-right: 0"
       >
         <el-sub-menu index="1">
           <template #title>
