@@ -30,33 +30,40 @@
         </el-table-column>
       </el-table>
 
-      <el-dialog
-          v-model="dialogVisible"
-          width="40%"
-      >
-        <el-form :model="record"
-                 :label-position="right"
-                 label-width="100px"
+      <div class="dialog">
+        <el-dialog
+            v-model="dialogVisible"
+            width="40%"
         >
-          <el-form-item label="名称">
-            <el-input v-model="record.name"/>
-          </el-form-item>
-          <el-form-item label="父分类">
-            <el-input v-model="record.parentId"/>
-          </el-form-item>
-          <el-form-item label="排序权重">
-            <el-input v-model="record.sortFlag"/>
-          </el-form-item>
-        </el-form>
-        <template #footer>
-          <el-button type="info" size="small" @click="dialogVisible = false">取消</el-button>
-          <el-button type="success" size="small" :loading="loading" @click="handleAddOrUpd">保存</el-button>
-        </template>
-      </el-dialog>
+          <el-form :model="record"
+                   :label-position="right"
+                   label-width="100px"
+          >
+            <el-form-item label="名称">
+              <el-input v-model="record.name"/>
+            </el-form-item>
+            <el-form-item label="父分类">
+              <el-input v-model="record.parentId"/>
+            </el-form-item>
+            <el-form-item label="排序权重">
+              <el-input v-model="record.sortFlag"/>
+            </el-form-item>
+          </el-form>
+          <template #footer>
+            <el-button type="info" size="small" @click="dialogVisible = false">不了</el-button>
+            <el-button type="success" size="small" :loading="loading" @click="handleAddOrUpd">保存</el-button>
+          </template>
+        </el-dialog>
+      </div>
     </el-main>
   </el-container>
 </template>
 
+<style scoped>
+.dialog ::v-deep .el-dialog__body {
+  padding-bottom: 0;
+}
+</style>
 <script lang="ts">
   import {defineComponent,onMounted,ref} from 'vue';
   import axios from 'axios';

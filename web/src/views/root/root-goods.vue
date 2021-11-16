@@ -51,30 +51,32 @@
           @current-change="handlePageChange"
       >
       </el-pagination>
-
-      <el-dialog
-          v-model="dialogVisible"
-          width="40%"
-      >
-        <el-form :model="record">
-          <el-form-item label="封面">
-            <el-input v-model="record.cover"/>
-          </el-form-item>
-          <el-form-item label="名称">
-            <el-input v-model="record.name"/>
-          </el-form-item>
-          <el-form-item label="分类">
-            <el-input v-model="record.categoryId"/>
-          </el-form-item>
-          <el-form-item label="描述">
-            <el-input v-model="record.description"/>
-          </el-form-item>
-        </el-form>
-        <template #footer>
-          <el-button type="info" size="small" @click="dialogVisible = false">取消</el-button>
-          <el-button type="success" size="small" :loading="loading" @click="handleAddOrUpd">保存</el-button>
-        </template>
-      </el-dialog>
+      
+      <div class="dialog">
+        <el-dialog
+            v-model="dialogVisible"
+            width="40%"
+        >
+          <el-form :model="record">
+            <el-form-item label="封面">
+              <el-input v-model="record.cover"/>
+            </el-form-item>
+            <el-form-item label="名称">
+              <el-input v-model="record.name"/>
+            </el-form-item>
+            <el-form-item label="分类">
+              <el-input v-model="record.categoryId"/>
+            </el-form-item>
+            <el-form-item label="描述">
+              <el-input v-model="record.description"/>
+            </el-form-item>
+          </el-form>
+          <template #footer>
+            <el-button type="info" size="small" @click="dialogVisible = false">不了</el-button>
+            <el-button type="success" size="small" :loading="loading" @click="handleAddOrUpd">保存</el-button>
+          </template>
+        </el-dialog>
+      </div>
     </el-main>
   </el-container>
 </template>
@@ -82,6 +84,10 @@
 <style scoped>
 .input ::v-deep .el-input__inner {
   border: 0;
+  background-color: #f4f6f9;
+}
+.dialog ::v-deep .el-dialog__body {
+  padding-bottom: 0;
 }
 </style>
 
