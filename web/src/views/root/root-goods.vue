@@ -12,36 +12,38 @@
           <el-check-tag checked @click="dialogVisible = true; record = {};">新增</el-check-tag>
         </el-form-item>
       </el-form>
-      <el-table :data="goods" stripe style="width: 100%">
-        <el-table-column label="封面" min-width="10%">
-          <template #default="scope">
-            <el-image
-                style="width: 40px; height: 30px"
-                :src="scope.row.cover"
-            ></el-image>
-          </template>
-        </el-table-column>
-        <el-table-column label="名称" prop="name" min-width="25%" />
-        <el-table-column label="分类" prop="categoryId" min-width="10%" />
-        <el-table-column label="浏览数" prop="followCount" min-width="10%" />
-        <el-table-column label="关注数" prop="followCount" min-width="10%" />
-        <el-table-column label="评论数" prop="commentCount" min-width="10%" />
-        <el-table-column fixed="right" label="操作">
-          <template #default="scope">
-            <el-button type="text" size="mini" @click="handleEdit(scope.row)">编辑</el-button>
+      <div class="table">
+        <el-table :data="goods" stripe style="width: 100%">
+          <el-table-column label="封面" min-width="10%">
+            <template #default="scope">
+              <el-image
+                  style="width: 40px; height: 30px"
+                  :src="scope.row.cover"
+              ></el-image>
+            </template>
+          </el-table-column>
+          <el-table-column label="名称" prop="name" min-width="25%" />
+          <el-table-column label="分类" prop="categoryId" min-width="10%" />
+          <el-table-column label="浏览数" prop="followCount" min-width="10%" />
+          <el-table-column label="关注数" prop="followCount" min-width="10%" />
+          <el-table-column label="评论数" prop="commentCount" min-width="10%" />
+          <el-table-column fixed="right" label="操作">
+            <template #default="scope">
+              <el-button type="text" size="mini" @click="handleEdit(scope.row)">编辑</el-button>
               <el-popconfirm
-                    confirm-button-text="嗯"
-                    cancel-button-text="不了"
-                    title="要删掉吗?"
-                    @confirm="handleDel(scope.row.id)"
-                >
-                  <template #reference>
-                    <el-button type="text" size="mini">删除</el-button>
-                  </template>
+                  confirm-button-text="嗯"
+                  cancel-button-text="不了"
+                  title="要删掉吗?"
+                  @confirm="handleDel(scope.row.id)"
+              >
+                <template #reference>
+                  <el-button type="text" size="mini">删除</el-button>
+                </template>
               </el-popconfirm>
-          </template>
-        </el-table-column>
-      </el-table>
+            </template>
+          </el-table-column>
+        </el-table>
+      </div>
       <el-pagination
           background
           :current-page="pagination.current"
@@ -88,6 +90,9 @@
 }
 .dialog ::v-deep .el-dialog__body {
   padding-bottom: 0;
+}
+.table ::v-deep .el-table__row>td{
+  border: none;
 }
 </style>
 

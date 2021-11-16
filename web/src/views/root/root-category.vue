@@ -4,32 +4,34 @@
       <p>
         <el-check-tag checked @click="dialogVisible = true; record = {};">新增</el-check-tag>
       </p>
-      <el-table :data="category"
-                style="width: 100%"
-                row-key="id"
-                :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
-                stripe
-      >
-        <el-table-column label="名称" prop="name" min-width="10%" />
-        <el-table-column label="父分类" prop="parentId" min-width="10%" />
-        <el-table-column label="排序权重" prop="sortFlag" min-width="10%" />
-        <el-table-column fixed="right" label="操作">
-          <template #default="scope">
-            <el-button type="text" size="mini" @click="handleEdit(scope.row)">编辑</el-button>
+      <div class="table">
+        <el-table :data="category"
+                  style="width: 100%"
+                  row-key="id"
+                  :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
+                  stripe
+        >
+          <el-table-column label="名称" prop="name" min-width="10%" />
+          <el-table-column label="父分类" prop="parentId" min-width="10%" />
+          <el-table-column label="排序权重" prop="sortFlag" min-width="10%" />
+          <el-table-column fixed="right" label="操作">
+            <template #default="scope">
+              <el-button type="text" size="mini" @click="handleEdit(scope.row)">编辑</el-button>
               <el-popconfirm
-                    confirm-button-text="嗯"
-                    cancel-button-text="不了"
-                    title="要删掉吗?"
-                    @confirm="handleDel(scope.row.id)"
-                >
-                  <template #reference>
-                    <el-button type="text" size="mini">删除</el-button>
-                  </template>
+                  confirm-button-text="嗯"
+                  cancel-button-text="不了"
+                  title="要删掉吗?"
+                  @confirm="handleDel(scope.row.id)"
+              >
+                <template #reference>
+                  <el-button type="text" size="mini">删除</el-button>
+                </template>
               </el-popconfirm>
-          </template>
-        </el-table-column>
-      </el-table>
-
+            </template>
+          </el-table-column>
+        </el-table>
+      </div>
+      
       <div class="dialog">
         <el-dialog
             v-model="dialogVisible"
@@ -62,6 +64,9 @@
 <style scoped>
 .dialog ::v-deep .el-dialog__body {
   padding-bottom: 0;
+}
+.table ::v-deep .el-table__row>td{
+  border: none;
 }
 </style>
 <script lang="ts">
