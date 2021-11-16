@@ -31,23 +31,25 @@
     </el-aside>
     <el-main>
       <div class="grid">
-        <el-row :gutter="30" class="row">
+        <el-row :gutter="30">
           <el-col :span="4" v-for="(item, index) in goods" :key="index" style="margin-bottom: 30px">
-            <el-card :body-style="{ padding: '0px'}" shadow="hover" class="card">
-              <el-image :src="item.cover" class="image"/>
-              <div style="padding:15px">
-                <el-form>
-                  <el-form-item style="margin-bottom: 0px;">
-                    <el-check-tag checked>{{ item.name }}</el-check-tag>
-                  </el-form-item>
-                  <el-form-item  style="margin-bottom: 0px;">
-                    <el-tag size="mini" type="info" style="margin-right: 8px">浏览{{item.viewCount}}</el-tag>
-                    <el-tag size="mini" type="info" style="margin-right: 8px">关注{{item.followCount}}</el-tag>
-                    <el-tag size="mini" type="info" style="margin-right: 8px">评论{{item.commentCount}}</el-tag>
-                  </el-form-item>
-                </el-form>
-              </div>
-            </el-card>
+            <div class="card">
+              <el-card :body-style="{ padding: '0px'}" shadow="hover">
+                <el-image :src="item.cover"/>
+                <div style="padding:15px">
+                  <el-form>
+                    <el-form-item style="margin-bottom: 0px;">
+                      <el-check-tag checked>{{ item.name }}</el-check-tag>
+                    </el-form-item>
+                    <el-form-item  style="margin-bottom: 0px;">
+                      <el-tag size="mini" type="info" style="margin-right: 8px">浏览{{item.viewCount}}</el-tag>
+                      <el-tag size="mini" type="info" style="margin-right: 8px">关注{{item.followCount}}</el-tag>
+                      <el-tag size="mini" type="info" style="margin-right: 8px">评论{{item.commentCount}}</el-tag>
+                    </el-form-item>
+                  </el-form>
+                </div>
+              </el-card>
+            </div>
           </el-col>
         </el-row>
       </div>
@@ -55,15 +57,16 @@
   </el-container>
 </template>
 
-<style>
-.row {
+<style scoped>
+.el-row {
   display: flex;
   flex-wrap: wrap;
 }
-.card {
+.el-card {
   height: 100%;
+  border: 0;
 }
-.image {
+.el-image {
   width: 100%;
   display: block;
 }

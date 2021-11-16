@@ -3,7 +3,9 @@
     <el-main>
       <el-form :inline="true" :model="param">
         <el-form-item>
-          <el-input v-model="param.name" size="mini"></el-input>
+          <div class="input">
+            <el-input v-model="param.name" size="mini"></el-input>
+          </div>
         </el-form-item>
         <el-form-item>
           <el-check-tag checked @click="handleQuery" style="margin-right: 8px">查询</el-check-tag>
@@ -76,6 +78,12 @@
     </el-main>
   </el-container>
 </template>
+
+<style scoped>
+.input ::v-deep .el-input__inner {
+  border: 0;
+}
+</style>
 
 <script lang="ts">
   import {defineComponent,onMounted,ref} from 'vue';
