@@ -1,22 +1,24 @@
 package com.dorohedoro.wiki.service;
 
-import com.dorohedoro.wiki.bean.Goods;
-import com.dorohedoro.wiki.bean.GoodsExample;
-import com.dorohedoro.wiki.bean.PageBean;
+import com.dorohedoro.wiki.bean.*;
+import com.dorohedoro.wiki.mapper.CategoryMapper;
 import com.dorohedoro.wiki.mapper.GoodsMapper;
 import com.dorohedoro.wiki.util.AppEnum;
 import com.dorohedoro.wiki.util.BeanUtil;
-import com.dorohedoro.wiki.bean.GoodsVO;
 import com.dorohedoro.wiki.util.IDGenerator;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @Description
@@ -29,6 +31,8 @@ public class GoodsService {
 
     @Autowired
     private GoodsMapper goodsMapper;
+    @Autowired
+    private CategoryMapper categoryMapper;
 
     public PageBean<GoodsVO> getGoodsList(Goods reqBean) {
         GoodsExample goodsExample = new GoodsExample();
@@ -36,11 +40,22 @@ public class GoodsService {
         if (!StringUtils.isEmpty(reqBean.getName())) {
             criteria.andNameLike("%" + reqBean.getName() + "%");
         }
-        if (reqBean.getCategoryId() != null) {
-            criteria.andCategoryIdEqualTo(reqBean.getCategoryId());
+
+        List<Long> categoryIdList = new ArrayList<>();
+        CategoryExample categoryExample = new CategoryExample();
+        Long categoryId = reqBean.getCategoryId();
+        categoryExample.createCriteria().andParentIdEqualTo(categoryId);
+        List<Category> categoryList = categoryMapper.selectByExample(categoryExample);
+        if (!CollectionUtils.isEmpty(categoryList)) {
+            //一级分类
+            categoryIdList = categoryList.stream().map(Category::getId).collect(Collectors.toList());
+        } else {
+            //二级分类
+            categoryIdList.add(categoryId);
         }
+        criteria.andCategoryIdIn(categoryIdList);
         criteria.andDeletedEqualTo(AppEnum.YesOrNo.no.v());
-        
+
         PageHelper.startPage(reqBean.getPage(), reqBean.getSize());
         List<Goods> goodsList = goodsMapper.selectByExample(goodsExample);
 

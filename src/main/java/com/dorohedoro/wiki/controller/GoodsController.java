@@ -3,6 +3,7 @@ package com.dorohedoro.wiki.controller;
 import com.dorohedoro.wiki.bean.Goods;
 import com.dorohedoro.wiki.bean.PageBean;
 import com.dorohedoro.wiki.bean.ResponseBean;
+import com.dorohedoro.wiki.service.CategoryService;
 import com.dorohedoro.wiki.service.GoodsService;
 import com.dorohedoro.wiki.util.AppEnum;
 import com.dorohedoro.wiki.bean.GoodsVO;
@@ -25,6 +26,7 @@ import java.util.List;
 public class GoodsController {
     @Autowired
     private GoodsService goodsService;
+    
 
     @GetMapping("/list")
     public ResponseBean getGoodsList(@Valid Goods reqBean) {

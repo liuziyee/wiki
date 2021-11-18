@@ -2,11 +2,13 @@
   <el-container>
     <el-aside width="150px">
       <el-menu style="border-right: 0"
-               default-active="201"
-               @select="handleCategoryChange">
+               @select="handleChildCategoryChange"
+               @open="handleParentCategoryChange"
+               unique-opened
+      >
         <el-sub-menu v-for="parent in category" :key="parent.id" :index="parent.id">
           <template #title>
-            <el-check-tag>{{parent.name}}</el-check-tag>
+            <el-check-tag checked>{{parent.name}}</el-check-tag>
           </template>
           <el-menu-item v-for="child in parent.children" :key="child.id" :index="child.id">
             <el-check-tag>{{child.name}}</el-check-tag>
@@ -101,7 +103,12 @@
         });
       };
       
-      const handleCategoryChange = (index:any) => {
+      const handleChildCategoryChange = (index:any) => {
+        cid = index;
+        handleQueryGoods();
+      };
+      
+      const handleParentCategoryChange = (index:any) => {
         cid = index;
         handleQueryGoods();
       };
@@ -114,7 +121,8 @@
       return {
         goods,
         category,
-        handleCategoryChange
+        handleChildCategoryChange,
+        handleParentCategoryChange
       }
     }
   });
