@@ -46,7 +46,7 @@ public class CategoryService {
 
     public void addOrUpdCategory(Category reqBean) {
         Long id = reqBean.getId();
-        if (id == null || id.equals(0)) {
+        if (id == null || id.equals(0L)) {
             reqBean.setId(IDGenerator.nextId());
             System.out.println(IDGenerator.nextId());
             categoryMappper.insertSelective(reqBean);

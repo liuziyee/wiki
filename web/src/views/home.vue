@@ -1,30 +1,13 @@
 <template>
   <el-container>
     <el-aside width="150px">
-      <el-menu
-          default-active="1"
-          style="border-right: 0"
-      >
-        <el-sub-menu index="1">
+      <el-menu style="border-right: 0" @select="handleCategoryChange">
+        <el-sub-menu v-for="parent in category" :key="parent.id" :index="parent.id">
           <template #title>
-            <el-check-tag>数码</el-check-tag>
+            <el-check-tag>{{parent.name}}</el-check-tag>
           </template>
-          <el-menu-item index="1-1">
-            <el-check-tag>硬盘</el-check-tag>
-          </el-menu-item>
-          <el-menu-item index="1-2">
-            <el-check-tag>可穿戴</el-check-tag>
-          </el-menu-item>
-        </el-sub-menu>
-        <el-sub-menu index="2">
-          <template #title>
-            <el-check-tag>玩具</el-check-tag>
-          </template>
-          <el-menu-item index="2-1">
-            <el-check-tag>可动</el-check-tag>
-          </el-menu-item>
-          <el-menu-item index="2-2">
-            <el-check-tag>扭蛋</el-check-tag>
+          <el-menu-item v-for="child in parent.children" :key="child.id" :index="child.id">
+            <el-check-tag>{{child.name}}</el-check-tag>
           </el-menu-item>
         </el-sub-menu>
       </el-menu>
@@ -81,12 +64,27 @@
     name: 'Home',
     setup() {
       const goods = ref([]);
-      const data = ref();
-      onMounted(() => {
+      const category = ref();
+      let cid = 201;
+      
+      const handleQueryCategory = () => {
+        axios.get("/category/tree").then((response) => {
+          let respBean = response.data;
+          if (respBean.code != 0) {
+            message.error(respBean.msg);
+          }
+          message.success("success");
+
+          category.value = respBean.data;
+        });
+      };
+      
+      const handleQueryGoods = () => {
         axios.get("/goods/list", {
           params: {
             page: 1,
-            size: 1000
+            size: 1000,
+            categoryId: cid
           }
         }).then((response) => {
           let respBean = response.data;
@@ -96,36 +94,37 @@
           }
           let pageBean = respBean.data;
           goods.value = pageBean.list;
-          
+
           message.success("success");
-        })
-      });
-  
-      const pagination = {
-        onChange: (page: number) => {
-          console.log(page);
-        },
-        pageSize: 3,
+        });
       };
-      const info: any = [
-        { type: 1, count: '156' },
-        { type: 2, count: '156' },
-        { type: 3, count: '2' },
-      ];
-  
+      
+      const handleCategoryChange = (index:any) => {
+        cid = index;
+        handleQueryGoods();
+      };
+      
+      onMounted(() => {
+        handleQueryCategory();
+        handleQueryGoods();
+      });
+     
       return {
         goods,
-        pagination,
-        info
+        category,
+        handleCategoryChange
       }
     }
   });
 </script>
 
 <style scoped>
-  .grid {
-    overflow-x: hidden;
-    padding: 0 30px;
-    box-sizing: border-box;
-  }
+.el-aside {
+  overflow-x: hidden;
+}
+.grid {
+  overflow-x: hidden;
+  padding: 0 30px;
+  box-sizing: border-box;
+}
 </style>

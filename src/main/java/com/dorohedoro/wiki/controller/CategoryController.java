@@ -22,7 +22,7 @@ public class CategoryController{
     @Autowired
     private CategoryService categoryService;
     
-    @GetMapping("/list")
+    @GetMapping("/tree")
     public ResponseBean getCategoryList() {
         List<CategoryVO> categoryVOList = categoryService.getCategoryList();
 

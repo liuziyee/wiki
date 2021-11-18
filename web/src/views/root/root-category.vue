@@ -1,5 +1,5 @@
 <template>
-  <el-container>
+  <el-container class="container">
     <el-main>
       <p>
         <el-check-tag checked @click="dialogVisible = true; record = {};">新增</el-check-tag>
@@ -62,6 +62,10 @@
 </template>
 
 <style scoped>
+.container ::v-deep .el-input__inner {
+  border: 0;
+  background-color: #f4f6f9;
+}
 .dialog ::v-deep .el-dialog__body {
   padding-bottom: 0;
 }
@@ -83,7 +87,7 @@
       const loading = ref(false);
       
       const handleQuery = () => {
-        axios.get("/category/list").then((response) => {
+        axios.get("/category/tree").then((response) => {
           let respBean = response.data;
           if (respBean.code != 0) {
             message.error(respBean.msg);

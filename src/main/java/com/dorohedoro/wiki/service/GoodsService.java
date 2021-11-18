@@ -4,6 +4,7 @@ import com.dorohedoro.wiki.bean.Goods;
 import com.dorohedoro.wiki.bean.GoodsExample;
 import com.dorohedoro.wiki.bean.PageBean;
 import com.dorohedoro.wiki.mapper.GoodsMapper;
+import com.dorohedoro.wiki.util.AppEnum;
 import com.dorohedoro.wiki.util.BeanUtil;
 import com.dorohedoro.wiki.bean.GoodsVO;
 import com.dorohedoro.wiki.util.IDGenerator;
@@ -13,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -31,10 +33,13 @@ public class GoodsService {
     public PageBean<GoodsVO> getGoodsList(Goods reqBean) {
         GoodsExample goodsExample = new GoodsExample();
         GoodsExample.Criteria criteria = goodsExample.createCriteria();
-        if (!ObjectUtils.isEmpty(reqBean.getName())) {
+        if (!StringUtils.isEmpty(reqBean.getName())) {
             criteria.andNameLike("%" + reqBean.getName() + "%");
         }
-        criteria.andDeletedEqualTo(0L);
+        if (reqBean.getCategoryId() != null) {
+            criteria.andCategoryIdEqualTo(reqBean.getCategoryId());
+        }
+        criteria.andDeletedEqualTo(AppEnum.YesOrNo.no.v());
         
         PageHelper.startPage(reqBean.getPage(), reqBean.getSize());
         List<Goods> goodsList = goodsMapper.selectByExample(goodsExample);

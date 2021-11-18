@@ -1,11 +1,9 @@
 <template>
-  <el-container>
+  <el-container class="container">
     <el-main>
       <el-form :inline="true" :model="param">
         <el-form-item>
-          <div class="input">
-            <el-input v-model="param.name" size="mini"></el-input>
-          </div>
+          <el-input v-model="param.name" size="mini"></el-input>
         </el-form-item>
         <el-form-item>
           <el-check-tag checked @click="handleQuery" style="margin-right: 8px">查询</el-check-tag>
@@ -67,7 +65,12 @@
               <el-input v-model="record.name"/>
             </el-form-item>
             <el-form-item label="分类">
-              <el-input v-model="record.categoryId"/>
+              <el-cascader
+                  :options="options"
+                  :props="{ multiple: true }"
+                  v-model="categoryIds"
+                  clearable
+              />
             </el-form-item>
             <el-form-item label="描述">
               <el-input v-model="record.description"/>
@@ -84,7 +87,7 @@
 </template>
 
 <style scoped>
-.input ::v-deep .el-input__inner {
+.container ::v-deep .el-input__inner {
   border: 0;
   background-color: #f4f6f9;
 }
@@ -115,6 +118,7 @@
       const record = ref({});
       const loading = ref(false);
       const param = ref({name: ''});
+      const categoryIds = ref({});
       
       const handleQuery = () => {
         axios.get("/goods/list", {
@@ -184,6 +188,7 @@
         dialogVisible,
         loading,
         param,
+        categoryIds,
         handlePageChange,
         handleEdit,
         handleAddOrUpd,
