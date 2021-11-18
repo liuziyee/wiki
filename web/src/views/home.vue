@@ -1,7 +1,9 @@
 <template>
   <el-container>
     <el-aside width="150px">
-      <el-menu style="border-right: 0" @select="handleCategoryChange">
+      <el-menu style="border-right: 0"
+               default-active="201"
+               @select="handleCategoryChange">
         <el-sub-menu v-for="parent in category" :key="parent.id" :index="parent.id">
           <template #title>
             <el-check-tag>{{parent.name}}</el-check-tag>
