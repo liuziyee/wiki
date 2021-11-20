@@ -7,13 +7,14 @@ package com.dorohedoro.wiki.util;
  */
 public class AppEnum {
     public enum ResultCode {
-        success {public Integer v() {
-                return 0;
+        success {public Long v() {
+                return 0L;
             }},
-        valid {public Integer v() { return 10;}},
-        auth {public Integer v() {return 20;}};
+        valid {public Long v() { return 10L;}},
+        auth {public Long v() {return 20L;}},
+        db {public Long v() {return 30L;}};
         
-        public abstract Integer v();
+        public abstract Long v();
     }
 
     public enum YesOrNo {

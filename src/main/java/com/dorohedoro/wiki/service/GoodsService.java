@@ -37,23 +37,28 @@ public class GoodsService {
     public PageBean<GoodsVO> getGoodsList(Goods reqBean) {
         GoodsExample goodsExample = new GoodsExample();
         GoodsExample.Criteria criteria = goodsExample.createCriteria();
+        //name like ?
         if (!StringUtils.isEmpty(reqBean.getName())) {
             criteria.andNameLike("%" + reqBean.getName() + "%");
         }
 
         List<Long> categoryIdList = new ArrayList<>();
         CategoryExample categoryExample = new CategoryExample();
+        //categoryId = ?
         Long categoryId = reqBean.getCategoryId();
-        categoryExample.createCriteria().andParentIdEqualTo(categoryId);
-        List<Category> categoryList = categoryMapper.selectByExample(categoryExample);
-        if (!CollectionUtils.isEmpty(categoryList)) {
-            //一级分类
-            categoryIdList = categoryList.stream().map(Category::getId).collect(Collectors.toList());
-        } else {
-            //二级分类
-            categoryIdList.add(categoryId);
+        if (categoryId != null && !categoryId.equals(0L)) {
+            categoryExample.createCriteria().andParentIdEqualTo(categoryId);
+            List<Category> categoryList = categoryMapper.selectByExample(categoryExample);
+            if (!CollectionUtils.isEmpty(categoryList)) {
+                //一级分类
+                categoryIdList = categoryList.stream().map(Category::getId).collect(Collectors.toList());
+            } else {
+                //二级分类
+                categoryIdList.add(categoryId);
+            }
+            criteria.andCategoryIdIn(categoryIdList);
         }
-        criteria.andCategoryIdIn(categoryIdList);
+        //deleted = 0
         criteria.andDeletedEqualTo(AppEnum.YesOrNo.no.v());
 
         PageHelper.startPage(reqBean.getPage(), reqBean.getSize());
@@ -67,14 +72,20 @@ public class GoodsService {
         return pageBean;
     }
 
-    public void addOrUpdGoods(Goods reqBean) {
+    public Long addOrUpdGoods(Goods reqBean) {
         Long id = reqBean.getId();
+        Integer res = 0;
         if (id == null || id.equals(0)) {
             reqBean.setId(IDGenerator.nextId());
-            System.out.println(IDGenerator.nextId());
-            goodsMapper.insertSelective(reqBean);
+            res = goodsMapper.insertSelective(reqBean);
         } else {
-            goodsMapper.updateByPrimaryKeySelective(reqBean);
+            res = goodsMapper.updateByPrimaryKeySelective(reqBean);
+        }
+
+        if (res.equals(0)) {
+            return AppEnum.ResultCode.db.v();
+        } else {
+            return reqBean.getId();
         }
     }
 

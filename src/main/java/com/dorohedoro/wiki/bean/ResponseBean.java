@@ -9,7 +9,7 @@ import lombok.Data;
  */
 @Data
 public class ResponseBean<T> {
-    private Integer code;
+    private Long code;
     private T data;
     private String msg;
     private Long serverTime;

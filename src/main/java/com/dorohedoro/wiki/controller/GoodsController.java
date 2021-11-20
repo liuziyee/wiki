@@ -41,9 +41,14 @@ public class GoodsController {
 
     @PostMapping("/addOrUpd")
     public ResponseBean addOrUpdGoods(@RequestBody Goods reqBean) {
-        ResponseBean res = new ResponseBean();
-        goodsService.addOrUpdGoods(reqBean);
-        res.setCode(AppEnum.ResultCode.success.v());
+        ResponseBean<Long> res = new ResponseBean();
+        Long code = goodsService.addOrUpdGoods(reqBean);
+        if (code.equals(AppEnum.ResultCode.db.v())) {
+            res.setCode(code);
+        } else {
+            res.setCode(AppEnum.ResultCode.success.v());
+            res.setData(code);
+        }
         return res;
     }
 

@@ -16,6 +16,15 @@
   </el-container>
 </template>
 
+<style scoped>
+.el-header {
+  padding: 0 0
+}
+.el-menu {
+  border-bottom: 0;
+}
+</style>
+
 <script lang="ts">
   import { defineComponent, ref } from 'vue';
   

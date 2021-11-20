@@ -6,7 +6,7 @@
           <el-input v-model="param.name" size="mini"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-check-tag checked @click="handleQuery" style="margin-right: 8px">查询</el-check-tag>
+          <el-check-tag checked @click="handleQueryGoods" style="margin-right: 8px">查询</el-check-tag>
           <el-check-tag checked @click="dialogVisible = true; record = {};">新增</el-check-tag>
         </el-form-item>
       </el-form>
@@ -66,9 +66,10 @@
             </el-form-item>
             <el-form-item label="分类">
               <el-cascader
-                  :options="options"
-                  :props="{ multiple: true }"
+                  :options="categoryOptions"
+                  :props="{ multiple: true,label: 'name', value: 'id' }"
                   v-model="categoryIds"
+                  placeholder="选吧"
                   clearable
               />
             </el-form-item>
@@ -118,9 +119,23 @@
       const record = ref({});
       const loading = ref(false);
       const param = ref({name: ''});
-      const categoryIds = ref({});
+      const categoryOptions = ref();
+      let categoryIds: any;
       
-      const handleQuery = () => {
+
+      const handleQueryCategory = () => {
+        axios.get("/category/tree").then((response) => {
+          let respBean = response.data;
+          if (respBean.code != 0) {
+            message.error(respBean.msg);
+          }
+          message.success("success");
+
+          categoryOptions.value = respBean.data;
+        });
+      };
+      
+      const handleQueryGoods = () => {
         axios.get("/goods/list", {
           params: {
             page: pagination.value.current,
@@ -137,12 +152,14 @@
           let pageBean = respBean.data;
           goods.value = pageBean.list;
           pagination.value.total = pageBean.total;
+
+          handleQueryCategory();
         });
       };
       
       const handlePageChange = (page: any) => {
         pagination.value.current = page;
-        handleQuery();
+        handleQueryGoods();
       };
 
       const handleEdit = (obj: any) => {
@@ -161,7 +178,7 @@
           loading.value = false;
           message.success("success");
           dialogVisible.value = false;
-          handleQuery();
+          handleQueryGoods();
         })
       };
       
@@ -173,12 +190,12 @@
             return;
           }
           message.success("success");
-          handleQuery();
+          handleQueryGoods();
         });
       };
 
       onMounted(() => {
-        handleQuery();
+        handleQueryGoods();
       });
       
       return {
@@ -189,11 +206,12 @@
         loading,
         param,
         categoryIds,
+        categoryOptions,
         handlePageChange,
         handleEdit,
         handleAddOrUpd,
         handleDel,
-        handleQuery
+        handleQueryGoods
       }
     }
   })
