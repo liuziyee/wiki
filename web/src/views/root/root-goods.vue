@@ -116,11 +116,11 @@
       });
 
       const dialogVisible = ref(false);
-      const record = ref({});
+      const record = ref({categoryId: 0});
       const loading = ref(false);
       const param = ref({name: ''});
       const categoryOptions = ref();
-      let categoryIds: any;
+      const categoryIds = ref();
       
 
       const handleQueryCategory = () => {
@@ -169,6 +169,7 @@
       
       const handleAddOrUpd = () => {
         loading.value = true;
+        console.log(categoryIds.value);
         axios.post("/goods/addOrUpd", record.value).then((response) => {
           let respBean = response.data;
           if (respBean.code != 0) {
