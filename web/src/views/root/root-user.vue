@@ -102,14 +102,14 @@
       const dialogVisible = ref(false);
       const record = ref({categoryId: 0});
       const loading = ref(false);
-      const param = ref({name: ''});
+      const param = ref({name:''});
       
       const handleQueryUser = () => {
         axios.get("/user/list", {
           params: {
             page: pagination.value.current,
             size: pagination.value.pageSize,
-            name: param.value.name
+            loginName: param.value.name
           }
         }).then((response) => {
           let respBean = response.data;

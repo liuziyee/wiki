@@ -37,7 +37,7 @@ public class UserService {
         UserExample userExample = new UserExample();
         UserExample.Criteria criteria = userExample.createCriteria();
         if (!StringUtils.isEmpty(userBO.getLoginName())) {
-            criteria.andNameLike("%" + userBO.getLoginName() + "%");
+            criteria.andLoginNameLike("%" + userBO.getLoginName() + "%");
         }
 
         PageHelper.startPage(userBO.getPage(), userBO.getSize());
