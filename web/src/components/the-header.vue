@@ -9,7 +9,7 @@
           router="true"
       >
         <el-menu-item index="/">首页</el-menu-item>
-        <el-menu-item index="/root">你瞅啥</el-menu-item>
+        <el-menu-item index="/root">空腹虫</el-menu-item>
         <el-menu-item index="/about">关于</el-menu-item>
       </el-menu>
     </el-header>

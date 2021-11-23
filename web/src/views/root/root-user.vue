@@ -1,19 +1,20 @@
 <template>
   <el-container class="container">
     <el-main>
-      <p>
-        <el-check-tag checked @click="dialogVisible = true; record = {};">新增</el-check-tag>
-      </p>
+      <el-form :inline="true" :model="param">
+        <el-form-item>
+          <el-input v-model="param.name" size="mini"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-check-tag checked @click="handleQueryUser" style="margin-right: 8px">查询</el-check-tag>
+          <el-check-tag checked @click="dialogVisible = true; record = {};">新增</el-check-tag>
+        </el-form-item>
+      </el-form>
       <div class="table">
-        <el-table :data="category"
-                  style="width: 100%"
-                  row-key="id"
-                  :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
-                  stripe
-        >
-          <el-table-column label="名称" prop="name" min-width="10%" />
-          <el-table-column label="父分类" prop="parentId" min-width="10%" />
-          <el-table-column label="排序权重" prop="sortFlag" min-width="10%" />
+        <el-table :data="users" stripe style="width: 100%">
+          <el-table-column label="登录名" prop="loginName" min-width="25%" />
+          <el-table-column label="昵称" prop="name" min-width="10%" />
+          <el-table-column label="密码" prop="password" min-width="10%" />
           <el-table-column fixed="right" label="操作">
             <template #default="scope">
               <el-button type="text" size="mini" @click="handleEdit(scope.row)">编辑</el-button>
@@ -31,6 +32,15 @@
           </el-table-column>
         </el-table>
       </div>
+      <el-pagination
+          background
+          :current-page="pagination.current"
+          :page-size="pagination.pageSize"
+          :total="pagination.total"
+          layout="prev, pager, next"
+          @current-change="handlePageChange"
+      >
+      </el-pagination>
       
       <div class="dialog">
         <el-dialog
@@ -41,14 +51,14 @@
                    :label-position="right"
                    label-width="80px"
           >
-            <el-form-item label="名称">
+            <el-form-item label="登录名">
+              <el-input v-model="record.loginName"/>
+            </el-form-item>
+            <el-form-item label="昵称">
               <el-input v-model="record.name"/>
             </el-form-item>
-            <el-form-item label="父分类">
-              <el-input v-model="record.parentId"/>
-            </el-form-item>
-            <el-form-item label="排序权重">
-              <el-input v-model="record.sortFlag"/>
+            <el-form-item label="密码">
+              <el-input v-model="record.password"/>
             </el-form-item>
           </el-form>
           <template #footer>
@@ -73,31 +83,52 @@
   border: none;
 }
 </style>
+
 <script lang="ts">
-  import {defineComponent,onMounted,ref} from 'vue';
+  import {defineComponent,onMounted,reactive,ref} from 'vue';
   import axios from 'axios';
   import {message} from 'ant-design-vue';
 
   export default defineComponent({
-    name: 'RootGoods',
+    name: 'RootUser',
     setup() {
-      const category = ref();
+      const users = ref();
+      const pagination = ref({
+        current: 1,
+        pageSize: 10,
+        total: 0
+      });
+
       const dialogVisible = ref(false);
-      const record = ref({});
+      const record = ref({categoryId: 0});
       const loading = ref(false);
+      const param = ref({name: ''});
       
-      const handleQuery = () => {
-        axios.get("/category/tree").then((response) => {
+      const handleQueryUser = () => {
+        axios.get("/user/list", {
+          params: {
+            page: pagination.value.current,
+            size: pagination.value.pageSize,
+            name: param.value.name
+          }
+        }).then((response) => {
           let respBean = response.data;
           if (respBean.code != 0) {
             message.error(respBean.msg);
           }
           message.success("success");
           
-          category.value = respBean.data;
+          let pageBean = respBean.data;
+          users.value = pageBean.list;
+          pagination.value.total = pageBean.total;
         });
       };
       
+      const handlePageChange = (page: any) => {
+        pagination.value.current = page;
+        handleQueryUser();
+      };
+
       const handleEdit = (obj: any) => {
         record.value = JSON.parse((JSON.stringify(obj)));
         dialogVisible.value = true;
@@ -105,7 +136,7 @@
       
       const handleAddOrUpd = () => {
         loading.value = true;
-        axios.post("/category/addOrUpd", record.value).then((response) => {
+        axios.post("/user/addOrUpd", record.value).then((response) => {
           let respBean = response.data;
           if (respBean.code != 0) {
             message.error(respBean.msg);
@@ -114,35 +145,38 @@
           loading.value = false;
           message.success("success");
           dialogVisible.value = false;
-          handleQuery();
+          handleQueryUser();
         })
       };
       
       const handleDel = (id: any) => {
-        axios.get("/category/del/" + id).then((response) => {
+        axios.get("/user/del/" + id).then((response) => {
           let respBean = response.data;
           if (respBean.code != 0) {
             message.error(respBean.msg);
             return;
           }
           message.success("success");
-          handleQuery();
+          handleQueryUser();
         });
       };
 
       onMounted(() => {
-        handleQuery();
+        handleQueryUser();
       });
       
       return {
-        category,
+        users,
+        pagination,
         record,
         dialogVisible,
         loading,
+        param,
+        handlePageChange,
         handleEdit,
         handleAddOrUpd,
         handleDel,
-        handleQuery
+        handleQueryUser
       }
     }
   })

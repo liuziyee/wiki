@@ -32,9 +32,9 @@ public class CategoryController{
     }
 
     @PostMapping("/addOrUpd")
-    public ResponseBean addOrUpdCategory(@RequestBody Category reqBean) {
+    public ResponseBean addOrUpdCategory(@RequestBody Category categoryBO) {
         ResponseBean res = new ResponseBean();
-        categoryService.addOrUpdCategory(reqBean);
+        categoryService.addOrUpdCategory(categoryBO);
         res.setCode(AppEnum.ResultCode.success.v());
         return res;
     }

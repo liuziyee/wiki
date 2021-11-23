@@ -39,14 +39,13 @@ public class CategoryService {
         return toTree(0L, categoryVOList);
     }
 
-    public void addOrUpdCategory(Category reqBean) {
-        Long id = reqBean.getId();
+    public void addOrUpdCategory(Category categoryBO) {
+        Long id = categoryBO.getId();
         if (id == null || id.equals(0L)) {
-            reqBean.setId(IDGenerator.nextId());
-            System.out.println(IDGenerator.nextId());
-            categoryMappper.insertSelective(reqBean);
+            categoryBO.setId(IDGenerator.nextId());
+            categoryMappper.insertSelective(categoryBO);
         } else {
-            categoryMappper.updateByPrimaryKeySelective(reqBean);
+            categoryMappper.updateByPrimaryKeySelective(categoryBO);
         }
     }
 

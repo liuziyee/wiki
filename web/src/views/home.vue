@@ -69,7 +69,7 @@
     setup() {
       const goods = ref([]);
       const category = ref();
-      let cid = 201;
+      let cid = 300;
       
       const handleQueryCategory = () => {
         axios.get("/category/tree").then((response) => {

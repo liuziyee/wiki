@@ -25,8 +25,8 @@ public class GoodsController {
     
 
     @GetMapping("/list")
-    public ResponseBean getGoodsList(@Valid Goods reqBean) {
-        PageBean<GoodsVO> pageBean = goodsService.getGoodsList(reqBean);
+    public ResponseBean getGoodsList(@Valid Goods goodsBO) {
+        PageBean<GoodsVO> pageBean = goodsService.getGoodsList(goodsBO);
 
         ResponseBean<PageBean> res = new ResponseBean<>();
         res.setCode(AppEnum.ResultCode.success.v());
@@ -36,9 +36,9 @@ public class GoodsController {
     }
 
     @PostMapping("/addOrUpd")
-    public ResponseBean addOrUpdGoods(@RequestBody Goods reqBean) {
+    public ResponseBean addOrUpdGoods(@RequestBody Goods goodsBO) {
         ResponseBean<Long> res = new ResponseBean();
-        Long code = goodsService.addOrUpdGoods(reqBean);
+        Long code = goodsService.addOrUpdGoods(goodsBO);
         if (code.equals(AppEnum.ResultCode.db.v())) {
             res.setCode(code);
         } else {

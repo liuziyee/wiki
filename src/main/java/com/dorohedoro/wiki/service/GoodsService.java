@@ -38,18 +38,18 @@ public class GoodsService {
     @Autowired
     private CategoryMapper categoryMapper;
 
-    public PageBean<GoodsVO> getGoodsList(Goods reqBean) {
+    public PageBean<GoodsVO> getGoodsList(Goods goodsBO) {
         GoodsExample goodsExample = new GoodsExample();
         GoodsExample.Criteria criteria = goodsExample.createCriteria();
         //name like ?
-        if (!StringUtils.isEmpty(reqBean.getName())) {
-            criteria.andNameLike("%" + reqBean.getName() + "%");
+        if (!StringUtils.isEmpty(goodsBO.getName())) {
+            criteria.andNameLike("%" + goodsBO.getName() + "%");
         }
 
         List<Long> categoryIdList = new ArrayList<>();
         CategoryExample categoryExample = new CategoryExample();
         //categoryId = ?
-        Long categoryId = reqBean.getCategoryId();
+        Long categoryId = goodsBO.getCategoryId();
         if (categoryId != null && !categoryId.equals(0L)) {
             categoryExample.createCriteria().andParentIdEqualTo(categoryId);
             List<Category> categoryList = categoryMapper.selectByExample(categoryExample);
@@ -63,7 +63,7 @@ public class GoodsService {
         //deleted = 0
         criteria.andDeletedEqualTo(AppEnum.YesOrNo.no.v());
 
-        PageHelper.startPage(reqBean.getPage(), reqBean.getSize());
+        PageHelper.startPage(goodsBO.getPage(), goodsBO.getSize());
         List<Goods> goodsList = goodsMapper.selectByExample(goodsExample);
         goodsList.sort(Comparator.comparing(Goods::getUpdateTime).reversed());
         
@@ -78,20 +78,20 @@ public class GoodsService {
         return pageBean;
     }
 
-    public Long addOrUpdGoods(Goods reqBean) {
-        Long id = reqBean.getId();
+    public Long addOrUpdGoods(Goods goodsBO) {
+        Long id = goodsBO.getId();
         Integer res = 0;
         if (id == null || id.equals(0)) {
-            reqBean.setId(IDGenerator.nextId());
-            res = goodsMapper.insertSelective(reqBean);
+            goodsBO.setId(IDGenerator.nextId());
+            res = goodsMapper.insertSelective(goodsBO);
         } else {
-            res = goodsMapper.updateByPrimaryKeySelective(reqBean);
+            res = goodsMapper.updateByPrimaryKeySelective(goodsBO);
         }
 
         if (res.equals(0)) {
             return AppEnum.ResultCode.db.v();
         } else {
-            return reqBean.getId();
+            return goodsBO.getId();
         }
     }
 
