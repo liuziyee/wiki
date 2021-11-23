@@ -101,7 +101,7 @@
 </style>
 
 <script lang="ts">
-  import {defineComponent,onMounted,ref} from 'vue';
+  import {defineComponent,onMounted,reactive,ref} from 'vue';
   import axios from 'axios';
   import {message} from 'ant-design-vue';
 
@@ -120,7 +120,7 @@
       const loading = ref(false);
       const param = ref({name: ''});
       const categoryOptions = ref();
-      const categoryIds = ref();
+      const categoryIds = ref([]);
       
 
       const handleQueryCategory = () => {
@@ -169,7 +169,6 @@
       
       const handleAddOrUpd = () => {
         loading.value = true;
-        console.log(categoryIds.value);
         axios.post("/goods/addOrUpd", record.value).then((response) => {
           let respBean = response.data;
           if (respBean.code != 0) {

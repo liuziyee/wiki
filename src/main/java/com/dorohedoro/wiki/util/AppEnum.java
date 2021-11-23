@@ -10,9 +10,9 @@ public class AppEnum {
         success {public Long v() {
                 return 0L;
             }},
-        valid {public Long v() { return 10L;}},
-        auth {public Long v() {return 20L;}},
-        db {public Long v() {return 30L;}};
+        valid {public Long v() { return 10L;}}, //参数校验失败
+        auth {public Long v() {return 20L;}}, //鉴权失败
+        db {public Long v() {return 30L;}}; //数据库异常
         
         public abstract Long v();
     }

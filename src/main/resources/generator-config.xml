@@ -22,7 +22,7 @@
             <property name="forceBigDecimals" value="false" />
         </javaTypeResolver>-->
 
-        <javaModelGenerator targetPackage="com.dorohedoro.wiki.bean"
+        <javaModelGenerator targetPackage="com.dorohedoro.wiki.bean.domain"
                             targetProject=".\src\main\java">
             <property name="enableSubPackages" value="true"/>
             <property name="trimStrings" value="true"/>
@@ -47,6 +47,7 @@
                selectByExampleQueryId="false"/>-->
 
         <!--<table tableName="goods"/>-->
-        <table tableName="category"/>
+        <!--<table tableName="category"/>-->
+        <table tableName="user"/>
     </context>
 </generatorConfiguration>

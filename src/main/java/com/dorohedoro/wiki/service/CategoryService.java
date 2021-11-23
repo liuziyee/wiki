@@ -1,24 +1,20 @@
 package com.dorohedoro.wiki.service;
 
-import com.dorohedoro.wiki.bean.Category;
-import com.dorohedoro.wiki.bean.CategoryExample;
-import com.dorohedoro.wiki.bean.CategoryVO;
-import com.dorohedoro.wiki.bean.PageBean;
+import com.dorohedoro.wiki.bean.domain.Category;
+import com.dorohedoro.wiki.bean.domain.CategoryExample;
+import com.dorohedoro.wiki.bean.VO.CategoryVO;
 import com.dorohedoro.wiki.mapper.CategoryMapper;
 import com.dorohedoro.wiki.util.AppEnum;
 import com.dorohedoro.wiki.util.BeanUtil;
 import com.dorohedoro.wiki.util.IDGenerator;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
-import org.springframework.util.ObjectUtils;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @Description
@@ -36,11 +32,10 @@ public class CategoryService {
         CategoryExample categoryExample = new CategoryExample();
         CategoryExample.Criteria criteria = categoryExample.createCriteria();
         criteria.andDeletedEqualTo(AppEnum.YesOrNo.no.v());
-        categoryExample.setOrderByClause("sort_flag asc");
         
         List<Category> categoryList = categoryMappper.selectByExample(categoryExample);
         List<CategoryVO> categoryVOList = BeanUtil.copyList(categoryList, CategoryVO.class);
-
+        categoryVOList.sort(Comparator.comparing(CategoryVO::getSortFlag).reversed());
         return toTree(0L, categoryVOList);
     }
 

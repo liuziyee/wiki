@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dorohedoro.wiki.mapper.GoodsMapper">
-  <resultMap id="BaseResultMap" type="com.dorohedoro.wiki.bean.Goods">
+  <resultMap id="BaseResultMap" type="com.dorohedoro.wiki.bean.domain.Goods">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="category_id" jdbcType="BIGINT" property="categoryId" />
@@ -76,7 +76,7 @@
     id, name, category_id, description, cover, view_count, follow_count, comment_count, 
     create_time, update_time, deleted
   </sql>
-  <select id="selectByExample" parameterType="com.dorohedoro.wiki.bean.GoodsExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.dorohedoro.wiki.bean.domain.GoodsExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -100,13 +100,13 @@
     delete from goods
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.dorohedoro.wiki.bean.GoodsExample">
+  <delete id="deleteByExample" parameterType="com.dorohedoro.wiki.bean.domain.GoodsExample">
     delete from goods
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.dorohedoro.wiki.bean.Goods">
+  <insert id="insert" parameterType="com.dorohedoro.wiki.bean.domain.Goods">
     insert into goods (id, name, category_id, 
       description, cover, view_count, 
       follow_count, comment_count, create_time, 
@@ -116,7 +116,7 @@
       #{followCount,jdbcType=BIGINT}, #{commentCount,jdbcType=BIGINT}, #{createTime,jdbcType=BIGINT}, 
       #{updateTime,jdbcType=BIGINT}, #{deleted,jdbcType=BIGINT})
   </insert>
-  <insert id="insertSelective" parameterType="com.dorohedoro.wiki.bean.Goods">
+  <insert id="insertSelective" parameterType="com.dorohedoro.wiki.bean.domain.Goods">
     insert into goods
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -189,7 +189,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.dorohedoro.wiki.bean.GoodsExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="com.dorohedoro.wiki.bean.domain.GoodsExample" resultType="java.lang.Long">
     select count(*) from goods
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -253,7 +253,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.dorohedoro.wiki.bean.Goods">
+  <update id="updateByPrimaryKeySelective" parameterType="com.dorohedoro.wiki.bean.domain.Goods">
     update goods
     <set>
       <if test="name != null">
@@ -289,7 +289,7 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.dorohedoro.wiki.bean.Goods">
+  <update id="updateByPrimaryKey" parameterType="com.dorohedoro.wiki.bean.domain.Goods">
     update goods
     set name = #{name,jdbcType=VARCHAR},
       category_id = #{categoryId,jdbcType=BIGINT},

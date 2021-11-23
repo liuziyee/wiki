@@ -1,7 +1,7 @@
 package com.dorohedoro.wiki.mapper;
 
-import com.dorohedoro.wiki.bean.Goods;
-import com.dorohedoro.wiki.bean.GoodsExample;
+import com.dorohedoro.wiki.bean.domain.Goods;
+import com.dorohedoro.wiki.bean.domain.GoodsExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

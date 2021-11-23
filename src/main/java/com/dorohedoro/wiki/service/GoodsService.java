@@ -1,6 +1,11 @@
 package com.dorohedoro.wiki.service;
 
-import com.dorohedoro.wiki.bean.*;
+import com.dorohedoro.wiki.bean.VO.GoodsVO;
+import com.dorohedoro.wiki.bean.VO.PageBean;
+import com.dorohedoro.wiki.bean.domain.Category;
+import com.dorohedoro.wiki.bean.domain.CategoryExample;
+import com.dorohedoro.wiki.bean.domain.Goods;
+import com.dorohedoro.wiki.bean.domain.GoodsExample;
 import com.dorohedoro.wiki.mapper.CategoryMapper;
 import com.dorohedoro.wiki.mapper.GoodsMapper;
 import com.dorohedoro.wiki.util.AppEnum;
@@ -12,12 +17,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
-import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -50,10 +54,8 @@ public class GoodsService {
             categoryExample.createCriteria().andParentIdEqualTo(categoryId);
             List<Category> categoryList = categoryMapper.selectByExample(categoryExample);
             if (!CollectionUtils.isEmpty(categoryList)) {
-                //一级分类
                 categoryIdList = categoryList.stream().map(Category::getId).collect(Collectors.toList());
             } else {
-                //二级分类
                 categoryIdList.add(categoryId);
             }
             criteria.andCategoryIdIn(categoryIdList);
@@ -63,11 +65,15 @@ public class GoodsService {
 
         PageHelper.startPage(reqBean.getPage(), reqBean.getSize());
         List<Goods> goodsList = goodsMapper.selectByExample(goodsExample);
-
+        goodsList.sort(Comparator.comparing(Goods::getUpdateTime).reversed());
+        
         List<GoodsVO> goodsVOList = BeanUtil.copyList(goodsList, GoodsVO.class);
+        categoryExample.clear(); //reset Criteria
+        //goodsVOList.stream().forEach(o -> );
+
+        PageInfo<Goods> pageInfo = new PageInfo<>(goodsList);
         PageBean<GoodsVO> pageBean = new PageBean<>();
         pageBean.setList(goodsVOList);
-        PageInfo<Goods> pageInfo = new PageInfo<>(goodsList);
         pageBean.setTotal(pageInfo.getTotal());
         return pageBean;
     }

@@ -1,4 +1,4 @@
-package com.dorohedoro.wiki.bean;
+package com.dorohedoro.wiki.bean.domain;
 
 import java.util.ArrayList;
 import java.util.List;

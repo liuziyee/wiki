@@ -1,7 +1,7 @@
 package com.dorohedoro.wiki.mapper;
 
-import com.dorohedoro.wiki.bean.Category;
-import com.dorohedoro.wiki.bean.CategoryExample;
+import com.dorohedoro.wiki.bean.domain.Category;
+import com.dorohedoro.wiki.bean.domain.CategoryExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

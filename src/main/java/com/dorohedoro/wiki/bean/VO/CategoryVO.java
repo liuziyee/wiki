@@ -1,11 +1,14 @@
-package com.dorohedoro.wiki.bean;
+package com.dorohedoro.wiki.bean.VO;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
 
 import java.util.List;
 
 @Data
-public class Category extends PageBean {
+public class CategoryVO {
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long id;
 
     private Long parentId;
@@ -16,6 +19,8 @@ public class Category extends PageBean {
 
     private Long deleted;
     
+    private List<CategoryVO> children;
+
     public Long getId() {
         return id;
     }

@@ -40,5 +40,14 @@ insert into `category`(id, parent_id, name, sort_flag) values(300, 0, '电玩', 
 insert into `category`(id, parent_id, name, sort_flag) values(301, 300, '游戏', 40);
 insert into `category`(id, parent_id, name, sort_flag) values(302, 300, '主机', 45);
 
+drop table if exists `user`;
+create table `user` (
+    `id` bigint not null comment 'id',
+    `login_name` varchar(50) not null comment '登录名',
+    `name` varchar(50) not null comment '昵称',
+    `password` varchar(50) not null comment '密码',
+    primary key (`id`),
+    unique key `login_name` (`login_name`)
+) engine=innodb default charset=utf8mb4 comment='用户基本信息表';
 
 

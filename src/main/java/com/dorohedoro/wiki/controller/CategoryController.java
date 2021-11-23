@@ -1,14 +1,13 @@
 package com.dorohedoro.wiki.controller;
 
-import com.dorohedoro.wiki.bean.*;
-import com.dorohedoro.wiki.service.CategoryService;
+import com.dorohedoro.wiki.bean.VO.CategoryVO;
+import com.dorohedoro.wiki.bean.VO.ResponseBean;
+import com.dorohedoro.wiki.bean.domain.Category;
 import com.dorohedoro.wiki.service.CategoryService;
 import com.dorohedoro.wiki.util.AppEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import java.time.Instant;
 import java.util.List;
 
 /**

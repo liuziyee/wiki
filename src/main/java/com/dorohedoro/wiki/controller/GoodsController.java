@@ -1,20 +1,16 @@
 package com.dorohedoro.wiki.controller;
 
-import com.dorohedoro.wiki.bean.Goods;
-import com.dorohedoro.wiki.bean.PageBean;
-import com.dorohedoro.wiki.bean.ResponseBean;
-import com.dorohedoro.wiki.service.CategoryService;
+import com.dorohedoro.wiki.bean.domain.Goods;
+import com.dorohedoro.wiki.bean.VO.PageBean;
+import com.dorohedoro.wiki.bean.VO.ResponseBean;
 import com.dorohedoro.wiki.service.GoodsService;
 import com.dorohedoro.wiki.util.AppEnum;
-import com.dorohedoro.wiki.bean.GoodsVO;
-import com.github.pagehelper.Page;
+import com.dorohedoro.wiki.bean.VO.GoodsVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 import java.time.Instant;
-import java.util.List;
 
 /**
  * @Description

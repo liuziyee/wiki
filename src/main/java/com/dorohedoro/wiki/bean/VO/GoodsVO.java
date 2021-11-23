@@ -1,6 +1,5 @@
-package com.dorohedoro.wiki.bean;
+package com.dorohedoro.wiki.bean.VO;
 
-import com.dorohedoro.wiki.bean.PageBean;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
@@ -17,8 +16,10 @@ public class GoodsVO {
     private Long id;
     
     private String name;
-
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long categoryId;
+
+    private Long parentCid;
 
     private String description;
 

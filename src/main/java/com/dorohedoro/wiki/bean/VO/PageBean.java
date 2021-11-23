@@ -1,4 +1,4 @@
-package com.dorohedoro.wiki.bean;
+package com.dorohedoro.wiki.bean.VO;
 
 import lombok.Data;
 
