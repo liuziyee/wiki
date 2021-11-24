@@ -48,16 +48,18 @@
             width="40%"
         >
           <el-form :model="record"
+                   :rules="rules"
+                   ref="uploadForm"
                    :label-position="right"
                    label-width="80px"
           >
-            <el-form-item label="登录名">
+            <el-form-item label="登录名" prop="loginName">
               <el-input v-model="record.loginName"/>
             </el-form-item>
             <el-form-item label="昵称">
               <el-input v-model="record.name"/>
             </el-form-item>
-            <el-form-item label="密码">
+            <el-form-item label="密码" prop="password">
               <el-input v-model="record.password"/>
             </el-form-item>
           </el-form>
@@ -85,9 +87,10 @@
 </style>
 
 <script lang="ts">
-  import {defineComponent,onMounted,reactive,ref} from 'vue';
+  import {defineComponent,onMounted,ref} from 'vue';
   import axios from 'axios';
   import {message} from 'ant-design-vue';
+  import {ElNotification} from "element-plus";
 
   export default defineComponent({
     name: 'RootUser',
@@ -97,6 +100,17 @@
         current: 1,
         pageSize: 10,
         total: 0
+      });
+      
+      const uploadForm = ref(); //表单DOM
+      const rules = ref({
+        loginName: [
+          { required: true, message: '未输入登录名',trigger: 'blur' }
+        ],
+        password: [
+          { required: true, message: '未输入密码',trigger: 'blur' },
+          { pattern: /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$/, message: '至少包含数字和英文 长度6~20', trigger: 'blur'}
+        ]
       });
 
       const dialogVisible = ref(false);
@@ -114,10 +128,8 @@
         }).then((response) => {
           let respBean = response.data;
           if (respBean.code != 0) {
-            message.error(respBean.msg);
+            ElNotification({ title: 'info', message: respBean.msg, type: 'error', duration: 1000});
           }
-          message.success("success");
-          
           let pageBean = respBean.data;
           users.value = pageBean.list;
           pagination.value.total = pageBean.total;
@@ -135,15 +147,26 @@
       };
       
       const handleAddOrUpd = () => {
+        //表单校验
+        const isAllowed = uploadForm.value.validate((valid: any) => {
+          if (!valid) {
+            ElNotification({ title: 'info', message: '表单数据非法', type: 'error', duration: 1000});
+            return false;
+          }
+        })
+        if (!isAllowed) {
+          return;
+        }
+        
         loading.value = true;
         axios.post("/user/addOrUpd", record.value).then((response) => {
           let respBean = response.data;
           if (respBean.code != 0) {
-            message.error(respBean.msg);
+            ElNotification({ title: 'info', message: respBean.msg, type: 'error', duration: 1000});
             return;
           }
           loading.value = false;
-          message.success("success");
+          ElNotification({ title: 'info', message: '成功', type: 'success', duration: 1000});
           dialogVisible.value = false;
           handleQueryUser();
         })
@@ -153,12 +176,11 @@
         axios.get("/user/del/" + id).then((response) => {
           let respBean = response.data;
           if (respBean.code != 0) {
-            message.error(respBean.msg);
+            ElNotification({ title: 'info', message: respBean.msg, type: 'error', duration: 1000});
             return;
           }
-          message.success("success");
           handleQueryUser();
-        });
+        })
       };
 
       onMounted(() => {
@@ -172,6 +194,8 @@
         dialogVisible,
         loading,
         param,
+        rules,
+        uploadForm,
         handlePageChange,
         handleEdit,
         handleAddOrUpd,

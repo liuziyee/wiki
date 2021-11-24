@@ -63,6 +63,7 @@
   import {defineComponent,onMounted,ref} from 'vue';
   import axios from 'axios';
   import {message} from 'ant-design-vue';
+  import { ElNotification } from 'element-plus';
 
   export default defineComponent({
     name: 'Home',
@@ -75,10 +76,8 @@
         axios.get("/category/tree").then((response) => {
           let respBean = response.data;
           if (respBean.code != 0) {
-            message.error(respBean.msg);
+            ElNotification({ title: 'info', message: respBean.msg, type: 'error', duration: 1000});
           }
-          message.success("success");
-
           category.value = respBean.data;
         });
       };
@@ -93,13 +92,11 @@
         }).then((response) => {
           let respBean = response.data;
           if (respBean.code != 0) {
-            message.error(respBean.msg);
+            ElNotification({ title: 'info', message: respBean.msg, type: 'error', duration: 1000});
             return;
           }
           let pageBean = respBean.data;
           goods.value = pageBean.list;
-
-          message.success("success");
         });
       };
       

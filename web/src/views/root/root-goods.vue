@@ -104,6 +104,7 @@
   import {defineComponent,onMounted,reactive,ref} from 'vue';
   import axios from 'axios';
   import {message} from 'ant-design-vue';
+  import {ElNotification} from "element-plus";
 
   export default defineComponent({
     name: 'RootGoods',
@@ -127,10 +128,8 @@
         axios.get("/category/tree").then((response) => {
           let respBean = response.data;
           if (respBean.code != 0) {
-            message.error(respBean.msg);
+            ElNotification({ title: 'info', message: respBean.msg, type: 'error', duration: 1000});
           }
-          message.success("success");
-
           categoryOptions.value = respBean.data;
         });
       };
@@ -145,10 +144,8 @@
         }).then((response) => {
           let respBean = response.data;
           if (respBean.code != 0) {
-            message.error(respBean.msg);
+            ElNotification({ title: 'info', message: respBean.msg, type: 'error', duration: 1000});
           }
-          message.success("success");
-          
           let pageBean = respBean.data;
           goods.value = pageBean.list;
           pagination.value.total = pageBean.total;
@@ -172,11 +169,10 @@
         axios.post("/goods/addOrUpd", record.value).then((response) => {
           let respBean = response.data;
           if (respBean.code != 0) {
-            message.error(respBean.msg);
+            ElNotification({ title: 'info', message: respBean.msg, type: 'error', duration: 1000});
             return;
           }
           loading.value = false;
-          message.success("success");
           dialogVisible.value = false;
           handleQueryGoods();
         })
@@ -186,10 +182,9 @@
         axios.get("/goods/del/" + id).then((response) => {
           let respBean = response.data;
           if (respBean.code != 0) {
-            message.error(respBean.msg);
+            ElNotification({ title: 'info', message: respBean.msg, type: 'error', duration: 1000});
             return;
           }
-          message.success("success");
           handleQueryGoods();
         });
       };
