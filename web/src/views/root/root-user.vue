@@ -151,20 +151,19 @@
         uploadForm.value.validate((valid: any) => {
           if (!valid) {
             ElNotification({ title: 'info', message: '表单数据非法', type: 'error', duration: 1000});
-            return false;
-          }
-        })
-        
-        loading.value = true;
-        axios.post("/user/addOrUpd", record.value).then((response) => {
-          let respBean = response.data;
-          if (respBean.code != 0) {
-            ElNotification({ title: 'info', message: respBean.msg, type: 'error', duration: 1000});
             return;
           }
-          loading.value = false;
-          dialogVisible.value = false;
-          handleQueryUser();
+          loading.value = true;
+          axios.post("/user/addOrUpd", record.value).then((response) => {
+            let respBean = response.data;
+            if (respBean.code != 0) {
+              ElNotification({ title: 'info', message: respBean.msg, type: 'error', duration: 1000});
+              return;
+            }
+            loading.value = false;
+            dialogVisible.value = false;
+            handleQueryUser();
+          })
         })
       };
       

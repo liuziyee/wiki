@@ -193,4 +193,11 @@
       password = #{password,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  
+  <select id="exist" parameterType="com.dorohedoro.wiki.bean.domain.User" resultType="java.lang.Long">
+    select 1 from user
+    <trim prefix="where" prefixOverrides="and">
+      <if test="loginName != null">and login_name = #{loginName}</if>
+    </trim>
+  </select>
 </mapper>

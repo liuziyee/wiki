@@ -54,6 +54,16 @@ public class UserService {
     public void addOrUpdUser(User userBO) {
         Long id = userBO.getId();
         if (id == null || id.equals(0L)) {
+            //loginName判重
+            String loginName = userBO.getLoginName();
+            User user = new User();
+            user.setLoginName(loginName);
+            Long exist = userMapper.exist(user);
+            log.info("exist: {}", exist);
+            if (exist != null && !exist.equals(0L)) {
+                throw new RuntimeException("user exists");
+            }
+            
             userBO.setId(IDGenerator.nextId());
             userMapper.insertSelective(userBO);
         } else {
