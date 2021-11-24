@@ -38,7 +38,7 @@
             width="40%"
         >
           <el-form :model="record"
-                   :label-position="right"
+                   label-position="right"
                    label-width="80px"
           >
             <el-form-item label="名称">
@@ -52,8 +52,8 @@
             </el-form-item>
           </el-form>
           <template #footer>
-            <el-button type="info" size="small" @click="dialogVisible = false">不了</el-button>
-            <el-button type="success" size="small" :loading="loading" @click="handleAddOrUpd">保存</el-button>
+            <el-check-tag style="margin-right: 5px" @change="dialogVisible = false">不了</el-check-tag>
+            <el-check-tag :loading="loading" @change="handleAddOrUpd">保存</el-check-tag>
           </template>
         </el-dialog>
       </div>

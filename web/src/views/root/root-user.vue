@@ -50,7 +50,7 @@
           <el-form :model="record"
                    :rules="rules"
                    ref="uploadForm"
-                   :label-position="right"
+                   label-position="right"
                    label-width="80px"
           >
             <el-form-item label="登录名" prop="loginName">
@@ -64,8 +64,8 @@
             </el-form-item>
           </el-form>
           <template #footer>
-            <el-button type="info" size="small" @click="dialogVisible = false">不了</el-button>
-            <el-button type="success" size="small" :loading="loading" @click="handleAddOrUpd">保存</el-button>
+            <el-check-tag style="margin-right: 5px" @change="dialogVisible = false">不了</el-check-tag>
+            <el-check-tag :loading="loading" @change="handleAddOrUpd">保存</el-check-tag>
           </template>
         </el-dialog>
       </div>
@@ -148,15 +148,12 @@
       
       const handleAddOrUpd = () => {
         //表单校验
-        const isAllowed = uploadForm.value.validate((valid: any) => {
+        uploadForm.value.validate((valid: any) => {
           if (!valid) {
             ElNotification({ title: 'info', message: '表单数据非法', type: 'error', duration: 1000});
             return false;
           }
         })
-        if (!isAllowed) {
-          return;
-        }
         
         loading.value = true;
         axios.post("/user/addOrUpd", record.value).then((response) => {
@@ -166,7 +163,6 @@
             return;
           }
           loading.value = false;
-          ElNotification({ title: 'info', message: '成功', type: 'success', duration: 1000});
           dialogVisible.value = false;
           handleQueryUser();
         })
