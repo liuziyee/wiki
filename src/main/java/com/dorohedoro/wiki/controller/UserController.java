@@ -7,6 +7,7 @@ import com.dorohedoro.wiki.bean.domain.User;
 import com.dorohedoro.wiki.service.UserService;
 import com.dorohedoro.wiki.service.UserService;
 import com.dorohedoro.wiki.util.AppEnum;
+import com.dorohedoro.wiki.util.ResultCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,7 +31,7 @@ public class UserController {
         PageBean<UserVO> pageBean = userService.getUserList(userBO);
 
         ResponseBean<PageBean> res = new ResponseBean<>();
-        res.setCode(AppEnum.ResultCode.success.v());
+        res.setCode(ResultCode.success.getCode());
         res.setData(pageBean);
         res.setServerTime(Instant.now().toEpochMilli());
         return res;
@@ -40,7 +41,7 @@ public class UserController {
     public ResponseBean addOrUpdUser(@RequestBody User userBO) {
         ResponseBean res = new ResponseBean();
         userService.addOrUpdUser(userBO);
-        res.setCode(AppEnum.ResultCode.success.v());
+        res.setCode(ResultCode.success.getCode());
         return res;
     }
 }

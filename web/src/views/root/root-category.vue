@@ -91,7 +91,7 @@
         axios.get("/category/tree").then((response) => {
           let respBean = response.data;
           if (respBean.code != 0) {
-            ElNotification({ title: 'info', message: respBean.msg, type: 'error', duration: 1000});
+            ElNotification({ title: 'info', message: respBean.msg, type: 'error'});
           }
           category.value = respBean.data;
         });
@@ -107,7 +107,7 @@
         axios.post("/category/addOrUpd", record.value).then((response) => {
           let respBean = response.data;
           if (respBean.code != 0) {
-            ElNotification({ title: 'info', message: respBean.msg, type: 'error', duration: 1000});
+            ElNotification({ title: 'info', message: respBean.msg, type: 'error'});
             return;
           }
           loading.value = false;
@@ -120,7 +120,7 @@
         axios.get("/category/del/" + id).then((response) => {
           let respBean = response.data;
           if (respBean.code != 0) {
-            ElNotification({ title: 'info', message: respBean.msg, type: 'error', duration: 1000});
+            ElNotification({ title: 'info', message: respBean.msg, type: 'error'});
             return;
           }
           handleQuery();

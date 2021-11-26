@@ -11,6 +11,7 @@ import com.dorohedoro.wiki.mapper.GoodsMapper;
 import com.dorohedoro.wiki.util.AppEnum;
 import com.dorohedoro.wiki.util.BeanUtil;
 import com.dorohedoro.wiki.util.IDGenerator;
+import com.dorohedoro.wiki.util.ResultCode;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
@@ -87,9 +88,9 @@ public class GoodsService {
         } else {
             res = goodsMapper.updateByPrimaryKeySelective(goodsBO);
         }
-
+        // TODO: 2021/11/25   
         if (res.equals(0)) {
-            return AppEnum.ResultCode.db.v();
+            return ResultCode.db.getCode();
         } else {
             return goodsBO.getId();
         }

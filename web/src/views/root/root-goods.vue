@@ -128,7 +128,7 @@
         axios.get("/category/tree").then((response) => {
           let respBean = response.data;
           if (respBean.code != 0) {
-            ElNotification({ title: 'info', message: respBean.msg, type: 'error', duration: 1000});
+            ElNotification({ title: 'info', message: respBean.msg, type: 'error'});
           }
           categoryOptions.value = respBean.data;
         });
@@ -144,7 +144,7 @@
         }).then((response) => {
           let respBean = response.data;
           if (respBean.code != 0) {
-            ElNotification({ title: 'info', message: respBean.msg, type: 'error', duration: 1000});
+            ElNotification({ title: 'info', message: respBean.msg, type: 'error'});
           }
           let pageBean = respBean.data;
           goods.value = pageBean.list;
@@ -169,7 +169,7 @@
         axios.post("/goods/addOrUpd", record.value).then((response) => {
           let respBean = response.data;
           if (respBean.code != 0) {
-            ElNotification({ title: 'info', message: respBean.msg, type: 'error', duration: 1000});
+            ElNotification({ title: 'info', message: respBean.msg, type: 'error'});
             return;
           }
           loading.value = false;
@@ -182,7 +182,7 @@
         axios.get("/goods/del/" + id).then((response) => {
           let respBean = response.data;
           if (respBean.code != 0) {
-            ElNotification({ title: 'info', message: respBean.msg, type: 'error', duration: 1000});
+            ElNotification({ title: 'info', message: respBean.msg, type: 'error'});
             return;
           }
           handleQueryGoods();

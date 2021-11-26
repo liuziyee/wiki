@@ -6,6 +6,7 @@ import com.dorohedoro.wiki.bean.VO.ResponseBean;
 import com.dorohedoro.wiki.service.GoodsService;
 import com.dorohedoro.wiki.util.AppEnum;
 import com.dorohedoro.wiki.bean.VO.GoodsVO;
+import com.dorohedoro.wiki.util.ResultCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,7 +30,7 @@ public class GoodsController {
         PageBean<GoodsVO> pageBean = goodsService.getGoodsList(goodsBO);
 
         ResponseBean<PageBean> res = new ResponseBean<>();
-        res.setCode(AppEnum.ResultCode.success.v());
+        res.setCode(ResultCode.success.getCode());
         res.setData(pageBean);
         res.setServerTime(Instant.now().toEpochMilli());
         return res;
@@ -39,10 +40,10 @@ public class GoodsController {
     public ResponseBean addOrUpdGoods(@RequestBody Goods goodsBO) {
         ResponseBean<Long> res = new ResponseBean();
         Long code = goodsService.addOrUpdGoods(goodsBO);
-        if (code.equals(AppEnum.ResultCode.db.v())) {
+        if (code.equals(ResultCode.db.getCode())) {
             res.setCode(code);
         } else {
-            res.setCode(AppEnum.ResultCode.success.v());
+            res.setCode(ResultCode.success.getCode());
             res.setData(code);
         }
         return res;
@@ -52,7 +53,7 @@ public class GoodsController {
     public ResponseBean del(@PathVariable("id") Long id) {
         goodsService.del(id);
         ResponseBean res = new ResponseBean();
-        res.setCode(AppEnum.ResultCode.success.v());
+        res.setCode(ResultCode.success.getCode());
         return res;
     }
 }

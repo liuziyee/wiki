@@ -4,11 +4,10 @@ import com.dorohedoro.wiki.bean.VO.PageBean;
 import com.dorohedoro.wiki.bean.VO.UserVO;
 import com.dorohedoro.wiki.bean.domain.User;
 import com.dorohedoro.wiki.bean.domain.UserExample;
+import com.dorohedoro.wiki.exception.BizException;
 import com.dorohedoro.wiki.mapper.UserMapper;
 import com.dorohedoro.wiki.mapper.UserMapper;
-import com.dorohedoro.wiki.util.AppEnum;
-import com.dorohedoro.wiki.util.BeanUtil;
-import com.dorohedoro.wiki.util.IDGenerator;
+import com.dorohedoro.wiki.util.*;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +16,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -32,6 +33,8 @@ public class UserService {
 
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private HttpServletResponse response;
 
     public PageBean<UserVO> getUserList(User userBO) {
         UserExample userExample = new UserExample();
@@ -51,7 +54,7 @@ public class UserService {
         return pageBean;
     }
 
-    public void addOrUpdUser(User userBO) {
+    public void addOrUpdUser(User userBO){
         Long id = userBO.getId();
         if (id == null || id.equals(0L)) {
             //loginName判重
@@ -61,9 +64,8 @@ public class UserService {
             Long exist = userMapper.exist(user);
             log.info("exist: {}", exist);
             if (exist != null && !exist.equals(0L)) {
-                throw new RuntimeException("user exists");
+                throw new BizException(ResultCode.user_exists);
             }
-            
             userBO.setId(IDGenerator.nextId());
             userMapper.insertSelective(userBO);
         } else {

@@ -150,14 +150,14 @@
         //表单校验
         uploadForm.value.validate((valid: any) => {
           if (!valid) {
-            ElNotification({ title: 'info', message: '表单数据非法', type: 'error', duration: 1000});
+            ElNotification({ title: 'info', message: '表单数据非法', type: 'error'});
             return;
           }
           loading.value = true;
           axios.post("/user/addOrUpd", record.value).then((response) => {
             let respBean = response.data;
             if (respBean.code != 0) {
-              ElNotification({ title: 'info', message: respBean.msg, type: 'error', duration: 1000});
+              ElNotification({ title: 'info', message: respBean.msg, type: 'error'});
               return;
             }
             loading.value = false;
@@ -171,7 +171,7 @@
         axios.get("/user/del/" + id).then((response) => {
           let respBean = response.data;
           if (respBean.code != 0) {
-            ElNotification({ title: 'info', message: respBean.msg, type: 'error', duration: 1000});
+            ElNotification({ title: 'info', message: respBean.msg, type: 'error'});
             return;
           }
           handleQueryUser();
