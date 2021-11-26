@@ -12,9 +12,9 @@
       </el-form>
       <div class="table">
         <el-table :data="users" stripe style="width: 100%">
-          <el-table-column label="登录名" prop="loginName" min-width="25%" />
-          <el-table-column label="昵称" prop="name" min-width="10%" />
-          <el-table-column label="密码" prop="password" min-width="10%" />
+          <el-table-column label="登录名" prop="loginName" min-width="15%" />
+          <el-table-column label="昵称" prop="name" min-width="15%" />
+          <el-table-column label="密码" prop="password" min-width="15%" />
           <el-table-column fixed="right" label="操作">
             <template #default="scope">
               <el-button type="text" size="mini" @click="handleEdit(scope.row)">编辑</el-button>
@@ -60,11 +60,12 @@
               <el-input v-model="record.name"/>
             </el-form-item>
             <el-form-item label="密码" prop="password">
-              <el-input v-model="record.password"/>
+              <el-input v-model="record.password" :disabled="!!record.id"/>
             </el-form-item>
           </el-form>
           <template #footer>
             <el-check-tag style="margin-right: 5px" @change="dialogVisible = false">不了</el-check-tag>
+            <el-check-tag style="margin-right: 5px">重置密码</el-check-tag>
             <el-check-tag :loading="loading" @change="handleAddOrUpd">保存</el-check-tag>
           </template>
         </el-dialog>
@@ -91,6 +92,9 @@
   import axios from 'axios';
   import {message} from 'ant-design-vue';
   import {ElNotification} from "element-plus";
+  
+  declare let hexMd5: any;
+  declare let KEY: any;
 
   export default defineComponent({
     name: 'RootUser',
@@ -109,12 +113,12 @@
         ],
         password: [
           { required: true, message: '未输入密码',trigger: 'blur' },
-          { pattern: /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$/, message: '至少包含数字和英文 长度6~20', trigger: 'blur'}
+          { pattern: /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,32}$/, message: '至少包含数字和英文 长度6~32', trigger: 'blur'}
         ]
       });
 
       const dialogVisible = ref(false);
-      const record = ref({categoryId: 0});
+      const record = ref({password: ''});
       const loading = ref(false);
       const param = ref({name:''});
       
@@ -128,7 +132,7 @@
         }).then((response) => {
           let respBean = response.data;
           if (respBean.code != 0) {
-            ElNotification({ title: 'info', message: respBean.msg, type: 'error', duration: 1000});
+            ElNotification({ title: '消息', message: respBean.msg, type: 'error', duration: 1000});
           }
           let pageBean = respBean.data;
           users.value = pageBean.list;
@@ -150,14 +154,15 @@
         //表单校验
         uploadForm.value.validate((valid: any) => {
           if (!valid) {
-            ElNotification({ title: 'info', message: '表单数据非法', type: 'error'});
+            ElNotification({ title: '消息', message: '表单数据非法', type: 'error'});
             return;
           }
           loading.value = true;
+          record.value.password = hexMd5(record.value.password + KEY);
           axios.post("/user/addOrUpd", record.value).then((response) => {
             let respBean = response.data;
             if (respBean.code != 0) {
-              ElNotification({ title: 'info', message: respBean.msg, type: 'error'});
+              ElNotification({ title: '消息', message: respBean.msg, type: 'error'});
               return;
             }
             loading.value = false;
@@ -171,7 +176,7 @@
         axios.get("/user/del/" + id).then((response) => {
           let respBean = response.data;
           if (respBean.code != 0) {
-            ElNotification({ title: 'info', message: respBean.msg, type: 'error'});
+            ElNotification({ title: '消息', message: respBean.msg, type: 'error'});
             return;
           }
           handleQueryUser();

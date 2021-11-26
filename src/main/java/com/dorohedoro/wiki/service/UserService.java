@@ -14,10 +14,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.DigestUtils;
 import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -33,8 +35,6 @@ public class UserService {
 
     @Autowired
     private UserMapper userMapper;
-    @Autowired
-    private HttpServletResponse response;
 
     public PageBean<UserVO> getUserList(User userBO) {
         UserExample userExample = new UserExample();
@@ -55,6 +55,7 @@ public class UserService {
     }
 
     public void addOrUpdUser(User userBO){
+        //userBO.setPassword(DigestUtils.md5DigestAsHex(userBO.getPassword().getBytes()));
         Long id = userBO.getId();
         if (id == null || id.equals(0L)) {
             //loginName判重
@@ -69,7 +70,8 @@ public class UserService {
             userBO.setId(IDGenerator.nextId());
             userMapper.insertSelective(userBO);
         } else {
-            userBO.setLoginName(null);
+            //userBO.setLoginName(null);
+            //userBO.setPassword(null);
             userMapper.updateByPrimaryKeySelective(userBO);
         }
     }

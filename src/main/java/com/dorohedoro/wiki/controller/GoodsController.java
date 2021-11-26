@@ -38,14 +38,9 @@ public class GoodsController {
 
     @PostMapping("/addOrUpd")
     public ResponseBean addOrUpdGoods(@RequestBody Goods goodsBO) {
-        ResponseBean<Long> res = new ResponseBean();
-        Long code = goodsService.addOrUpdGoods(goodsBO);
-        if (code.equals(ResultCode.db.getCode())) {
-            res.setCode(code);
-        } else {
-            res.setCode(ResultCode.success.getCode());
-            res.setData(code);
-        }
+        ResponseBean res = new ResponseBean();
+        goodsService.addOrUpdGoods(goodsBO);
+        res.setCode(ResultCode.success.getCode());
         return res;
     }
 

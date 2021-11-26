@@ -6,6 +6,7 @@ import com.dorohedoro.wiki.bean.domain.Category;
 import com.dorohedoro.wiki.bean.domain.CategoryExample;
 import com.dorohedoro.wiki.bean.domain.Goods;
 import com.dorohedoro.wiki.bean.domain.GoodsExample;
+import com.dorohedoro.wiki.exception.BizException;
 import com.dorohedoro.wiki.mapper.CategoryMapper;
 import com.dorohedoro.wiki.mapper.GoodsMapper;
 import com.dorohedoro.wiki.util.AppEnum;
@@ -79,20 +80,14 @@ public class GoodsService {
         return pageBean;
     }
 
-    public Long addOrUpdGoods(Goods goodsBO) {
+    public void addOrUpdGoods(Goods goodsBO) {
         Long id = goodsBO.getId();
         Integer res = 0;
         if (id == null || id.equals(0)) {
             goodsBO.setId(IDGenerator.nextId());
-            res = goodsMapper.insertSelective(goodsBO);
+            goodsMapper.insertSelective(goodsBO);
         } else {
-            res = goodsMapper.updateByPrimaryKeySelective(goodsBO);
-        }
-        // TODO: 2021/11/25   
-        if (res.equals(0)) {
-            return ResultCode.db.getCode();
-        } else {
-            return goodsBO.getId();
+            goodsMapper.updateByPrimaryKeySelective(goodsBO);
         }
     }
 

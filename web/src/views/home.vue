@@ -76,7 +76,7 @@
         axios.get("/category/tree").then((response) => {
           let respBean = response.data;
           if (respBean.code != 0) {
-            ElNotification({ title: 'info', message: respBean.msg, type: 'error', duration: 1000});
+            ElNotification({ title: '消息', message: respBean.msg, type: 'error', duration: 1000});
           }
           category.value = respBean.data;
         });
@@ -92,7 +92,7 @@
         }).then((response) => {
           let respBean = response.data;
           if (respBean.code != 0) {
-            ElNotification({ title: 'info', message: respBean.msg, type: 'error', duration: 1000});
+            ElNotification({ title: '消息', message: respBean.msg, type: 'error', duration: 1000});
             return;
           }
           let pageBean = respBean.data;
