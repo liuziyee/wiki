@@ -69,6 +69,7 @@ public class UserService {
             userBO.setId(IDGenerator.nextId());
             userMapper.insertSelective(userBO);
         } else {
+            userBO.setLoginName(null);
             userMapper.updateByPrimaryKeySelective(userBO);
         }
     }

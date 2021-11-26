@@ -6,7 +6,7 @@
           mode="horizontal"
           background-color="#708090"
           text-color="#ffffff"
-          router="true"
+          router
       >
         <el-menu-item index="/">首页</el-menu-item>
         <el-menu-item index="/root">空腹虫</el-menu-item>

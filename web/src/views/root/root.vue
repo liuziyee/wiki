@@ -1,7 +1,7 @@
 <template>
   <el-container>
     <el-aside width="150px">
-      <el-menu style="border-right: 0" router="true">
+      <el-menu style="border-right: 0" router>
         <el-menu-item index="/root/goods">
           <el-check-tag>好物管理</el-check-tag>
         </el-menu-item>

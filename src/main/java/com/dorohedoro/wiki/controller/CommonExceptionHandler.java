@@ -29,7 +29,6 @@ public class CommonExceptionHandler {
     @ExceptionHandler(BizException.class)
     public ResponseBean handleBizException(BizException e) {
         ResponseBean res = new ResponseBean();
-        log.error("BizException: ", e);
         res.setCode(e.getCode());
         res.setMsg(e.getMsg());
         return res;

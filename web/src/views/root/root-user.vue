@@ -54,7 +54,7 @@
                    label-width="80px"
           >
             <el-form-item label="登录名" prop="loginName">
-              <el-input v-model="record.loginName"/>
+              <el-input v-model="record.loginName" :disabled="!!record.id"/>
             </el-form-item>
             <el-form-item label="昵称">
               <el-input v-model="record.name"/>
