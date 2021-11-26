@@ -44,4 +44,12 @@ public class UserController {
         res.setCode(ResultCode.success.getCode());
         return res;
     }
+
+    @PostMapping("/login")
+    public ResponseBean login(@RequestBody User userBO) {
+        UserVO userVO = userService.login(userBO);
+        ResponseBean res = new ResponseBean();
+        res.setCode(ResultCode.success.getCode());
+        return res;
+    }
 }

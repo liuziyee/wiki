@@ -60,12 +60,12 @@
               <el-input v-model="record.name"/>
             </el-form-item>
             <el-form-item label="密码" prop="password">
-              <el-input v-model="record.password" :disabled="!!record.id"/>
+              <el-input v-model="record.password"/>
             </el-form-item>
           </el-form>
           <template #footer>
             <el-check-tag style="margin-right: 5px" @change="dialogVisible = false">不了</el-check-tag>
-            <el-check-tag style="margin-right: 5px">重置密码</el-check-tag>
+            <el-check-tag style="margin-right: 5px" @click="record.password = null">重置密码</el-check-tag>
             <el-check-tag :loading="loading" @change="handleAddOrUpd">保存</el-check-tag>
           </template>
         </el-dialog>

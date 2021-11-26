@@ -11,6 +11,7 @@ import com.dorohedoro.wiki.util.*;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -74,6 +75,24 @@ public class UserService {
             //userBO.setPassword(null);
             userMapper.updateByPrimaryKeySelective(userBO);
         }
+    }
+
+    public UserVO login(User userBO) {
+        String formPwd = DigestUtils.md5DigestAsHex(userBO.getPassword().getBytes());
+        UserExample userExample = new UserExample();
+        userExample.createCriteria().andLoginNameEqualTo(userBO.getLoginName());
+        List<User> userList = userMapper.selectByExample(userExample);
+        if (CollectionUtils.isEmpty(userList)) {
+            throw new BizException(ResultCode.login);
+        }
+        String pwd = userList.get(0).getPassword();
+        if (!formPwd.equals(pwd)) {
+            throw new BizException(ResultCode.login);
+        }
+        
+
+        return null;
+                
     }
 }
 
