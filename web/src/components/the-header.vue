@@ -53,6 +53,7 @@
 import {defineComponent, onMounted, ref} from 'vue';
 import {ElNotification} from "element-plus";
 import axios from "axios";
+import store from "@/store";
 
 declare let hexMd5: any;
 declare let KEY: any;
@@ -88,7 +89,8 @@ declare let KEY: any;
               return;
             }
             authUser.value = respBean.data;
-            ElNotification({title: '消息', message: '你好啊...' + authUser.value.name, type: 'success'});
+            store.commit("setAuthUser", authUser);
+            ElNotification({title: '消息', message: '你好啊 ' + authUser.value.name, type: 'success'});
             dialogVisible.value = false;
           })
         })
