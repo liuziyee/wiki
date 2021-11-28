@@ -56,7 +56,7 @@ public class UserService {
     }
 
     public void addOrUpdUser(User userBO){
-        //userBO.setPassword(DigestUtils.md5DigestAsHex(userBO.getPassword().getBytes()));
+        userBO.setPassword(DigestUtils.md5DigestAsHex(userBO.getPassword().getBytes()));
         Long id = userBO.getId();
         if (id == null || id.equals(0L)) {
             //loginName判重
@@ -85,13 +85,13 @@ public class UserService {
         if (CollectionUtils.isEmpty(userList)) {
             throw new BizException(ResultCode.login);
         }
-        String pwd = userList.get(0).getPassword();
+        User user = userList.get(0);
+        String pwd = user.getPassword();
         if (!formPwd.equals(pwd)) {
             throw new BizException(ResultCode.login);
         }
         
-
-        return null;
+        return BeanUtil.copy(user, UserVO.class);
                 
     }
 }

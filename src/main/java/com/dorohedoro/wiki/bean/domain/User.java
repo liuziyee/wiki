@@ -2,16 +2,17 @@ package com.dorohedoro.wiki.bean.domain;
 
 import com.dorohedoro.wiki.bean.VO.PageBean;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 public class User extends PageBean {
     private Long id;
-    
+    @NotEmpty
     private String loginName;
     
     private String name;
-    
+    @NotEmpty
     private String password;
 
     public Long getId() {
