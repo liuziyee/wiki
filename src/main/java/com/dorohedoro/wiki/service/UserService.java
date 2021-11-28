@@ -13,6 +13,7 @@ import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.DigestUtils;
@@ -21,9 +22,8 @@ import org.springframework.util.StringUtils;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @Description
@@ -36,6 +36,8 @@ public class UserService {
 
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     public PageBean<UserVO> getUserList(User userBO) {
         UserExample userExample = new UserExample();
@@ -77,7 +79,7 @@ public class UserService {
         }
     }
 
-    public UserVO login(User userBO) {
+    public Map<String, Object> login(User userBO) {
         String formPwd = DigestUtils.md5DigestAsHex(userBO.getPassword().getBytes());
         UserExample userExample = new UserExample();
         userExample.createCriteria().andLoginNameEqualTo(userBO.getLoginName());
@@ -91,8 +93,14 @@ public class UserService {
             throw new BizException(ResultCode.login);
         }
         
-        return BeanUtil.copy(user, UserVO.class);
-                
+        Map<String, Object> dataMap = new HashMap<>();
+        UserVO userVO = BeanUtil.copy(user, UserVO.class);
+        Long token = IDGenerator.nextId();
+        redisTemplate.opsForValue().set(token, userVO, 3600 * 24, TimeUnit.SECONDS);
+        log.info("generate a SSO token:{} and put it in redis", token);
+        dataMap.put("token", token.toString());
+        dataMap.put("vo", userVO);
+        return dataMap;
     }
 }
 

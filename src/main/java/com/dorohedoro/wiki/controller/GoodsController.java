@@ -32,7 +32,6 @@ public class GoodsController {
         ResponseBean<PageBean> res = new ResponseBean<>();
         res.setCode(ResultCode.success.getCode());
         res.setData(pageBean);
-        res.setServerTime(Instant.now().toEpochMilli());
         return res;
     }
 

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.time.Instant;
+import java.util.Map;
 
 /**
  * @Description
@@ -33,7 +34,6 @@ public class UserController {
         ResponseBean<PageBean> res = new ResponseBean<>();
         res.setCode(ResultCode.success.getCode());
         res.setData(pageBean);
-        res.setServerTime(Instant.now().toEpochMilli());
         return res;
     }
 
@@ -47,9 +47,11 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseBean login(@RequestBody User userBO) {
-        UserVO userVO = userService.login(userBO);
-        ResponseBean res = new ResponseBean();
+        Map<String, Object> dataMap = userService.login(userBO);
+        ResponseBean<UserVO> res = new ResponseBean();
         res.setCode(ResultCode.success.getCode());
+        res.setData((UserVO) dataMap.get("vo"));
+        res.setToken((String) dataMap.get("token"));
         return res;
     }
 }

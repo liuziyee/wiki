@@ -8,11 +8,10 @@ import javax.validation.constraints.Pattern;
 
 public class User extends PageBean {
     private Long id;
-    @NotEmpty
     private String loginName;
     
     private String name;
-    @NotEmpty
+    
     private String password;
 
     public Long getId() {

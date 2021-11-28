@@ -10,8 +10,7 @@
       >
         <el-menu-item index="/">首页</el-menu-item>
         <el-menu-item index="/root">空腹虫</el-menu-item>
-        <el-menu-item index="" @click="dialogVisible = true;user = {};">登录</el-menu-item>
-        <el-menu-item index="/about">关于</el-menu-item>
+        <el-menu-item index="" @click="() => {authUser.id ? this.$router.push({path: '/mine'}) : dialogVisible = true;}">我的</el-menu-item>
       </el-menu>
     </el-header>
 
@@ -63,6 +62,7 @@ declare let KEY: any;
     setup() {
       const dialogVisible = ref(false);
       const user = ref({password: ''});
+      const authUser = ref({name: ''});
       const loginForm = ref(); //表单DOM
       const rules = ref({
         loginName: [
@@ -75,7 +75,6 @@ declare let KEY: any;
       });
 
       const handleLogin = () => {
-        //表单校验
         loginForm.value.validate((valid: any) => {
           if (!valid) {
             ElNotification({ title: '消息', message: '表单数据非法', type: 'error'});
@@ -88,7 +87,8 @@ declare let KEY: any;
               ElNotification({ title: '消息', message: respBean.msg, type: 'error'});
               return;
             }
-            ElNotification({title: '消息', message: '登录成功', type: 'success'});
+            authUser.value = respBean.data;
+            ElNotification({title: '消息', message: '你好啊...' + authUser.value.name, type: 'success'});
             dialogVisible.value = false;
           })
         })
@@ -101,6 +101,7 @@ declare let KEY: any;
       return {
         dialogVisible,
         user,
+        authUser,
         loginForm,
         rules,
         handleLogin

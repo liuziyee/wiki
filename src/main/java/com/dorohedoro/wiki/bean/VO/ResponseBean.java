@@ -12,5 +12,5 @@ public class ResponseBean<T> {
     private Long code;
     private T data;
     private String msg;
-    private Long serverTime;
+    private String token;
 }
