@@ -6,24 +6,17 @@ import com.dorohedoro.wiki.bean.domain.User;
 import com.dorohedoro.wiki.bean.domain.UserExample;
 import com.dorohedoro.wiki.exception.BizException;
 import com.dorohedoro.wiki.mapper.UserMapper;
-import com.dorohedoro.wiki.mapper.UserMapper;
 import com.dorohedoro.wiki.util.*;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.DigestUtils;
 import org.springframework.util.StringUtils;
 
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @Description
@@ -36,8 +29,6 @@ public class UserService {
 
     @Autowired
     private UserMapper userMapper;
-    @Autowired
-    private RedisTemplate redisTemplate;
 
     public PageBean<UserVO> getUserList(User userBO) {
         UserExample userExample = new UserExample();
@@ -68,7 +59,7 @@ public class UserService {
             Long exist = userMapper.exist(user);
             log.info("exist: {}", exist);
             if (exist != null && !exist.equals(0L)) {
-                throw new BizException(ResultCode.user_exists);
+                throw new BizException(ResCode.user_exists);
             }
             userBO.setId(IDGenerator.nextId());
             userMapper.insertSelective(userBO);
@@ -85,22 +76,29 @@ public class UserService {
         userExample.createCriteria().andLoginNameEqualTo(userBO.getLoginName());
         List<User> userList = userMapper.selectByExample(userExample);
         if (CollectionUtils.isEmpty(userList)) {
-            throw new BizException(ResultCode.login);
+            throw new BizException(ResCode.login);
         }
         User user = userList.get(0);
         String pwd = user.getPassword();
         if (!formPwd.equals(pwd)) {
-            throw new BizException(ResultCode.login);
+            throw new BizException(ResCode.login);
         }
-        
+        //auth pass
         Map<String, Object> dataMap = new HashMap<>();
         UserVO userVO = BeanUtil.copy(user, UserVO.class);
         Long token = IDGenerator.nextId();
-        redisTemplate.opsForValue().set(token, userVO, 3600 * 24, TimeUnit.SECONDS);
+        String key = RedisUtil.getKey(RedisKey.token, token);
+        RedisUtil.set(key, userVO, 3600L * 3);
         log.info("generate a SSO token:{} and put it in redis", token);
         dataMap.put("token", token.toString());
         dataMap.put("vo", userVO);
         return dataMap;
+    }
+
+    public void logout(Long token) {
+        String key = RedisUtil.getKey(RedisKey.token, token);
+        RedisUtil.del(key);
+        log.info("delete a SSO token:{}", token);
     }
 }
 

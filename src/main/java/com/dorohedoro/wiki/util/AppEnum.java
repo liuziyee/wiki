@@ -13,5 +13,5 @@ public class AppEnum {
 
         public abstract Long v();
     }
-    
+
 }

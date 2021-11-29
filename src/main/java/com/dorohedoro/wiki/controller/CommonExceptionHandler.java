@@ -2,8 +2,7 @@ package com.dorohedoro.wiki.controller;
 
 import com.dorohedoro.wiki.bean.VO.ResponseBean;
 import com.dorohedoro.wiki.exception.BizException;
-import com.dorohedoro.wiki.util.AppEnum;
-import com.dorohedoro.wiki.util.ResultCode;
+import com.dorohedoro.wiki.util.ResCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -21,7 +20,7 @@ public class CommonExceptionHandler {
     @ExceptionHandler(BindException.class)
     public ResponseBean handleValidException(BindException e) {
         ResponseBean res = new ResponseBean();
-        res.setCode(ResultCode.valid.getCode());
+        res.setCode(ResCode.valid.getCode());
         res.setMsg(e.getBindingResult().getFieldError().getDefaultMessage());
         return res;
     }

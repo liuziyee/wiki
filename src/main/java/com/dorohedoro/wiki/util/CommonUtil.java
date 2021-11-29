@@ -20,7 +20,7 @@ public class CommonUtil {
         return str.split(regExp);
     }
 
-    public static void sayError(HttpServletResponse response, ResultCode code) throws IOException {
+    public static void sayError(HttpServletResponse response, ResCode code) throws IOException {
         response.setContentType("text/html;charset=UTF-8");
 
         ResponseBean resBean = new ResponseBean();

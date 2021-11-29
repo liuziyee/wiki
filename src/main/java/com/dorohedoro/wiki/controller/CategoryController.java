@@ -4,8 +4,7 @@ import com.dorohedoro.wiki.bean.VO.CategoryVO;
 import com.dorohedoro.wiki.bean.VO.ResponseBean;
 import com.dorohedoro.wiki.bean.domain.Category;
 import com.dorohedoro.wiki.service.CategoryService;
-import com.dorohedoro.wiki.util.AppEnum;
-import com.dorohedoro.wiki.util.ResultCode;
+import com.dorohedoro.wiki.util.ResCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +26,7 @@ public class CategoryController{
         List<CategoryVO> categoryVOList = categoryService.getCategoryList();
 
         ResponseBean<List<CategoryVO>> res = new ResponseBean<>();
-        res.setCode(ResultCode.success.getCode());
+        res.setCode(ResCode.success.getCode());
         res.setData(categoryVOList);
         return res;
     }
@@ -36,15 +35,15 @@ public class CategoryController{
     public ResponseBean addOrUpdCategory(@RequestBody Category categoryBO) {
         ResponseBean res = new ResponseBean();
         categoryService.addOrUpdCategory(categoryBO);
-        res.setCode(ResultCode.success.getCode());
+        res.setCode(ResCode.success.getCode());
         return res;
     }
 
     @GetMapping("/del/{id}")
-    public ResponseBean del(@PathVariable("id") Long id) {
+    public ResponseBean del(@PathVariable Long id) {
         categoryService.del(id);
         ResponseBean res = new ResponseBean();
-        res.setCode(ResultCode.success.getCode());
+        res.setCode(ResCode.success.getCode());
         return res;
     }
     

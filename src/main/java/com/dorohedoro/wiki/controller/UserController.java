@@ -5,14 +5,11 @@ import com.dorohedoro.wiki.bean.VO.PageBean;
 import com.dorohedoro.wiki.bean.VO.ResponseBean;
 import com.dorohedoro.wiki.bean.domain.User;
 import com.dorohedoro.wiki.service.UserService;
-import com.dorohedoro.wiki.service.UserService;
-import com.dorohedoro.wiki.util.AppEnum;
-import com.dorohedoro.wiki.util.ResultCode;
+import com.dorohedoro.wiki.util.ResCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.time.Instant;
 import java.util.Map;
 
 /**
@@ -25,14 +22,14 @@ import java.util.Map;
 public class UserController {
     @Autowired
     private UserService userService;
-    
+
 
     @GetMapping("/list")
     public ResponseBean getUserList(@Valid User userBO) {
         PageBean<UserVO> pageBean = userService.getUserList(userBO);
 
         ResponseBean<PageBean> res = new ResponseBean<>();
-        res.setCode(ResultCode.success.getCode());
+        res.setCode(ResCode.success.getCode());
         res.setData(pageBean);
         return res;
     }
@@ -41,7 +38,7 @@ public class UserController {
     public ResponseBean addOrUpdUser(@RequestBody User userBO) {
         ResponseBean res = new ResponseBean();
         userService.addOrUpdUser(userBO);
-        res.setCode(ResultCode.success.getCode());
+        res.setCode(ResCode.success.getCode());
         return res;
     }
 
@@ -49,9 +46,17 @@ public class UserController {
     public ResponseBean login(@RequestBody User userBO) {
         Map<String, Object> dataMap = userService.login(userBO);
         ResponseBean<UserVO> res = new ResponseBean();
-        res.setCode(ResultCode.success.getCode());
+        res.setCode(ResCode.success.getCode());
         res.setData((UserVO) dataMap.get("vo"));
         res.setToken((String) dataMap.get("token"));
+        return res;
+    }
+
+    @GetMapping("/logout/{token}")
+    public ResponseBean logout(@PathVariable Long token) {
+        userService.logout(token);
+        ResponseBean res = new ResponseBean();
+        res.setCode(ResCode.success.getCode());
         return res;
     }
 }

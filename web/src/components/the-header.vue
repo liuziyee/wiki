@@ -105,9 +105,13 @@ const TOKEN = 'TOKEN';
       };
       
       const checkSession = () => {
-        let value = sessionStorage.getItem(USER);
-        if (value) {
-          store.commit("setUser", JSON.parse(value));
+        let user = sessionStorage.getItem(USER);
+        if (user) {
+          store.commit("setUser", JSON.parse(user));
+        }
+        let token = sessionStorage.getItem(TOKEN);
+        if (token) {
+          store.commit("setToken", token);
         }
       };
 

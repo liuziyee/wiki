@@ -5,7 +5,7 @@ package com.dorohedoro.wiki.util;
  * @Author liuziye
  * @Date 2021/11/26 8:51
  */
-public enum ResultCode {
+public enum ResCode {
     success(0L, "成功"),
     valid(10L, "参数校验失败"),
     db(20L, "数据库异常"),
@@ -15,7 +15,7 @@ public enum ResultCode {
     private Long code;
     private String desc;
 
-    ResultCode(Long code, String desc) {
+    ResCode(Long code, String desc) {
         this.code = code;
         this.desc = desc;
     }

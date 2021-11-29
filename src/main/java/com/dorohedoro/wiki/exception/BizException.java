@@ -1,7 +1,6 @@
 package com.dorohedoro.wiki.exception;
 
-import com.dorohedoro.wiki.util.AppEnum;
-import com.dorohedoro.wiki.util.ResultCode;
+import com.dorohedoro.wiki.util.ResCode;
 
 /**
  * @Description
@@ -9,9 +8,9 @@ import com.dorohedoro.wiki.util.ResultCode;
  * @Date 2021/11/26 8:49
  */
 public class BizException extends RuntimeException{
-    private ResultCode code;
+    private ResCode code;
 
-    public BizException(ResultCode code) {
+    public BizException(ResCode code) {
         super(code.getDesc());
         this.code = code;
     }

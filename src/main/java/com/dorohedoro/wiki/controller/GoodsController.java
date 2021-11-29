@@ -4,14 +4,12 @@ import com.dorohedoro.wiki.bean.domain.Goods;
 import com.dorohedoro.wiki.bean.VO.PageBean;
 import com.dorohedoro.wiki.bean.VO.ResponseBean;
 import com.dorohedoro.wiki.service.GoodsService;
-import com.dorohedoro.wiki.util.AppEnum;
 import com.dorohedoro.wiki.bean.VO.GoodsVO;
-import com.dorohedoro.wiki.util.ResultCode;
+import com.dorohedoro.wiki.util.ResCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.time.Instant;
 
 /**
  * @Description
@@ -30,7 +28,7 @@ public class GoodsController {
         PageBean<GoodsVO> pageBean = goodsService.getGoodsList(goodsBO);
 
         ResponseBean<PageBean> res = new ResponseBean<>();
-        res.setCode(ResultCode.success.getCode());
+        res.setCode(ResCode.success.getCode());
         res.setData(pageBean);
         return res;
     }
@@ -39,15 +37,15 @@ public class GoodsController {
     public ResponseBean addOrUpdGoods(@RequestBody Goods goodsBO) {
         ResponseBean res = new ResponseBean();
         goodsService.addOrUpdGoods(goodsBO);
-        res.setCode(ResultCode.success.getCode());
+        res.setCode(ResCode.success.getCode());
         return res;
     }
 
     @GetMapping("/del/{id}")
-    public ResponseBean del(@PathVariable("id") Long id) {
+    public ResponseBean del(@PathVariable Long id) {
         goodsService.del(id);
         ResponseBean res = new ResponseBean();
-        res.setCode(ResultCode.success.getCode());
+        res.setCode(ResCode.success.getCode());
         return res;
     }
 }
