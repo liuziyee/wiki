@@ -13,7 +13,7 @@ import store from "@/store";
 export default defineComponent({
   name: 'Mine',
   setup() {
-    const user = computed(() => store.state.authUser);
+    const user = computed(() => store.state.user);
     
     return {
       user

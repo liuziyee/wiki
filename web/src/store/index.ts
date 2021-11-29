@@ -2,11 +2,16 @@ import { createStore } from 'vuex'
 
 const store = createStore({
   state: {
-    authUser: {}
+    // authUser: SessionStorage.get(key) || {}
+    user: {},
+    token: ''
   },
   mutations: {
-    setAuthUser(state, user) {
-      state.authUser = user;
+    setUser(state, user) {
+      state.user = user;
+    },
+    setToken(state, token) {
+      state.token = token;
     }
   },
   actions: {

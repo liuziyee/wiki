@@ -10,7 +10,7 @@
       >
         <el-menu-item index="/">首页</el-menu-item>
         <el-menu-item index="/root">空腹虫</el-menu-item>
-        <el-menu-item index="" @click="() => {authUser.id ? this.$router.push({path: '/mine'}) : dialogVisible = true;}">我的</el-menu-item>
+        <el-menu-item index="" @click="() => {user.id ? this.$router.push({path: '/mine'}) : dialogVisible = true;}">我的</el-menu-item>
       </el-menu>
     </el-header>
 
@@ -18,17 +18,17 @@
         v-model="dialogVisible"
         width="25%"
     >
-      <el-form :model="user"
+      <el-form :model="record"
                :rules="rules"
                ref="loginForm"
                label-position="right"
                label-width="80px"
       >
         <el-form-item label="登录名" prop="loginName">
-          <el-input v-model="user.loginName"/>
+          <el-input v-model="record.loginName"/>
         </el-form-item>
         <el-form-item label="密码" prop="password">
-          <el-input v-model="user.password"/>
+          <el-input v-model="record.password"/>
         </el-form-item>
       </el-form>
       <template #footer>
@@ -50,20 +50,22 @@
 </style>
 
 <script lang="ts">
-import {defineComponent, onMounted, ref} from 'vue';
+import {computed, defineComponent, onMounted, ref} from 'vue';
 import {ElNotification} from "element-plus";
 import axios from "axios";
 import store from "@/store";
 
 declare let hexMd5: any;
 declare let KEY: any;
+const USER = 'USER';
+const TOKEN = 'TOKEN';
   
   export default defineComponent({
     name: 'the-header',
     setup() {
       const dialogVisible = ref(false);
-      const user = ref({password: ''});
-      const authUser = ref({name: ''});
+      const record = ref({password: ''});
+      const user = computed(() => store.state.user);
       const loginForm = ref(); //表单DOM
       const rules = ref({
         loginName: [
@@ -81,29 +83,42 @@ declare let KEY: any;
             ElNotification({ title: '消息', message: '表单数据非法', type: 'error'});
             return;
           }
-          user.value.password = hexMd5(user.value.password + KEY);
-          axios.post("/user/login", user.value).then((response) => {
+          record.value.password = hexMd5(record.value.password + KEY);
+          axios.post("/user/login", record.value).then((response) => {
             let respBean = response.data;
             if (respBean.code != 0) {
               ElNotification({ title: '消息', message: respBean.msg, type: 'error'});
               return;
             }
-            authUser.value = respBean.data;
-            store.commit("setAuthUser", authUser);
-            ElNotification({title: '消息', message: '你好啊 ' + authUser.value.name, type: 'success'});
+            let user = respBean.data;
+            let token = respBean.token;
+            //put into session and vuex
+            sessionStorage.setItem(USER, JSON.stringify(user));
+            sessionStorage.setItem(TOKEN, token);
+            store.commit("setUser", user);
+            store.commit("setToken", token);
+            
+            ElNotification({title: '消息', message: '你好啊 ' + user.name, type: 'success'});
             dialogVisible.value = false;
           })
         })
       };
       
+      const checkSession = () => {
+        let value = sessionStorage.getItem(USER);
+        if (value) {
+          store.commit("setUser", JSON.parse(value));
+        }
+      };
+
+      onMounted(() => {
+        checkSession();
+      });
       
-      // onMounted(() => {
-      //  
-      // });
       return {
         dialogVisible,
+        record,
         user,
-        authUser,
         loginForm,
         rules,
         handleLogin
