@@ -9,7 +9,7 @@
             <el-card :body-style="{ padding: '0px'}" shadow="always">
               <el-image src="/image/macmini.png"/>
               <div style="padding:15px">
-                <el-form>
+                <el-form v-if="user.id">
                   <el-form-item style="margin-bottom: 0px;">
                     <el-check-tag>{{user.name}}</el-check-tag>
                   </el-form-item>
@@ -57,17 +57,17 @@ export default defineComponent({
     const token = computed(() => store.state.token);
     
     const handleLogout = () => {
-      axios.get("/goods/list", {
-        params: {
-          token: token
-        }
-      }).then((response) => {
+      axios.get("/user/logout/" + token.value).then((response) => {
         let respBean = response.data;
         if (respBean.code != 0) {
           ElNotification({ title: '消息', message: respBean.msg, type: 'error', duration: 1000});
           return;
         }
-        
+        //empty store and session
+        store.commit("setUser", {});
+        store.commit("setToken", '');
+        sessionStorage.clear();
+        ElNotification({ title: '消息', message: '拜拜...', type: 'success', duration: 1000});
       });
     }
     

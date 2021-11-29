@@ -92,7 +92,7 @@ const TOKEN = 'TOKEN';
             }
             let user = respBean.data;
             let token = respBean.token;
-            //put into session and vuex
+            //put data into session and store
             sessionStorage.setItem(USER, JSON.stringify(user));
             sessionStorage.setItem(TOKEN, token);
             store.commit("setUser", user);
