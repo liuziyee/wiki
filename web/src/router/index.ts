@@ -5,6 +5,7 @@ import Root from '../views/root/root.vue'
 import RootGoods from '../views/root/root-goods.vue'
 import RootCategory from '../views/root/root-category.vue'
 import RootUser from '../views/root/root-user.vue'
+import store from "@/store";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -15,12 +16,18 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/mine',
     name: 'Mine',
-    component: Mine
+    component: Mine,
+    meta: {
+      authRequire: true
+    }
   },
   {
     path: '/root',
     name: 'Root',
     component: Root,
+    meta: {
+      authRequire: true
+    },
     children: [
       {
         path: 'goods',
@@ -44,6 +51,19 @@ const routes: Array<RouteRecordRaw> = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some((route) => route.meta.authRequire)) {
+    const token = store.state.token;
+    if (typeof token == 'string' && token.length > 0) {
+      next();
+      return;
+    }
+    next("/");
+  } else {
+    next();
+  }
 })
 
 export default router

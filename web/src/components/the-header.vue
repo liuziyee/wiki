@@ -2,6 +2,7 @@
   <el-container>
     <el-header style="padding: 0 0">
       <el-menu
+          default-active="/"
           class="router-menu"
           mode="horizontal"
           background-color="#708090"
@@ -10,7 +11,7 @@
       >
         <el-menu-item index="/">首页</el-menu-item>
         <el-menu-item index="/root">空腹虫</el-menu-item>
-        <el-menu-item index="" @click="() => {user.id ? this.$router.push({path: '/mine'}) : dialogVisible = true;}">我的</el-menu-item>
+        <el-menu-item index="/mine" @click="user.id ? router.push({path: '/mine'}) : dialogVisible = true">我的</el-menu-item>
       </el-menu>
     </el-header>
 
@@ -54,6 +55,7 @@ import {computed, defineComponent, onMounted, ref} from 'vue';
 import {ElNotification} from "element-plus";
 import axios from "axios";
 import store from "@/store";
+import {useRouter} from 'vue-router';
 
 declare let hexMd5: any;
 declare let KEY: any;
@@ -76,6 +78,7 @@ const TOKEN = 'TOKEN';
           { pattern: /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,32}$/, message: '至少包含数字和英文 长度6~32', trigger: 'blur'}
         ]
       });
+      let router = useRouter();
 
       const handleLogin = () => {
         loginForm.value.validate((valid: any) => {
@@ -100,6 +103,9 @@ const TOKEN = 'TOKEN';
             
             ElNotification({title: '消息', message: '你好啊 ' + user.name, type: 'success'});
             dialogVisible.value = false;
+
+            router.push({path: '/mine'});
+            
           })
         })
       };
@@ -125,6 +131,7 @@ const TOKEN = 'TOKEN';
         user,
         loginForm,
         rules,
+        router,
         handleLogin
       }
     }

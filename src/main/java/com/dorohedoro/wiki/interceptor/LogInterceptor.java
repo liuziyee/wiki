@@ -1,4 +1,4 @@
-package com.dorohedoro.wiki.util;
+package com.dorohedoro.wiki.interceptor;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

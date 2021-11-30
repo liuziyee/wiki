@@ -32,5 +32,9 @@ public class RedisUtil {
     public static void del(String key) {
         redisTemplate.delete(key);
     }
+
+    public static Object get(String key) {
+        return redisTemplate.opsForValue().get(key);
+    }
     
 }

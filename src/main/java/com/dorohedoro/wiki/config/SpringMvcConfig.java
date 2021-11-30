@@ -1,5 +1,6 @@
 package com.dorohedoro.wiki.config;
 
+import com.dorohedoro.wiki.interceptor.AuthInterceptor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
@@ -25,15 +26,20 @@ import java.util.List;
 @Configuration
 public class SpringMvcConfig implements WebMvcConfigurer {
 
-    //@Autowired
-    //LogInterceptor logInterceptor;
-    //
-    //@Override
-    //public void addInterceptors(InterceptorRegistry registry) {
-    //    registry.addInterceptor(logInterceptor)
-    //            .addPathPatterns("/**")
-    //            .excludePathPatterns("/login");
-    //}
+    @Autowired
+    AuthInterceptor authInterceptor;
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(authInterceptor)
+                .addPathPatterns("/**")
+                .excludePathPatterns(
+                        "/goods/list",
+                        "/category/tree",
+                        "/user/list",
+                        "/user/login"
+                );
+    }
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
