@@ -23,15 +23,15 @@
             <div class="card">
               <el-card :body-style="{ padding: '0px'}" shadow="hover">
                 <el-image :src="item.cover"/>
-                <div style="padding:15px">
+                <div style="padding: 15px">
                   <el-form>
-                    <el-form-item style="margin-bottom: 0px;">
-                      <el-check-tag checked>{{ item.name }}</el-check-tag>
+                    <el-form-item style="margin-bottom: 0px">
+                      <el-check-tag checked @change="router.push({path: '/info', query: {id: item.id}})">{{ item.name }}</el-check-tag>
                     </el-form-item>
-                    <el-form-item  style="margin-bottom: 0px;">
-                      <el-tag size="mini" type="info" style="margin-right: 8px">浏览{{item.viewCount}}</el-tag>
-                      <el-tag size="mini" type="info" style="margin-right: 8px">关注{{item.followCount}}</el-tag>
-                      <el-tag size="mini" type="info" style="margin-right: 8px">评论{{item.commentCount}}</el-tag>
+                    <el-form-item  style="margin-bottom: 0px">
+                      <el-check-tag class="data-tag">浏览{{item.viewCount}}</el-check-tag>
+                      <el-check-tag class="data-tag">关注{{item.followCount}}</el-check-tag>
+                      <el-check-tag class="data-tag">评论{{item.commentCount}}</el-check-tag>
                     </el-form-item>
                   </el-form>
                 </div>
@@ -57,6 +57,19 @@
   width: 100%;
   display: block;
 }
+.el-aside {
+  overflow-x: hidden;
+}
+.grid {
+  overflow-x: hidden;
+  padding: 0 30px;
+  box-sizing: border-box;
+}
+.data-tag {
+  font-size: xx-small;
+  margin-right: 5px;
+  padding: 5px;
+}
 </style>
 
 <script lang="ts">
@@ -64,6 +77,7 @@
   import axios from 'axios';
   import {message} from 'ant-design-vue';
   import { ElNotification } from 'element-plus';
+  import {useRouter} from 'vue-router';
 
   export default defineComponent({
     name: 'Home',
@@ -71,6 +85,7 @@
       const goods = ref([]);
       const category = ref();
       let cid = 300;
+      let router = useRouter();
       
       const handleQueryCategory = () => {
         axios.get("/category/tree").then((response) => {
@@ -83,7 +98,7 @@
       };
       
       const handleQueryGoods = () => {
-        axios.get("/goods/list", {
+        axios.get("/goods/all", {
           params: {
             page: 1,
             size: 1000,
@@ -118,20 +133,10 @@
       return {
         goods,
         category,
+        router,
         handleChildCategoryChange,
         handleParentCategoryChange
       }
     }
   });
 </script>
-
-<style scoped>
-.el-aside {
-  overflow-x: hidden;
-}
-.grid {
-  overflow-x: hidden;
-  padding: 0 30px;
-  box-sizing: border-box;
-}
-</style>

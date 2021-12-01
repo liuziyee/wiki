@@ -135,7 +135,7 @@
       };
       
       const handleQueryGoods = () => {
-        axios.get("/goods/list", {
+        axios.get("/goods/all", {
           params: {
             page: pagination.value.current,
             size: pagination.value.pageSize,

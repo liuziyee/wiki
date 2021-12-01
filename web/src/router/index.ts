@@ -5,6 +5,7 @@ import Root from '../views/root/root.vue'
 import RootGoods from '../views/root/root-goods.vue'
 import RootCategory from '../views/root/root-category.vue'
 import RootUser from '../views/root/root-user.vue'
+import Info from '../views/info.vue'
 import store from "@/store";
 
 const routes: Array<RouteRecordRaw> = [
@@ -20,6 +21,11 @@ const routes: Array<RouteRecordRaw> = [
     meta: {
       authRequire: true
     }
+  },
+  {
+    path: '/info',
+    name: 'Info',
+    component: Info
   },
   {
     path: '/root',

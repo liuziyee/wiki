@@ -123,7 +123,7 @@
       const param = ref({name:''});
       
       const handleQueryUser = () => {
-        axios.get("/user/list", {
+        axios.get("/user/all", {
           params: {
             page: pagination.value.current,
             size: pagination.value.pageSize,

@@ -6,11 +6,13 @@ import com.dorohedoro.wiki.bean.domain.Category;
 import com.dorohedoro.wiki.bean.domain.CategoryExample;
 import com.dorohedoro.wiki.bean.domain.Goods;
 import com.dorohedoro.wiki.bean.domain.GoodsExample;
+import com.dorohedoro.wiki.exception.BizException;
 import com.dorohedoro.wiki.mapper.CategoryMapper;
 import com.dorohedoro.wiki.mapper.GoodsMapper;
 import com.dorohedoro.wiki.util.AppEnum;
 import com.dorohedoro.wiki.util.BeanUtil;
 import com.dorohedoro.wiki.util.IDGenerator;
+import com.dorohedoro.wiki.util.ResCode;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
@@ -39,17 +41,27 @@ public class GoodsService {
     private CategoryMapper categoryMapper;
 
     public PageBean<GoodsVO> getGoodsList(Goods goodsBO) {
+        String name = goodsBO.getName();
+        Long id = goodsBO.getId();
+        Long categoryId = goodsBO.getCategoryId();
+        if (StringUtils.isEmpty(name) && id == null && categoryId == null) {
+            throw new BizException(ResCode.valid);
+        }
+        
         GoodsExample goodsExample = new GoodsExample();
         GoodsExample.Criteria criteria = goodsExample.createCriteria();
-        //name like ?
-        if (!StringUtils.isEmpty(goodsBO.getName())) {
-            criteria.andNameLike("%" + goodsBO.getName() + "%");
+        
+        if (!StringUtils.isEmpty(name)) {
+            criteria.andNameLike("%" + name + "%"); //name like ?
+        }
+        
+        if (id != null) {
+            criteria.andIdEqualTo(id); //id = ?
         }
 
         List<Long> categoryIdList = new ArrayList<>();
         CategoryExample categoryExample = new CategoryExample();
-        //categoryId = ?
-        Long categoryId = goodsBO.getCategoryId();
+        
         if (categoryId != null && !categoryId.equals(0L)) {
             categoryExample.createCriteria().andParentIdEqualTo(categoryId);
             List<Category> categoryList = categoryMapper.selectByExample(categoryExample);
@@ -58,10 +70,13 @@ public class GoodsService {
             } else {
                 categoryIdList.add(categoryId);
             }
-            criteria.andCategoryIdIn(categoryIdList);
+            criteria.andCategoryIdIn(categoryIdList); //categoryId in ?
         }
+        
         //deleted = 0
         criteria.andDeletedEqualTo(AppEnum.YesOrNo.no.v());
+        
+        
 
         PageHelper.startPage(goodsBO.getPage(), goodsBO.getSize());
         List<Goods> goodsList = goodsMapper.selectByExample(goodsExample);

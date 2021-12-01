@@ -24,7 +24,7 @@ public class UserController {
     private UserService userService;
 
 
-    @GetMapping("/list")
+    @GetMapping("/all")
     public ResponseBean getUserList(@Valid User userBO) {
         PageBean<UserVO> pageBean = userService.getUserList(userBO);
 

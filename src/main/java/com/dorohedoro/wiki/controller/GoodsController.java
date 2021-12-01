@@ -23,7 +23,7 @@ public class GoodsController {
     private GoodsService goodsService;
     
 
-    @GetMapping("/list")
+    @GetMapping("/all")
     public ResponseBean getGoodsList(@Valid Goods goodsBO) {
         PageBean<GoodsVO> pageBean = goodsService.getGoodsList(goodsBO);
 
