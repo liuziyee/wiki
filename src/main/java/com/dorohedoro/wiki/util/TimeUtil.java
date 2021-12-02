@@ -10,13 +10,6 @@ import java.util.HashMap;
  * @Date 2021/11/4 17:55
  */
 public class TimeUtil {
-    public static final String YMDHMS = "yyyy-MM-dd HH:mm:ss";
-
-    public static String getYMDHMS() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(YMDHMS);
-        String str = formatter.format(LocalDateTime.now());
-        return str;
-    }
     
     public static HashMap<String, Long> getToday() {
         LocalDateTime ts = LocalDateTime.of(LocalDate.now(), LocalTime.MIN); //00:00:00
@@ -30,6 +23,5 @@ public class TimeUtil {
         map.put("te", tet);
         return map;
     }
-    
     
 }
