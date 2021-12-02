@@ -8,15 +8,25 @@
           </el-col>
           <el-col :span="5">
             <el-form style="margin-top: 30px">
-              <el-form-item style="margin-bottom: 0px">
-                <el-check-tag style="font-size: large">{{goods.name}}</el-check-tag>
+              <el-form-item>
+                <el-check-tag style="font-size: 15px">{{goods.name}}</el-check-tag>
               </el-form-item>
-              <el-form-item  style="margin-bottom: 0px">
+              <el-form-item>
                 <el-check-tag class="data-tag">浏览{{goods.viewCount}}</el-check-tag>
                 <el-check-tag class="data-tag">关注{{goods.followCount}}</el-check-tag>
                 <el-check-tag class="data-tag">评论{{goods.commentCount}}</el-check-tag>
               </el-form-item>
+              <el-form-item>
+                <el-check-tag checked>关注</el-check-tag>
+              </el-form-item>
             </el-form>
+          </el-col>
+        </el-row>
+      </el-card>
+      <el-card :body-style="{ padding: '0px'}" shadow="always" style="margin-top: 15px">
+        <el-row :gutter="10">
+          <el-col :span="5">
+            <el-image src="/image/finder.png"/>
           </el-col>
         </el-row>
       </el-card>
@@ -25,6 +35,9 @@
 </template>
 
 <style scoped>
+.el-main {
+  height: 100%;
+}
 .el-card {
   width: 100%;
   height: 100%;
@@ -34,8 +47,11 @@
   width: 100%;
   display: block;
 }
+.el-form-item {
+  margin-bottom: 0px;
+}
 .data-tag {
-  font-size: small;
+  font-size: x-small;
   margin-right: 5px;
   padding: 5px;
 }

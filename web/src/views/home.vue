@@ -25,10 +25,10 @@
                 <el-image :src="item.cover"/>
                 <div style="padding: 15px">
                   <el-form>
-                    <el-form-item style="margin-bottom: 0px">
+                    <el-form-item>
                       <el-check-tag checked @change="router.push({path: '/info', query: {id: item.id}})">{{ item.name }}</el-check-tag>
                     </el-form-item>
-                    <el-form-item  style="margin-bottom: 0px">
+                    <el-form-item>
                       <el-check-tag class="data-tag">浏览{{item.viewCount}}</el-check-tag>
                       <el-check-tag class="data-tag">关注{{item.followCount}}</el-check-tag>
                       <el-check-tag class="data-tag">评论{{item.commentCount}}</el-check-tag>
@@ -69,6 +69,9 @@
   font-size: xx-small;
   margin-right: 5px;
   padding: 5px;
+}
+.el-form-item {
+  margin-bottom: 0px;
 }
 </style>
 
