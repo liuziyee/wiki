@@ -3,8 +3,8 @@ create table `goods` (
     `id` bigint(20) not null comment 'id',
     `name` varchar(50) not null default '' comment '名称',
     `category_id` bigint not null comment '分类id',
-    `description` varchar(200) not null default '' comment '描述',
-    `cover` varchar(200) not null default '' comment '封面',
+    `description` varchar(256) not null default '' comment '描述',
+    `cover` varchar(256) not null default '' comment '封面',
     `view_count` bigint(20) not null default 0 comment '浏览数',
     `follow_count` bigint(20) not null default 0 comment '关注数',
     `comment_count` bigint(20) not null default 0 comment '评论数',
@@ -14,6 +14,8 @@ create table `goods` (
 ) engine=innodb default charset=utf8mb4 comment='物品表';
 
 alter table `goods` add column `deleted` bigint(20) default 0 comment '0:U,1:D';
+alter table `goods` modify `cover` varchar(256);
+alter table `goods` modify `description` varchar(256);
 
 insert into `goods`(id, name, category_id, description) values(1, '闪迪至尊极速™ 移动固态硬盘 V2', 0, '这款大容量移动固态硬盘提供快速的NVMe™固态性能，具有1050MB/秒2的读取速度和1000MB/秒2的写入速度');
 insert into `goods`(id, name, category_id, description) values(2, '西部数据 WD_BLACK P10 Game Drive', 0, 'WD_BLACK™ P10 Game Drive 配备高达 5TB 的存储空间，可以保存多达125个游戏');
@@ -50,4 +52,28 @@ create table `user` (
     unique key `login_name` (`login_name`)
 ) engine=innodb default charset=utf8mb4 comment='用户基本信息表';
 
+drop table if exists `comment`;
+create table `comment` (
+    `id` bigint not null comment 'id',
+    `goods_id` bigint not null comment '物品id',
+    `user_id` bigint not null comment '用户id',
+    `content` varchar(1024) not null default '' comment '内容',
+    `create_time` bigint(20) not null default 0 comment '创建时间',
+    primary key (`id`)
+) engine=innodb default charset=utf8mb4 comment='评论表';
 
+drop table if exists `reply`;
+create table `reply` (
+    `id` bigint not null comment 'id',
+    `comment_id` bigint not null comment '评论id',
+    `rela_id` bigint not null comment '关联id',
+    `type` bigint not null comment '回复类型(1:评论;2:回复)',
+    `from_uid` bigint not null,
+    `to_uid` bigint not null,
+    `content` varchar(1024) not null default '' comment '内容',
+    `create_time` bigint(20) not null default 0 comment '创建时间',
+    primary key (`id`)
+) engine=innodb default charset=utf8mb4 comment='回复表';
+
+
+update goods g join (select goods_id, count(1) comment_count from comment group by goods_id) c on g.id = c.goods_id set g.comment_count = c.comment_count;

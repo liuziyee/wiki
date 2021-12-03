@@ -1,5 +1,5 @@
 <template>
-  <el-container>
+  <el-container class="container">
     <el-main>
       <el-card :body-style="{ padding: '0px'}" shadow="always">
         <el-row :gutter="10">
@@ -23,12 +23,19 @@
           </el-col>
         </el-row>
       </el-card>
-      <el-card :body-style="{ padding: '0px'}" shadow="always" style="margin-top: 15px">
-        <el-row :gutter="10">
-          <el-col :span="5">
-            <el-image src="/image/finder.png"/>
-          </el-col>
-        </el-row>
+      <el-card :body-style="{ padding: '15px'}" shadow="always" style="margin-top: 15px">
+        <el-tabs>
+          <el-tab-pane label="详情" style="font-size: 15px">
+            <el-row :gutter="10">
+              <el-col :span="5">
+                <el-image src="/image/emoji.png"/>
+              </el-col>
+            </el-row>
+          </el-tab-pane>
+          <el-tab-pane label="评论">
+            <el-tree :data="comment" empty-text=""/>
+          </el-tab-pane>
+        </el-tabs>
       </el-card>
     </el-main>
   </el-container>
@@ -70,6 +77,7 @@
     setup() {
       let route = useRoute();
       const goods = ref({});
+      const comment = ref({});
 
       const handleQueryGoods = () => {
         axios.get("/goods/all", {
@@ -87,6 +95,19 @@
           let pageBean = respBean.data;
           console.log(pageBean.list[0]);
           goods.value = pageBean.list[0];
+
+          handleQueryComment();
+        });
+      };
+      
+      const handleQueryComment = () => {
+        axios.get("/comment/all/" + route.query.id).then((response) => {
+          let respBean = response.data;
+          if (respBean.code != 0) {
+            ElNotification({ title: '消息', message: respBean.msg, type: 'error', duration: 1000});
+            return;
+          }
+          comment.value = respBean.data;
         });
       };
 
@@ -95,7 +116,9 @@
       });
       
       return {
-        goods
+        goods,
+        comment,
+        
       }
     }
   });

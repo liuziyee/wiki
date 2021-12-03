@@ -37,7 +37,8 @@ public class SpringMvcConfig implements WebMvcConfigurer {
                         "/goods/all",
                         "/category/tree",
                         "/user/all",
-                        "/user/login"
+                        "/user/login",
+                        "/comment/all/*"
                 );
     }
 

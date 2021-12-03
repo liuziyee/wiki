@@ -48,6 +48,8 @@
 
         <!--<table tableName="goods"/>-->
         <!--<table tableName="category"/>-->
-        <table tableName="user"/>
+        <!--<table tableName="user"/>-->
+        <table tableName="comment"/>
+        <table tableName="reply"/>
     </context>
 </generatorConfiguration>
