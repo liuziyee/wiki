@@ -22,7 +22,7 @@ public class RedisUtil {
     }
 
     public static String getKey(RedisKey prefix, Long id) {
-        return prefix.getKey() + "_" + id;
+        return String.join("_", prefix.getKey(), id.toString());
     }
 
     public static void set(String key, Object obj, Long seconds) {

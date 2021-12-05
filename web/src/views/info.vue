@@ -32,16 +32,29 @@
               </el-col>
             </el-row>
           </el-tab-pane>
-          <el-tab-pane label="评论">
+          <el-tab-pane :label="total">
             <el-row :gutter="10">
               <el-col :span="5">
-                <el-input size="mini" type="textarea" :rows="3"></el-input>
+                <el-input size="mini" type="textarea" :rows="3" v-model="comment"></el-input>
               </el-col>
               <el-col :span="5">
-                <el-check-tag>评论</el-check-tag>
+                <el-check-tag @change="handleComment">评论</el-check-tag>
               </el-col>
             </el-row>
-            <el-tree :data="comment" :props="{ children: 'children', label: 'label' }" empty-text=""/>
+            <el-tree :data="commentTree" 
+                     :props="{ children: 'children', label: 'label' }" 
+                     empty-text=""
+                     default-expand-all
+                     :expand-on-click-node="false"
+                     @node-click="handleReply"
+            >
+              <template #default="{ node, data }">
+                <div class="tree-node">
+                  <span style="margin-right: 5px">{{node.label}}</span>
+                  <el-check-tag class="data-tag">回复</el-check-tag>
+                </div>
+              </template>
+            </el-tree>
           </el-tab-pane>
         </el-tabs>
       </el-card>
@@ -66,7 +79,7 @@
   margin-bottom: 0px;
 }
 .data-tag {
-  font-size: x-small;
+  font-size: 5px;
   margin-right: 5px;
   padding: 5px;
 }
@@ -74,29 +87,41 @@
   border: 0;
   background-color: #f4f6f9;
 }
+.tree-node {
+  font-size: 14px;
+  margin-bottom: 5px;
+}
 </style>
 
 <script lang="ts">
-  import {defineComponent,onMounted,ref} from 'vue';
-  import axios from 'axios';
-  import {message} from 'ant-design-vue';
-  import { ElNotification } from 'element-plus';
-  import {useRoute} from 'vue-router';
+import {computed, defineComponent, onMounted, ref} from 'vue';
+import axios from 'axios';
+import {message} from 'ant-design-vue';
+import { ElNotification } from 'element-plus';
+import {useRoute} from 'vue-router';
+import store from "@/store";
 
   export default defineComponent({
     name: 'GoodsInfo',
     
     setup() {
+      const user = computed(() => store.state.user);
+      const token = computed(() => store.state.token);
+
       let route = useRoute();
       const goods = ref({});
-      const comment = ref({});
+      const commentTree = ref({});
+      const comment = ref();
+      const goodsId = route.query.id;
+      const total = ref();
+      
 
       const handleQueryGoods = () => {
         axios.get("/goods/all", {
           params: {
             page: 1,
             size: 1000,
-            id: route.query.id
+            id: goodsId
           }
         }).then((response) => {
           let respBean = response.data;
@@ -113,14 +138,39 @@
       };
       
       const handleQueryComment = () => {
-        axios.get("/comment/all/" + route.query.id).then((response) => {
+        axios.get("/comment/all/" + goodsId).then((response) => {
           let respBean = response.data;
           if (respBean.code != 0) {
             ElNotification({ title: '消息', message: respBean.msg, type: 'error', duration: 1000});
             return;
           }
-          comment.value = respBean.data;
+          let pageBean = respBean.data;
+          commentTree.value = pageBean.list;
+          total.value = "评论(" + pageBean.total + ")";
         });
+      };
+      
+      const handleComment = () => {
+        
+        
+        axios.get("/comment/addComment/", {
+          params: {
+            goodsId: goodsId,
+            content: comment.value
+          }
+        }).then((response) => {
+          let respBean = response.data;
+          if (respBean.code != 0) {
+            ElNotification({ title: '消息', message: respBean.msg, type: 'error', duration: 1000});
+            return;
+          }
+          comment.value = null;
+          handleQueryComment();
+        });
+      };
+
+      const handleReply = (node: any) => {
+        console.log(node);
       };
 
       onMounted(() => {
@@ -129,8 +179,11 @@
       
       return {
         goods,
+        commentTree,
         comment,
-        
+        total,
+        handleComment,
+        handleReply
       }
     }
   });

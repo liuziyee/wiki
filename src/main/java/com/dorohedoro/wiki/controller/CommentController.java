@@ -1,6 +1,7 @@
 package com.dorohedoro.wiki.controller;
 
 import com.dorohedoro.wiki.bean.VO.CommentVO;
+import com.dorohedoro.wiki.bean.VO.PageBean;
 import com.dorohedoro.wiki.bean.VO.ResponseBean;
 import com.dorohedoro.wiki.bean.domain.Comment;
 import com.dorohedoro.wiki.service.CommentService;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -27,10 +29,19 @@ public class CommentController {
 
     @GetMapping("/all/{id}")
     public ResponseBean getCommentTree(@PathVariable Long id) {
-        List<CommentVO> commentTree = commentService.getCommentTree(id);
-        ResponseBean<List<CommentVO>> res = new ResponseBean();
+        PageBean<CommentVO> pageBean = commentService.getCommentTree(id);
+        ResponseBean<PageBean> res = new ResponseBean();
         res.setCode(ResCode.success.getCode());
-        res.setData(commentTree);
+        res.setData(pageBean);
+        return res;
+    }
+
+    @GetMapping("/addComment")
+    public ResponseBean addComment(HttpServletRequest request, Comment commentBO) {
+        Long token = Long.valueOf(request.getHeader("token"));
+        commentService.addComment(commentBO, token);
+        ResponseBean res = new ResponseBean();
+        res.setCode(ResCode.success.getCode());
         return res;
     }
 }

@@ -1,18 +1,20 @@
 package com.dorohedoro.wiki.service;
 
 import com.dorohedoro.wiki.bean.VO.CommentVO;
+import com.dorohedoro.wiki.bean.VO.PageBean;
 import com.dorohedoro.wiki.bean.VO.ReplyVO;
+import com.dorohedoro.wiki.bean.VO.UserVO;
 import com.dorohedoro.wiki.bean.domain.*;
+import com.dorohedoro.wiki.exception.BizException;
 import com.dorohedoro.wiki.mapper.CommentMapper;
 import com.dorohedoro.wiki.mapper.ReplyMapper;
 import com.dorohedoro.wiki.mapper.UserMapper;
-import com.dorohedoro.wiki.util.AppEnum;
-import com.dorohedoro.wiki.util.BeanUtil;
-import com.dorohedoro.wiki.util.TimeUtil;
+import com.dorohedoro.wiki.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -34,7 +36,7 @@ public class CommentService extends BaseService {
     @Autowired
     private UserMapper userMapper;
 
-    public List<CommentVO> getCommentTree(Long id) {
+    public PageBean<CommentVO> getCommentTree(Long id) {
         CommentExample commentExample = new CommentExample();
         commentExample.createCriteria().andGoodsIdEqualTo(id);
         List<Comment> commentList = commentMapper.selectByExample(commentExample);
@@ -68,7 +70,28 @@ public class CommentService extends BaseService {
                 }
             }
         }
-        return commentVOList;
+
+        PageBean<CommentVO> pageBean = new PageBean<>();
+        pageBean.setList(commentVOList);
+        int total = commentList.size() + allReplyList.size();
+        pageBean.setTotal((long) total);
+        return pageBean;
+    }
+
+    public void addComment(Comment commentBO, Long token) {
+        String key = RedisUtil.getKey(RedisKey.token, token);
+        UserVO user = (UserVO) RedisUtil.get(key);
+        if (user == null) {
+            throw new BizException(ResCode.token_expire);
+        }
+
+        Comment comment = new Comment();
+        comment.setId(IDGenerator.nextId());
+        comment.setGoodsId(commentBO.getGoodsId());
+        comment.setUserId(user.getId());
+        comment.setContent(commentBO.getContent());
+        comment.setCreateTime(Instant.now().toEpochMilli());
+        commentMapper.insertSelective(comment);
     }
 
     private Map<Long, User> getUserMap(List<CommentVO> commentVOList, List<ReplyVO> allReplyVOList) {
