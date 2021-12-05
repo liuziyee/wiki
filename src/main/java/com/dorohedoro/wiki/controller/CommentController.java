@@ -1,5 +1,6 @@
 package com.dorohedoro.wiki.controller;
 
+import com.dorohedoro.wiki.bean.VO.CommentVO;
 import com.dorohedoro.wiki.bean.VO.ResponseBean;
 import com.dorohedoro.wiki.bean.domain.Comment;
 import com.dorohedoro.wiki.service.CommentService;
@@ -26,8 +27,8 @@ public class CommentController {
 
     @GetMapping("/all/{id}")
     public ResponseBean getCommentTree(@PathVariable Long id) {
-        List<Comment> commentTree = commentService.getCommentTree(id);
-        ResponseBean<List<Comment>> res = new ResponseBean();
+        List<CommentVO> commentTree = commentService.getCommentTree(id);
+        ResponseBean<List<CommentVO>> res = new ResponseBean();
         res.setCode(ResCode.success.getCode());
         res.setData(commentTree);
         return res;

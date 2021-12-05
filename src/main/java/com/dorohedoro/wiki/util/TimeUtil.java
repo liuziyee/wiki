@@ -1,7 +1,9 @@
 package com.dorohedoro.wiki.util;
 
+import java.text.SimpleDateFormat;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.HashMap;
 
 /**
@@ -10,6 +12,13 @@ import java.util.HashMap;
  * @Date 2021/11/4 17:55
  */
 public class TimeUtil {
+    private static String YMDHMS = "yyyy-MM-dd HH:mm:ss";
+
+    public static String getYMDHMS(Long timestamp) {
+        Date date = new Date(timestamp);
+        SimpleDateFormat format = new SimpleDateFormat(YMDHMS);
+        return format.format(date);
+    }
     
     public static HashMap<String, Long> getToday() {
         LocalDateTime ts = LocalDateTime.of(LocalDate.now(), LocalTime.MIN); //00:00:00

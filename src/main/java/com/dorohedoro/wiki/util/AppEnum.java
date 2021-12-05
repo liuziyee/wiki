@@ -13,5 +13,12 @@ public class AppEnum {
 
         public abstract Long v();
     }
+    
+    public enum Reply {
+        comment  {public Long v() {return 1L;}},
+        reply {public Long v() {return 2L;}};
+
+        public abstract Long v();
+    }
 
 }

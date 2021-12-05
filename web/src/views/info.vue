@@ -33,7 +33,7 @@
             </el-row>
           </el-tab-pane>
           <el-tab-pane label="评论">
-            <el-tree :data="comment" empty-text=""/>
+            <el-tree :data="comment" :props="{ children: 'children', label: 'label' }" empty-text=""/>
           </el-tab-pane>
         </el-tabs>
       </el-card>
