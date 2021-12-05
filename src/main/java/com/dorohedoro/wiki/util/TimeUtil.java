@@ -12,11 +12,11 @@ import java.util.HashMap;
  * @Date 2021/11/4 17:55
  */
 public class TimeUtil {
-    private static String YMDHMS = "yyyy-MM-dd HH:mm:ss";
+    private static String YMDHM = "yyyy-MM-dd HH:mm";
 
     public static String getYMDHMS(Long timestamp) {
         Date date = new Date(timestamp);
-        SimpleDateFormat format = new SimpleDateFormat(YMDHMS);
+        SimpleDateFormat format = new SimpleDateFormat(YMDHM);
         return format.format(date);
     }
     

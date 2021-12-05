@@ -88,7 +88,7 @@ public class CommentService extends BaseService {
 
             User fromUser = userMap.get(reply.getFromUid());
             User toUser = userMap.get(reply.getToUid());
-            String label = String.join(" ", fromUser.getName() + "@" + toUser.getName(), 
+            String label = String.join(" ", fromUser.getName() + " 回复 " + toUser.getName(), 
                     reply.getContent(), TimeUtil.getYMDHMS(reply.getCreateTime()));
             reply.setLabel(label);
             

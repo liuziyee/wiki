@@ -33,6 +33,14 @@
             </el-row>
           </el-tab-pane>
           <el-tab-pane label="评论">
+            <el-row :gutter="10">
+              <el-col :span="5">
+                <el-input size="mini" type="textarea" :rows="3"></el-input>
+              </el-col>
+              <el-col :span="5">
+                <el-check-tag>评论</el-check-tag>
+              </el-col>
+            </el-row>
             <el-tree :data="comment" :props="{ children: 'children', label: 'label' }" empty-text=""/>
           </el-tab-pane>
         </el-tabs>
@@ -61,6 +69,10 @@
   font-size: x-small;
   margin-right: 5px;
   padding: 5px;
+}
+.container ::v-deep .el-textarea__inner {
+  border: 0;
+  background-color: #f4f6f9;
 }
 </style>
 
