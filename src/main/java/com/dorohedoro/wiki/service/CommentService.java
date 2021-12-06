@@ -16,10 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -73,6 +70,7 @@ public class CommentService extends BaseService {
             }
         }
 
+        commentVOList.sort(Comparator.comparing(CommentVO::getCreateTime).reversed());
         PageBean<CommentVO> pageBean = new PageBean<>();
         pageBean.setList(commentVOList);
         int total = commentList.size() + allReplyList.size();
