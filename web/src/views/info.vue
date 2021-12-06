@@ -63,7 +63,7 @@
                       </div>
                     </div>
                     <template #reference>
-                      <el-check-tag class="data-tag">回复</el-check-tag>
+                      <el-check-tag class="data-tag" @change="prepareReplyData">回复</el-check-tag>
                     </template>
                   </el-popover>
                 </div>
@@ -101,6 +101,12 @@
   border: 0;
   background-color: #f4f6f9;
   resize: none;
+}
+.container ::v-deep .el-tree-node__content {
+  padding: 15px 0;
+}
+.el-tree {
+  margin-top: 10px;
 }
 .tree-node {
   font-size: 14px;
@@ -193,6 +199,7 @@ import store from "@/store";
       };
 
       const prepareReplyData = (item: any, node: any) => {
+        console.log(item);
         console.log(node.parent.data instanceof Array);
         reply.value.relaId = item.id;
         if (node.parent.data instanceof Array) {
