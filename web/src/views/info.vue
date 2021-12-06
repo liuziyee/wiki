@@ -46,12 +46,26 @@
                      empty-text=""
                      default-expand-all
                      :expand-on-click-node="false"
-                     @node-click="handleReply"
+                     @node-click="prepareReplyData"
             >
               <template #default="{ node, data }">
                 <div class="tree-node">
                   <span style="margin-right: 5px">{{node.label}}</span>
-                  <el-check-tag class="data-tag">回复</el-check-tag>
+                  <el-popover
+                      placement="top-start"
+                      :width="500"
+                      trigger="click"
+                  >
+                    <div class="container">
+                      <el-input type="textarea" :row="2" v-model="reply.content"></el-input>
+                      <div style="text-align: right;margin-top: 5px">
+                        <el-check-tag class="data-tag" @change="handleReply">回复</el-check-tag>
+                      </div>
+                    </div>
+                    <template #reference>
+                      <el-check-tag class="data-tag">回复</el-check-tag>
+                    </template>
+                  </el-popover>
                 </div>
               </template>
             </el-tree>
@@ -86,6 +100,7 @@
 .container ::v-deep .el-textarea__inner {
   border: 0;
   background-color: #f4f6f9;
+  resize: none;
 }
 .tree-node {
   font-size: 14px;
@@ -114,7 +129,14 @@ import store from "@/store";
       const comment = ref();
       const goodsId = route.query.id;
       const total = ref();
-      
+      const reply = ref({
+        toUid: 0, 
+        commentId: 0,
+        relaId: 0,
+        type: 0,
+        content: ''
+      });
+      const popoverVisible = ref(false);
 
       const handleQueryGoods = () => {
         axios.get("/goods/all", {
@@ -164,13 +186,41 @@ import store from "@/store";
             ElNotification({ title: '消息', message: respBean.msg, type: 'error', duration: 1000});
             return;
           }
+          ElNotification({ title: '消息', message: '看看你的评论吧...', type: 'success'});
           comment.value = null;
           handleQueryComment();
         });
       };
 
-      const handleReply = (node: any) => {
-        console.log(node);
+      const prepareReplyData = (item: any, node: any) => {
+        console.log(node.parent.data instanceof Array);
+        reply.value.relaId = item.id;
+        if (node.parent.data instanceof Array) {
+          reply.value.type = 1;
+          reply.value.toUid = item.userId;
+        } else {
+          reply.value.type = 2;
+          reply.value.toUid = item.fromUid;
+        }
+        while (!(node.parent.data instanceof Array)) {
+          node = node.parent;
+        }
+        reply.value.commentId = node.data.id;
+        console.log(reply.value);
+      };
+      
+      const handleReply = () => {
+        axios.post("/comment/addReply", reply.value).then((response) => {
+          let respBean = response.data;
+          if (respBean.code != 0) {
+            ElNotification({ title: '消息', message: respBean.msg, type: 'error'});
+            return;
+          }
+          
+          reply.value.content = '';
+          ElNotification({ title: '消息', message: '看看你的回复吧...', type: 'success'});
+          handleQueryComment();
+        })
       };
 
       onMounted(() => {
@@ -181,8 +231,11 @@ import store from "@/store";
         goods,
         commentTree,
         comment,
+        reply,
         total,
+        popoverVisible,
         handleComment,
+        prepareReplyData,
         handleReply
       }
     }

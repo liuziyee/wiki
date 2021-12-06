@@ -10,6 +10,7 @@ import com.dorohedoro.wiki.mapper.CommentMapper;
 import com.dorohedoro.wiki.mapper.ReplyMapper;
 import com.dorohedoro.wiki.mapper.UserMapper;
 import com.dorohedoro.wiki.util.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -27,6 +28,7 @@ import java.util.stream.Collectors;
  * @Date 2021/12/3 17:34
  */
 @Service
+@Slf4j
 public class CommentService extends BaseService {
 
     @Autowired
@@ -84,12 +86,10 @@ public class CommentService extends BaseService {
         if (user == null) {
             throw new BizException(ResCode.token_expire);
         }
-
-        Comment comment = new Comment();
+        
+        Comment comment = BeanUtil.copy(commentBO, Comment.class);
         comment.setId(IDGenerator.nextId());
-        comment.setGoodsId(commentBO.getGoodsId());
         comment.setUserId(user.getId());
-        comment.setContent(commentBO.getContent());
         comment.setCreateTime(Instant.now().toEpochMilli());
         commentMapper.insertSelective(comment);
     }
@@ -122,5 +122,15 @@ public class CommentService extends BaseService {
                 getTree(replyToReplyList, allReplyVOList, userMap);
             }
         }
+    }
+
+    public void addReply(Reply replyBO, Long token) {
+        Reply reply = BeanUtil.copy(replyBO, Reply.class);
+        String key = RedisUtil.getKey(RedisKey.token, token);
+        UserVO user = (UserVO) RedisUtil.get(key);
+        reply.setId(IDGenerator.nextId());
+        reply.setFromUid(user.getId());
+        reply.setCreateTime(Instant.now().toEpochMilli());
+        replyMapper.insertSelective(reply);
     }
 }
