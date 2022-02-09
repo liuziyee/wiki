@@ -44,9 +44,9 @@ public class GoodsService {
         String name = goodsBO.getName();
         Long id = goodsBO.getId();
         Long categoryId = goodsBO.getCategoryId();
-        if (StringUtils.isEmpty(name) && id == null && categoryId == null) {
-            throw new BizException(ResCode.valid);
-        }
+        //if (StringUtils.isEmpty(name) && id == null && categoryId == null) {
+        //    throw new BizException(ResCode.valid);
+        //}
         
         GoodsExample goodsExample = new GoodsExample();
         GoodsExample.Criteria criteria = goodsExample.createCriteria();
@@ -84,7 +84,6 @@ public class GoodsService {
         
         List<GoodsVO> goodsVOList = BeanUtil.copyList(goodsList, GoodsVO.class);
         categoryExample.clear(); //reset Criteria
-        //goodsVOList.stream().forEach(o -> );
 
         PageInfo<Goods> pageInfo = new PageInfo<>(goodsList);
         PageBean<GoodsVO> pageBean = new PageBean<>();

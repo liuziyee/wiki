@@ -6,6 +6,7 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.*;
+import org.slf4j.MDC;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -32,6 +33,9 @@ public class LogAspect {
 
     @Before("logPointCut()")
     public void doBefore(JoinPoint joinPoint) {
+        MDC.put("LOG_ID", String.valueOf(IDGenerator.nextId()));
+        MDC.put("TIMESTAMP", String.valueOf(System.currentTimeMillis()));
+        
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = attributes.getRequest();
         Signature signature = joinPoint.getSignature();
