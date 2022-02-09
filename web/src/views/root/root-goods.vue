@@ -129,6 +129,7 @@
           let respBean = response.data;
           if (respBean.code != 0) {
             ElNotification({ title: '消息', message: respBean.msg, type: 'error'});
+            return;
           }
           categoryOptions.value = respBean.data;
         });
@@ -145,6 +146,7 @@
           let respBean = response.data;
           if (respBean.code != 0) {
             ElNotification({ title: '消息', message: respBean.msg, type: 'error'});
+            return;
           }
           let pageBean = respBean.data;
           goods.value = pageBean.list;
