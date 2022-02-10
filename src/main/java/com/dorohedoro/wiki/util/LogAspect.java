@@ -27,7 +27,7 @@ import java.time.Instant;
 @Aspect
 @Slf4j
 public class LogAspect {
-    @Pointcut("execution(* com.dorohedoro..*controller..*(..))")
+    @Pointcut("execution(* com.dorohedoro..*Controller..*(..))")
     public void logPointCut() {
     }
 

@@ -25,13 +25,13 @@ public class WSServer {
     public void onOpen(Session session, @PathParam("token") String token) {
         map.put(token, session);
         this.token = token;
-        log.info("got a new connection: [token:{}, session id:{}, current connections:{}]", token, session.getId(), map.size());
+        log.info("got a new websocket connection: [token:{}, session id:{}, current connections:{}]", token, session.getId(), map.size());
     }
     
     @OnClose
     public void onClose(Session session) {
         map.remove(this.token);
-        log.info("close a connection: [token:{}, session id:{}, current connections:{}]", this.token, session.getId(), map.size());
+        log.info("close a websocket connection: [token:{}, session id:{}, current connections:{}]", this.token, session.getId(), map.size());
     }
     
     @OnMessage
@@ -44,8 +44,11 @@ public class WSServer {
         log.error("there is a problem", error);
     }
     
-    public void sendInfo(String message) {
+    public void sendInfo(String message, String uniToken) {
         for (String token : map.keySet()) {
+            if (token.equals(uniToken)) {
+                continue;
+            }
             Session session = map.get(token);
             boolean isSucceed = false;
             try {

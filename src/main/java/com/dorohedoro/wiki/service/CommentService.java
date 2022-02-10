@@ -7,9 +7,11 @@ import com.dorohedoro.wiki.bean.VO.UserVO;
 import com.dorohedoro.wiki.bean.domain.*;
 import com.dorohedoro.wiki.exception.BizException;
 import com.dorohedoro.wiki.mapper.CommentMapper;
+import com.dorohedoro.wiki.mapper.GoodsMapper;
 import com.dorohedoro.wiki.mapper.ReplyMapper;
 import com.dorohedoro.wiki.mapper.UserMapper;
 import com.dorohedoro.wiki.util.*;
+import com.dorohedoro.wiki.websocket.WSServer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,6 +36,10 @@ public class CommentService extends BaseService {
     private ReplyMapper replyMapper;
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private GoodsMapper goodsMapper;
+    @Autowired
+    private WSServer wsServer;
 
     public PageBean<CommentVO> getCommentTree(Long id) {
         CommentExample commentExample = new CommentExample();
@@ -90,6 +96,10 @@ public class CommentService extends BaseService {
         comment.setUserId(user.getId());
         comment.setCreateTime(Instant.now().toEpochMilli());
         commentMapper.insertSelective(comment);
+
+        Long goodsId = commentBO.getGoodsId();
+        Goods goods = goodsMapper.selectByPrimaryKey(goodsId);
+        wsServer.sendInfo(String.join("-", user.getName(), goods.getName()), token.toString());
     }
 
     private Map<Long, User> getUserMap(List<CommentVO> commentVOList, List<ReplyVO> allReplyVOList) {

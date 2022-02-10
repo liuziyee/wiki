@@ -80,20 +80,21 @@ const TOKEN = 'TOKEN';
       });
       let router = useRouter();
       let websocket: any;
-      let wsToken: any;
       
       const initWebSocket = () => {
         websocket.onopen = () => {
-          console.log('got a new connection, status code: ', websocket.readyState);
+          console.log('got a new websocket connection, status code: ', websocket.readyState);
         };
         websocket.onmessage = (event: any) => {
-          console.log('got a message, status code: ', event.data);
+          console.log('got a message: ', event.data);
+          let arr = event.data.split("-");
+          ElNotification({title: '消息', message: arr[0] + '评论了' + arr[1], type: 'info'});
         };
         websocket.onerror = () => {
           console.log('there is a problem, status code: ', websocket.readyState);
         };
         websocket.onclose = () => {
-          console.log('close a connection, status code: ', websocket.readyState);
+          console.log('close a websocket connection, status code: ', websocket.readyState);
         };
       };
 
@@ -117,6 +118,8 @@ const TOKEN = 'TOKEN';
             sessionStorage.setItem(TOKEN, token);
             store.commit("setUser", user);
             store.commit("setToken", token);
+
+            openConnection(token);
             
             ElNotification({title: '消息', message: '你好啊 ' + user.name, type: 'success'});
             dialogVisible.value = false;
@@ -135,28 +138,19 @@ const TOKEN = 'TOKEN';
         let token = sessionStorage.getItem(TOKEN);
         if (token) {
           store.commit("setToken", token);
+          openConnection(token);
         }
       };
 
-      const uuid = (len: number, radix = 62) => {
-        const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.split('');
-        const uuid = [];
-        radix = radix || chars.length;
-
-        for (let i = 0; i < len; i++) {
-          uuid[i] = chars[0 | Math.random() * radix];
+      const openConnection = (token: any) => {
+        if ('WebSocket' in window) {
+          websocket = new WebSocket(process.env.VUE_APP_WS_SERVER + '/ws/' + token);
+          initWebSocket();
         }
-        return uuid.join('');
       };
 
       onMounted(() => {
         checkSession();
-
-        if ('WebSocket' in window) {
-          wsToken = uuid(10);
-          websocket = new WebSocket(process.env.VUE_APP_WS_SERVER + '/ws/' + wsToken);
-          initWebSocket();
-        }
       });
       
       return {
