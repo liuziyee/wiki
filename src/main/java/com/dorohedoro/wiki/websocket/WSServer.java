@@ -25,34 +25,39 @@ public class WSServer {
     public void onOpen(Session session, @PathParam("token") String token) {
         map.put(token, session);
         this.token = token;
-        log.info("got a new connection... token:{}, session id:{}, current connections:{}", token, session.getId(), map.size());
+        log.info("got a new connection: [token:{}, session id:{}, current connections:{}]", token, session.getId(), map.size());
     }
     
     @OnClose
     public void onClose(Session session) {
         map.remove(this.token);
-        log.info("close a connection... token:{}, session id:{}, current connections:{}", this.token, session.getId(), map.size());
+        log.info("close a connection: [token:{}, session id:{}, current connections:{}]", this.token, session.getId(), map.size());
     }
     
     @OnMessage
     public void onMessage(String message, Session session) {
-        log.info("got a message... token:{}, msg:{}", token, message);
+        log.info("got a message: [token:{}, msg:{}]", token, message);
     }
     
     @OnError
     public void onError(Session session, Throwable error) {
-        log.error("there is a problem...", error);
+        log.error("there is a problem", error);
     }
     
     public void sendInfo(String message) {
         for (String token : map.keySet()) {
             Session session = map.get(token);
+            boolean isSucceed = false;
             try {
                 session.getBasicRemote().sendText(message);
+                isSucceed = true;
             } catch (IOException e) {
-                log.error("failed to push a message... token:{}, msg:{}", token, message);
+                log.error("failed to push a message: [token:{}, msg:{}]", token, message);
+            } finally {
+                if (isSucceed) {
+                    log.info("push a message: [token:{}, msg:{}]", token, message);
+                }
             }
-            log.info("push a message... token:{}, msg:{}", token, message);
         }
     }
 

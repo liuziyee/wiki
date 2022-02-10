@@ -79,6 +79,23 @@ const TOKEN = 'TOKEN';
         ]
       });
       let router = useRouter();
+      let websocket: any;
+      let wsToken: any;
+      
+      const initWebSocket = () => {
+        websocket.onopen = () => {
+          console.log('got a new connection, status code: ', websocket.readyState);
+        };
+        websocket.onmessage = (event: any) => {
+          console.log('got a message, status code: ', event.data);
+        };
+        websocket.onerror = () => {
+          console.log('there is a problem, status code: ', websocket.readyState);
+        };
+        websocket.onclose = () => {
+          console.log('close a connection, status code: ', websocket.readyState);
+        };
+      };
 
       const handleLogin = () => {
         loginForm.value.validate((valid: any) => {
@@ -121,8 +138,25 @@ const TOKEN = 'TOKEN';
         }
       };
 
+      const uuid = (len: number, radix = 62) => {
+        const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.split('');
+        const uuid = [];
+        radix = radix || chars.length;
+
+        for (let i = 0; i < len; i++) {
+          uuid[i] = chars[0 | Math.random() * radix];
+        }
+        return uuid.join('');
+      };
+
       onMounted(() => {
         checkSession();
+
+        if ('WebSocket' in window) {
+          wsToken = uuid(10);
+          websocket = new WebSocket(process.env.VUE_APP_WS_SERVER + '/ws/' + wsToken);
+          initWebSocket();
+        }
       });
       
       return {
