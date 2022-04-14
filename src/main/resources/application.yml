@@ -9,7 +9,7 @@ spring:
     password: 1994
   redis:
     database: 0
-    host: 192.168.110.69
+    host: 192.168.0.104
     password:
     lettuce:
       pool:

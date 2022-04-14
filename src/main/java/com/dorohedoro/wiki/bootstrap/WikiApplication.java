@@ -8,7 +8,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @ComponentScan("com.dorohedoro")
 @MapperScan("com.dorohedoro.wiki.mapper")
-@EnableScheduling
 @SpringBootApplication
 public class WikiApplication {
 
