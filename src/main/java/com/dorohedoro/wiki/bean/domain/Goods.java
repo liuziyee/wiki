@@ -2,6 +2,7 @@ package com.dorohedoro.wiki.bean.domain;
 
 import com.dorohedoro.wiki.bean.VO.PageBean;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 @Data
 public class Goods extends PageBean {

@@ -86,9 +86,14 @@ const TOKEN = 'TOKEN';
           console.log('got a new websocket connection, status code: ', websocket.readyState);
         };
         websocket.onmessage = (event: any) => {
-          console.log('got a message: ', event.data);
-          let arr = event.data.split("-");
-          ElNotification({title: '消息', message: arr[0] + '评论了' + arr[1], type: 'info'});
+          let msg = event.data;
+          console.log('got a message: ', msg);
+          if (msg.indexOf("&") != -1) {
+            let arr = msg.split("&");
+            ElNotification({title: '消息', message: arr[0] + '评论了' + arr[1], type: 'info'});
+          } else {
+            ElNotification({title: '消息', message: msg, type: 'info'});
+          }
         };
         websocket.onerror = () => {
           console.log('there is a problem, status code: ', websocket.readyState);
