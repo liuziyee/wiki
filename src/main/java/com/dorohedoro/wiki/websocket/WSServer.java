@@ -44,7 +44,7 @@ public class WSServer {
         log.error("there is a problem", error);
     }
     
-    public void sendInfo(String message, String uniToken) {
+    public void sendMsg(String message, String uniToken) {
         for (String token : map.keySet()) {
             if (token.equals(uniToken)) {
                 continue;

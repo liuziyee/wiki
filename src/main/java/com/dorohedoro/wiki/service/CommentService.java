@@ -99,7 +99,7 @@ public class CommentService extends BaseService {
 
         Long goodsId = commentBO.getGoodsId();
         Goods goods = goodsMapper.selectByPrimaryKey(goodsId);
-        wsServer.sendInfo(String.join("&", user.getName(), goods.getName()), token.toString());
+        wsServer.sendMsg(String.join("&", user.getName(), goods.getName()), token.toString());
     }
 
     private Map<Long, User> getUserMap(List<CommentVO> commentVOList, List<ReplyVO> allReplyVOList) {

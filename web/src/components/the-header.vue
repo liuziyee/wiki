@@ -92,7 +92,7 @@ const TOKEN = 'TOKEN';
             let arr = msg.split("&");
             ElNotification({title: '消息', message: arr[0] + '评论了' + arr[1], type: 'info'});
           } else {
-            ElNotification({title: '消息', message: msg, type: 'info'});
+            ElNotification({title: '消息', message: "推送时间戳: " + msg, type: 'info'});
           }
         };
         websocket.onerror = () => {
