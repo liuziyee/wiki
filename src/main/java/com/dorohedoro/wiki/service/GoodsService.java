@@ -1,18 +1,16 @@
 package com.dorohedoro.wiki.service;
 
-import com.dorohedoro.wiki.bean.VO.GoodsVO;
-import com.dorohedoro.wiki.bean.VO.PageBean;
+import com.dorohedoro.wiki.bean.vo.GoodsVO;
+import com.dorohedoro.wiki.bean.vo.PageBean;
 import com.dorohedoro.wiki.bean.domain.Category;
 import com.dorohedoro.wiki.bean.domain.CategoryExample;
 import com.dorohedoro.wiki.bean.domain.Goods;
 import com.dorohedoro.wiki.bean.domain.GoodsExample;
-import com.dorohedoro.wiki.exception.BizException;
 import com.dorohedoro.wiki.mapper.CategoryMapper;
 import com.dorohedoro.wiki.mapper.GoodsMapper;
 import com.dorohedoro.wiki.util.AppEnum;
 import com.dorohedoro.wiki.util.BeanUtil;
 import com.dorohedoro.wiki.util.IDGenerator;
-import com.dorohedoro.wiki.util.ResCode;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;

@@ -2,7 +2,7 @@ package com.dorohedoro.wiki.service;
 
 import com.dorohedoro.wiki.bean.domain.Category;
 import com.dorohedoro.wiki.bean.domain.CategoryExample;
-import com.dorohedoro.wiki.bean.VO.CategoryVO;
+import com.dorohedoro.wiki.bean.vo.CategoryVO;
 import com.dorohedoro.wiki.mapper.CategoryMapper;
 import com.dorohedoro.wiki.util.AppEnum;
 import com.dorohedoro.wiki.util.BeanUtil;

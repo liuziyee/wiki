@@ -1,9 +1,9 @@
 package com.dorohedoro.wiki.service;
 
-import com.dorohedoro.wiki.bean.VO.CommentVO;
-import com.dorohedoro.wiki.bean.VO.PageBean;
-import com.dorohedoro.wiki.bean.VO.ReplyVO;
-import com.dorohedoro.wiki.bean.VO.UserVO;
+import com.dorohedoro.wiki.bean.vo.CommentVO;
+import com.dorohedoro.wiki.bean.vo.PageBean;
+import com.dorohedoro.wiki.bean.vo.ReplyVO;
+import com.dorohedoro.wiki.bean.vo.UserVO;
 import com.dorohedoro.wiki.bean.domain.*;
 import com.dorohedoro.wiki.exception.BizException;
 import com.dorohedoro.wiki.mapper.CommentMapper;

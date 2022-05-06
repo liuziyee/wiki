@@ -1,6 +1,6 @@
 package com.dorohedoro.wiki.util;
 
-import com.dorohedoro.wiki.bean.VO.ResponseBean;
+import com.dorohedoro.wiki.bean.vo.ResponseBean;
 import com.google.gson.Gson;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;

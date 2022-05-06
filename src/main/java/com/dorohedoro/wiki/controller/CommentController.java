@@ -1,8 +1,8 @@
 package com.dorohedoro.wiki.controller;
 
-import com.dorohedoro.wiki.bean.VO.CommentVO;
-import com.dorohedoro.wiki.bean.VO.PageBean;
-import com.dorohedoro.wiki.bean.VO.ResponseBean;
+import com.dorohedoro.wiki.bean.vo.CommentVO;
+import com.dorohedoro.wiki.bean.vo.PageBean;
+import com.dorohedoro.wiki.bean.vo.ResponseBean;
 import com.dorohedoro.wiki.bean.domain.Comment;
 import com.dorohedoro.wiki.bean.domain.Reply;
 import com.dorohedoro.wiki.service.CommentService;
@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 /**
  * @Description

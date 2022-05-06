@@ -1,7 +1,7 @@
 package com.dorohedoro.wiki.controller;
 
-import com.dorohedoro.wiki.bean.VO.CategoryVO;
-import com.dorohedoro.wiki.bean.VO.ResponseBean;
+import com.dorohedoro.wiki.bean.vo.CategoryVO;
+import com.dorohedoro.wiki.bean.vo.ResponseBean;
 import com.dorohedoro.wiki.bean.domain.Category;
 import com.dorohedoro.wiki.service.CategoryService;
 import com.dorohedoro.wiki.util.ResCode;

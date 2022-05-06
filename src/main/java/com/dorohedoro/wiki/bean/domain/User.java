@@ -1,10 +1,6 @@
 package com.dorohedoro.wiki.bean.domain;
 
-import com.dorohedoro.wiki.bean.VO.PageBean;
-
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
+import com.dorohedoro.wiki.bean.vo.PageBean;
 
 public class User extends PageBean {
     private Long id;

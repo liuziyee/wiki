@@ -1,6 +1,6 @@
 package com.dorohedoro.wiki.controller;
 
-import com.dorohedoro.wiki.bean.VO.ResponseBean;
+import com.dorohedoro.wiki.bean.vo.ResponseBean;
 import com.dorohedoro.wiki.exception.BizException;
 import com.dorohedoro.wiki.util.ResCode;
 import lombok.extern.slf4j.Slf4j;

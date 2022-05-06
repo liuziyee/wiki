@@ -1,19 +1,24 @@
-package com.dorohedoro.wiki.bean.VO;
+package com.dorohedoro.wiki.bean.vo;
 
-import com.dorohedoro.wiki.bean.domain.Reply;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
 
 import java.util.List;
 @Data
-public class CommentVO {
+public class ReplyVO {
     @JsonSerialize(using = ToStringSerializer.class)
     private Long id;
     @JsonSerialize(using = ToStringSerializer.class)
-    private Long goodsId;
+    private Long commentId;
     @JsonSerialize(using = ToStringSerializer.class)
-    private Long userId;
+    private Long relaId;
+
+    private Long type;
+    @JsonSerialize(using = ToStringSerializer.class)
+    private Long fromUid;
+    @JsonSerialize(using = ToStringSerializer.class)
+    private Long toUid;
 
     private String content;
 
@@ -22,5 +27,4 @@ public class CommentVO {
     private String label;
 
     private List<ReplyVO> children;
-    
 }
