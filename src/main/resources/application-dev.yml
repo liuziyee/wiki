@@ -9,14 +9,14 @@ spring:
     password: 1994
   redis:
     database: 0
-    host: 192.168.0.104
+    host: 192.168.1.2
     password:
     lettuce:
       pool:
-        max-active: 8 #连接池最大连接数
-        max-wait: -1 #连接池最大阻塞等待时间
-        max-idel: 5 #连接池最大空闲连接
-        min-idel: 5 #连接池最小空闲连接
+        max-active: 8
+        max-wait: -1
+        max-idel: 5
+        min-idel: 5
     timeout: 10000
 
 mybatis:
