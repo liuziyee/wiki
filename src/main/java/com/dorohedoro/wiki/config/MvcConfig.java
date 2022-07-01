@@ -26,7 +26,7 @@ import java.util.List;
  * @Date 2021/11/7 9:31
  */
 @Configuration
-public class SpringMvcConfig implements WebMvcConfigurer {
+public class MvcConfig implements WebMvcConfigurer {
 
     @Autowired
     AuthInterceptor authInterceptor;

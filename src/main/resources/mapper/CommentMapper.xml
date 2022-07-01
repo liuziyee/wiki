@@ -148,7 +148,7 @@
       <include refid="Example_Where_Clause" />
     </if>
   </select>
-  <update id="updateByExampleSelective" parameterType="map">
+    <update id="updateByExampleSelective" parameterType="map">
     update comment
     <set>
       <if test="record.id != null">
@@ -208,4 +208,10 @@
       create_time = #{createTime,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  <select id="orderBy" resultType="com.dorohedoro.wiki.bean.domain.Comment" resultMap="BaseResultMap">
+    select * from comment
+    <if test="filed != null">
+      order by ${filed} desc
+    </if>
+  </select>
 </mapper>

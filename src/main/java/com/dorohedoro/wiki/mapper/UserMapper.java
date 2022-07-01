@@ -29,4 +29,10 @@ public interface UserMapper {
     int updateByPrimaryKey(User record);
 
     Long exist(User record);
+
+    void writeLock();
+
+    void unlock();
+
+    List<User> limit(Integer offset, Integer size);
 }

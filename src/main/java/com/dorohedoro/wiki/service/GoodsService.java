@@ -81,7 +81,7 @@ public class GoodsService {
         goodsList.sort(Comparator.comparing(Goods::getUpdateTime).reversed());
         
         List<GoodsVO> goodsVOList = BeanUtil.copyList(goodsList, GoodsVO.class);
-        categoryExample.clear(); //reset Criteria
+        categoryExample.clear();
 
         PageInfo<Goods> pageInfo = new PageInfo<>(goodsList);
         PageBean<GoodsVO> pageBean = new PageBean<>();

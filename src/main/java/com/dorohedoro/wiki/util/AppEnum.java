@@ -1,10 +1,5 @@
 package com.dorohedoro.wiki.util;
 
-/**
- * @Description
- * @Author liuziye
- * @Date 2021/11/4 17:43
- */
 public class AppEnum {
     public enum YesOrNo {
         no  {public Long v() {return 0L;}},
@@ -20,5 +15,4 @@ public class AppEnum {
 
         public abstract Long v();
     }
-
 }

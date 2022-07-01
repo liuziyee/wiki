@@ -200,4 +200,19 @@
       <if test="loginName != null">and login_name = #{loginName}</if>
     </trim>
   </select>
+
+  <select id="writeLock">
+    LOCK TABLES user WRITE
+  </select>
+  
+  <select id="unlock">
+    UNLOCK TABLES
+  </select>
+  
+  <select id="limit" resultType="com.dorohedoro.wiki.bean.domain.User" resultMap="BaseResultMap">
+    select * from user
+    <if test="offset != null and size != null">
+      limit #{offset}, #{size}
+    </if>
+  </select>
 </mapper>

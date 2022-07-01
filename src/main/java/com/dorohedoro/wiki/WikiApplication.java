@@ -1,12 +1,9 @@
-package com.dorohedoro.wiki.bootstrap;
+package com.dorohedoro.wiki;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.scheduling.annotation.EnableScheduling;
 
-@ComponentScan("com.dorohedoro")
 @MapperScan("com.dorohedoro.wiki.mapper")
 @SpringBootApplication
 public class WikiApplication {
