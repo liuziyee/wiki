@@ -4,9 +4,12 @@ import com.dorohedoro.wiki.bean.domain.CategoryExample;
 import com.dorohedoro.wiki.bean.domain.Goods;
 import com.dorohedoro.wiki.bean.domain.GoodsExample;
 import com.dorohedoro.wiki.bean.vo.PageBean;
+import com.dorohedoro.wiki.bean.vo.ResponseBean;
+import com.dorohedoro.wiki.controller.GoodsController;
 import com.dorohedoro.wiki.mapper.CategoryMapper;
 import com.dorohedoro.wiki.mapper.GoodsMapper;
 import com.dorohedoro.wiki.service.GoodsService;
+import com.dorohedoro.wiki.util.ResCode;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Before;
 import org.junit.Test;
@@ -32,6 +35,10 @@ public class MockitoTest {
 
     @Spy
     @InjectMocks
+    private GoodsController goodsController;
+
+    @Spy
+    @InjectMocks
     private GoodsService goodsService;
 
     @Mock
@@ -50,21 +57,26 @@ public class MockitoTest {
         when(random.nextInt()).thenReturn(3);
         log.info("{}", random.nextInt());
     }
-
+    
     @Test
-    public void mockService() {
+    public void mock() {
         Goods goods = new Goods();
         goods.setPage(1);
         goods.setSize(100);
-        goods.setCategoryId(102L);
+        goods.setCategoryId(0L);
 
         when(categoryMapper.selectByExample(any(CategoryExample.class))).thenReturn(Collections.emptyList());
         when(goodsMapper.selectByExample(any(GoodsExample.class))).thenReturn(Collections.emptyList());
 
-        PageBean res = new PageBean();
-        res.setTotal(0L);
-        res.setList(Collections.emptyList());
+        goodsController.getGoodsList(goods);
 
-        assertEquals(res, goodsService.getGoodsList(goods));
+        PageBean pageBean = new PageBean();
+        pageBean.setTotal(0L);
+        pageBean.setList(Collections.emptyList());
+        ResponseBean<PageBean> res = new ResponseBean<>();
+        res.setCode(ResCode.success.getCode());
+        res.setData(pageBean);
+
+        assertEquals(res, goodsController.getGoodsList(goods));
     }
 }
