@@ -42,19 +42,16 @@ public class GoodsService {
         String name = goodsBO.getName();
         Long id = goodsBO.getId();
         Long categoryId = goodsBO.getCategoryId();
-        //if (StringUtils.isEmpty(name) && id == null && categoryId == null) {
-        //    throw new BizException(ResCode.valid);
-        //}
         
         GoodsExample goodsExample = new GoodsExample();
         GoodsExample.Criteria criteria = goodsExample.createCriteria();
         
         if (!StringUtils.isEmpty(name)) {
-            criteria.andNameLike("%" + name + "%"); //name like ?
+            criteria.andNameLike("%" + name + "%");
         }
         
         if (id != null) {
-            criteria.andIdEqualTo(id); //id = ?
+            criteria.andIdEqualTo(id);
         }
 
         List<Long> categoryIdList = new ArrayList<>();
@@ -68,13 +65,10 @@ public class GoodsService {
             } else {
                 categoryIdList.add(categoryId);
             }
-            criteria.andCategoryIdIn(categoryIdList); //categoryId in ?
+            criteria.andCategoryIdIn(categoryIdList);
         }
         
-        //deleted = 0
         criteria.andDeletedEqualTo(AppEnum.YesOrNo.no.v());
-        
-        
 
         PageHelper.startPage(goodsBO.getPage(), goodsBO.getSize());
         List<Goods> goodsList = goodsMapper.selectByExample(goodsExample);
@@ -93,7 +87,7 @@ public class GoodsService {
     public void addOrUpdGoods(Goods goodsBO) {
         Long id = goodsBO.getId();
         Integer res = 0;
-        if (id == null || id.equals(0)) {
+        if (id == null || id.equals(0L)) {
             goodsBO.setId(IDGenerator.nextId());
             goodsMapper.insertSelective(goodsBO);
         } else {
