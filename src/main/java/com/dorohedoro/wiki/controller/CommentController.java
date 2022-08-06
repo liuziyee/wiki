@@ -50,6 +50,4 @@ public class CommentController {
         res.setCode(ResCode.success.getCode());
         return res;
     }
-    
-    
 }
