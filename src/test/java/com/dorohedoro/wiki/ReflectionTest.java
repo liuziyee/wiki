@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
@@ -28,7 +29,7 @@ public class ReflectionTest {
         ClassLoader clazzLoader = user.getClass().getClassLoader();
         clazz = clazzLoader.loadClass("com.dorohedoro.wiki.bean.domain.User");
     }
-    
+
     @Test
     public void clazzApi() throws Exception {
         Class clazz = Class.forName("com.dorohedoro.wiki.bean.domain.User");
@@ -46,5 +47,14 @@ public class ReflectionTest {
 
         Field[] fields = clazz.getDeclaredFields();
         log.info("fields: {}", Arrays.stream(fields).map(o -> o.getName()).collect(Collectors.joining(",")));
+
+        Class[] interfaces = clazz.getInterfaces();
+        log.info("interfaces: {}", interfaces);
+
+        Method setId = clazz.getMethod("setId", Long.class);
+        setId.invoke(user, 117L);
+        Method getId = clazz.getMethod("getId");
+        Object uid = getId.invoke(user);
+        log.info("runtime class: {}", uid.getClass());
     }
 }

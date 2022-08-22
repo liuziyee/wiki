@@ -2,8 +2,11 @@ package com.dorohedoro.wiki.bean.domain;
 
 import com.dorohedoro.wiki.bean.vo.PageBean;
 
-public class User extends PageBean {
+import java.io.Serializable;
+
+public class User extends PageBean implements Serializable {
     private Long id;
+    
     private String loginName;
     
     private String name;
