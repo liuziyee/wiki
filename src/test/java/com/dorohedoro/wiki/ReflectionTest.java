@@ -7,6 +7,7 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -56,5 +57,9 @@ public class ReflectionTest {
         Method getId = clazz.getMethod("getId");
         Object uid = getId.invoke(user);
         log.info("runtime class: {}", uid.getClass());
+
+        log.info("declaring class: {}", id.getDeclaringClass());
+        log.info("{}", User.class.isAssignableFrom(id.getDeclaringClass()));
+        log.info("{}", Serializable.class.isAssignableFrom(id.getDeclaringClass()));
     }
 }
