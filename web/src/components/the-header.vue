@@ -1,5 +1,5 @@
 <template>
-  <el-container>
+  <el-container class="container">
     <el-header style="padding: 0 0">
       <el-menu
           default-active="/"
@@ -47,7 +47,10 @@
 .el-menu {
   border-bottom: 0;
 }
-
+.container ::v-deep .el-input__inner {
+  border: 0;
+  background-color: #f4f6f9;
+}
 </style>
 
 <script lang="ts">

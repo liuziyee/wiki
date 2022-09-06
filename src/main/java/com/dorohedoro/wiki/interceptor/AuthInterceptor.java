@@ -29,7 +29,6 @@ public class AuthInterceptor implements HandlerInterceptor {
         if (request.getMethod().equalsIgnoreCase("OPTIONS")) {
             return true;
         }
-        request.setAttribute("startTime", Instant.now().toEpochMilli());
         log.info("URL: {} {}", request.getRequestURL().toString(), request.getMethod());
 
         String token = request.getHeader("token");
@@ -40,16 +39,11 @@ public class AuthInterceptor implements HandlerInterceptor {
         String key = RedisUtil.getKey(RedisKey.token, Long.valueOf(token));
         Object obj = RedisUtil.get(key);
         Gson gson = new Gson();
-        log.info("token: {}, data: {}", gson.toJson(obj));
+        log.info("token: {}, data: {}", token, gson.toJson(obj));
         if (obj == null) {
             CommonUtil.sayError(response, ResCode.unauthorized);
             return false;
         }
         return true;
-    }
-
-    @Override
-    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-        log.info("{}ms", Instant.now().toEpochMilli() - (Long)request.getAttribute("startTime"));
     }
 }
