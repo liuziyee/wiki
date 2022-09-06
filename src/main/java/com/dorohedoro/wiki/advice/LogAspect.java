@@ -40,9 +40,8 @@ public class LogAspect {
         HttpServletRequest request = attributes.getRequest();
         Signature signature = joinPoint.getSignature();
 
-        log.info("<<<<<<<<<<日志开始>>>>>>>>>>");
-        log.info("请求地址: {} {}", request.getRequestURL().toString(), request.getMethod());
-        log.info("类名&方法: {}.{}", signature.getDeclaringTypeName(), signature.getName());
+        log.info("URL: {} {}", request.getRequestURL().toString(), request.getMethod());
+        log.info("@{}.{}", signature.getDeclaringTypeName(), signature.getName());
 
         Object[] args = joinPoint.getArgs();
         Object[] arguments = new Object[args.length];
@@ -54,7 +53,7 @@ public class LogAspect {
         }
 
         Gson gson = new Gson();
-        log.info("{}", gson.toJson(arguments));
+        log.info("req data: {}", gson.toJson(arguments));
     }
 
     @Around("logPointCut()")
@@ -63,8 +62,8 @@ public class LogAspect {
         Object res = proceedingJoinPoint.proceed();
 
         Gson gson = new Gson();
-        log.info("{}", gson.toJson(res));
-        log.info("<<<<<<<<<<日志结束 耗时:{}ms>>>>>>>>>>", Instant.now().toEpochMilli() - startTime);
+        log.info("res data: {}", gson.toJson(res));
+        log.info("{}ms", Instant.now().toEpochMilli() - startTime);
         return res;
     }
 }
