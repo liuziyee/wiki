@@ -2,7 +2,6 @@ import { createStore } from 'vuex'
 
 const store = createStore({
   state: {
-    // authUser: SessionStorage.get(key) || {}
     user: {},
     token: ''
   },

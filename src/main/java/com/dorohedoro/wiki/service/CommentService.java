@@ -56,7 +56,7 @@ public class CommentService extends BaseService {
 
         List<CommentVO> commentVOList = BeanUtil.copyList(commentList, CommentVO.class);
         List<ReplyVO> allReplyVOList = BeanUtil.copyList(allReplyList, ReplyVO.class);
-        //预先查出用户信息
+        
         Map<Long, User> userMap = getUserMap(commentVOList, allReplyVOList);
 
         for (CommentVO comment : commentVOList) {

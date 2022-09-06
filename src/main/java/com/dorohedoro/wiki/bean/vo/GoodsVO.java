@@ -11,7 +11,6 @@ import lombok.Data;
  */
 @Data
 public class GoodsVO {
-    //Long转为String
     @JsonSerialize(using = ToStringSerializer.class)
     private Long id;
     

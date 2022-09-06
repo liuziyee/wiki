@@ -71,7 +71,7 @@ const TOKEN = 'TOKEN';
       const dialogVisible = ref(false);
       const record = ref({password: ''});
       const user = computed(() => store.state.user);
-      const loginForm = ref(); //表单DOM
+      const loginForm = ref();
       const rules = ref({
         loginName: [
           { required: true, message: '未输入登录名',trigger: 'blur' }

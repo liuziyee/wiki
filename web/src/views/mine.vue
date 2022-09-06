@@ -63,7 +63,7 @@ export default defineComponent({
           ElNotification({ title: '消息', message: respBean.msg, type: 'error', duration: 1000});
           return;
         }
-        //empty store and session
+        
         store.commit("setUser", {});
         store.commit("setToken", '');
         sessionStorage.clear();

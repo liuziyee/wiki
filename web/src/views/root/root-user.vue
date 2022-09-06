@@ -106,7 +106,7 @@
         total: 0
       });
       
-      const uploadForm = ref(); //表单DOM
+      const uploadForm = ref();
       const rules = ref({
         loginName: [
           { required: true, message: '未输入登录名',trigger: 'blur' }
@@ -151,7 +151,6 @@
       };
       
       const handleAddOrUpd = () => {
-        //表单校验
         uploadForm.value.validate((valid: any) => {
           if (!valid) {
             ElNotification({ title: '消息', message: '表单数据非法', type: 'error'});

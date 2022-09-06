@@ -52,7 +52,6 @@ public class UserService {
         userBO.setPassword(DigestUtils.md5DigestAsHex(userBO.getPassword().getBytes()));
         Long id = userBO.getId();
         if (id == null || id.equals(0L)) {
-            //loginName判重
             String loginName = userBO.getLoginName();
             User user = new User();
             user.setLoginName(loginName);
@@ -64,8 +63,6 @@ public class UserService {
             userBO.setId(IDGenerator.nextId());
             userMapper.insertSelective(userBO);
         } else {
-            //userBO.setLoginName(null);
-            //userBO.setPassword(null);
             userMapper.updateByPrimaryKeySelective(userBO);
         }
     }
@@ -83,7 +80,7 @@ public class UserService {
         if (!formPwd.equals(pwd)) {
             throw new BizException(ResCode.login);
         }
-        //auth pass
+        
         Map<String, Object> dataMap = new HashMap<>();
         UserVO userVO = BeanUtil.copy(user, UserVO.class);
         Long token = IDGenerator.nextId();
