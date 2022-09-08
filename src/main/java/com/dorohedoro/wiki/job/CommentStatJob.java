@@ -32,7 +32,7 @@ public class CommentStatJob extends QuartzJobBean {
         //try {
         //    TimeUnit.SECONDS.sleep(10);
         //} catch (InterruptedException e) {
-        //    log.info("{}", e.getMessage(), e);
+        //    log.error(e.getMessage(), e);
         //}
         
         wsServer.sendMsg(TimeUtil.getYMDHMS(Instant.now().toEpochMilli()), "");
