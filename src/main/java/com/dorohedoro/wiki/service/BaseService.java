@@ -4,7 +4,6 @@ import com.dorohedoro.wiki.bean.domain.User;
 import com.dorohedoro.wiki.bean.domain.UserExample;
 import com.dorohedoro.wiki.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 

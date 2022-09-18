@@ -1,10 +1,10 @@
 package com.dorohedoro.wiki.controller;
 
+import com.dorohedoro.wiki.bean.domain.Comment;
+import com.dorohedoro.wiki.bean.domain.Reply;
 import com.dorohedoro.wiki.bean.vo.CommentVO;
 import com.dorohedoro.wiki.bean.vo.PageBean;
 import com.dorohedoro.wiki.bean.vo.ResponseBean;
-import com.dorohedoro.wiki.bean.domain.Comment;
-import com.dorohedoro.wiki.bean.domain.Reply;
 import com.dorohedoro.wiki.service.CommentService;
 import com.dorohedoro.wiki.util.ResCode;
 import org.springframework.beans.factory.annotation.Autowired;

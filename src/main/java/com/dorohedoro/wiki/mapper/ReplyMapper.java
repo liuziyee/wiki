@@ -2,8 +2,9 @@ package com.dorohedoro.wiki.mapper;
 
 import com.dorohedoro.wiki.bean.domain.Reply;
 import com.dorohedoro.wiki.bean.domain.ReplyExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ReplyMapper {
     long countByExample(ReplyExample example);

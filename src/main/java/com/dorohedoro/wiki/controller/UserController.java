@@ -1,9 +1,9 @@
 package com.dorohedoro.wiki.controller;
 
-import com.dorohedoro.wiki.bean.vo.UserVO;
+import com.dorohedoro.wiki.bean.domain.User;
 import com.dorohedoro.wiki.bean.vo.PageBean;
 import com.dorohedoro.wiki.bean.vo.ResponseBean;
-import com.dorohedoro.wiki.bean.domain.User;
+import com.dorohedoro.wiki.bean.vo.UserVO;
 import com.dorohedoro.wiki.service.UserService;
 import com.dorohedoro.wiki.util.ResCode;
 import org.springframework.beans.factory.annotation.Autowired;

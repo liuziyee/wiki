@@ -1,10 +1,10 @@
 package com.dorohedoro.wiki.controller;
 
 import com.dorohedoro.wiki.bean.domain.Goods;
+import com.dorohedoro.wiki.bean.vo.GoodsVO;
 import com.dorohedoro.wiki.bean.vo.PageBean;
 import com.dorohedoro.wiki.bean.vo.ResponseBean;
 import com.dorohedoro.wiki.service.GoodsService;
-import com.dorohedoro.wiki.bean.vo.GoodsVO;
 import com.dorohedoro.wiki.util.ResCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

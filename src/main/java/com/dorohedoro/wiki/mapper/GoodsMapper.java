@@ -2,8 +2,9 @@ package com.dorohedoro.wiki.mapper;
 
 import com.dorohedoro.wiki.bean.domain.Goods;
 import com.dorohedoro.wiki.bean.domain.GoodsExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface GoodsMapper {
     long countByExample(GoodsExample example);

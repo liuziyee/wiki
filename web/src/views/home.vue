@@ -76,13 +76,12 @@
 </style>
 
 <script lang="ts">
-  import {defineComponent,onMounted,ref} from 'vue';
-  import axios from 'axios';
-  import {message} from 'ant-design-vue';
-  import { ElNotification } from 'element-plus';
-  import {useRouter} from 'vue-router';
+import {defineComponent, onMounted, ref} from 'vue';
+import axios from 'axios';
+import {ElNotification} from 'element-plus';
+import {useRouter} from 'vue-router';
 
-  export default defineComponent({
+export default defineComponent({
     name: 'Home',
     setup() {
       const goods = ref([]);

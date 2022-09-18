@@ -1,7 +1,5 @@
 package com.dorohedoro.wiki.util;
 
-import org.springframework.stereotype.Component;
-
 /**
  * @Description
  * @Author liuziye

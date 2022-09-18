@@ -1,11 +1,11 @@
 package com.dorohedoro.wiki.service;
 
-import com.dorohedoro.wiki.bean.vo.GoodsVO;
-import com.dorohedoro.wiki.bean.vo.PageBean;
 import com.dorohedoro.wiki.bean.domain.Category;
 import com.dorohedoro.wiki.bean.domain.CategoryExample;
 import com.dorohedoro.wiki.bean.domain.Goods;
 import com.dorohedoro.wiki.bean.domain.GoodsExample;
+import com.dorohedoro.wiki.bean.vo.GoodsVO;
+import com.dorohedoro.wiki.bean.vo.PageBean;
 import com.dorohedoro.wiki.mapper.CategoryMapper;
 import com.dorohedoro.wiki.mapper.GoodsMapper;
 import com.dorohedoro.wiki.util.AppEnum;

@@ -2,8 +2,9 @@ package com.dorohedoro.wiki.mapper;
 
 import com.dorohedoro.wiki.bean.domain.Comment;
 import com.dorohedoro.wiki.bean.domain.CommentExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface CommentMapper {
     long countByExample(CommentExample example);

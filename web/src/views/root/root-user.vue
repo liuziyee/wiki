@@ -88,12 +88,11 @@
 </style>
 
 <script lang="ts">
-  import {defineComponent,onMounted,ref} from 'vue';
-  import axios from 'axios';
-  import {message} from 'ant-design-vue';
-  import {ElNotification} from "element-plus";
-  
-  declare let hexMd5: any;
+import {defineComponent, onMounted, ref} from 'vue';
+import axios from 'axios';
+import {ElNotification} from "element-plus";
+
+declare let hexMd5: any;
   declare let KEY: any;
 
   export default defineComponent({

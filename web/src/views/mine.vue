@@ -45,7 +45,7 @@
 </style>
 
 <script lang="ts">
-import {defineComponent,computed} from 'vue';
+import {computed, defineComponent} from 'vue';
 import store from "@/store";
 import axios from "axios";
 import {ElNotification} from "element-plus";

@@ -2,8 +2,9 @@ package com.dorohedoro.wiki.mapper;
 
 import com.dorohedoro.wiki.bean.domain.User;
 import com.dorohedoro.wiki.bean.domain.UserExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface UserMapper {
     long countByExample(UserExample example);

@@ -18,11 +18,9 @@
 </template>
 
 <script lang="ts">
-  import {defineComponent,onMounted,ref} from 'vue';
-  import axios from 'axios';
-  import {message} from 'ant-design-vue';
+import {defineComponent} from 'vue';
 
-  export default defineComponent({
+export default defineComponent({
     name: 'Root',
   })
 </script>

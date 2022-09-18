@@ -2,8 +2,9 @@ package com.dorohedoro.wiki.mapper;
 
 import com.dorohedoro.wiki.bean.domain.Category;
 import com.dorohedoro.wiki.bean.domain.CategoryExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface CategoryMapper {
     long countByExample(CategoryExample example);

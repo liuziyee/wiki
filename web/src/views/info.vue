@@ -117,12 +117,11 @@
 <script lang="ts">
 import {computed, defineComponent, onMounted, ref} from 'vue';
 import axios from 'axios';
-import {message} from 'ant-design-vue';
-import { ElNotification } from 'element-plus';
+import {ElNotification} from 'element-plus';
 import {useRoute} from 'vue-router';
 import store from "@/store";
 
-  export default defineComponent({
+export default defineComponent({
     name: 'GoodsInfo',
     
     setup() {
