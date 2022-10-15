@@ -4,11 +4,6 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
 
-/**
- * @Description
- * @Author liuziye
- * @Date 2021/11/4 18:31
- */
 @Data
 public class GoodsVO {
     @JsonSerialize(using = ToStringSerializer.class)

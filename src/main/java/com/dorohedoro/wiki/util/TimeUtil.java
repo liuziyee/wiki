@@ -8,11 +8,6 @@ import java.time.ZoneOffset;
 import java.util.Date;
 import java.util.HashMap;
 
-/**
- * @Description
- * @Author liuziye
- * @Date 2021/11/4 17:55
- */
 public class TimeUtil {
     private static String YMDHMS = "yyyy-MM-dd HH:mm:ss";
 

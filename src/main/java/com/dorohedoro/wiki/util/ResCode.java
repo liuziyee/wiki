@@ -1,10 +1,5 @@
 package com.dorohedoro.wiki.util;
 
-/**
- * @Description
- * @Author liuziye
- * @Date 2021/11/26 8:51
- */
 public enum ResCode {
     success(0L, "成功"),
     valid(10L, "参数校验失败"),

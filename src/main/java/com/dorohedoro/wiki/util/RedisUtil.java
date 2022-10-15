@@ -5,11 +5,6 @@ import org.springframework.data.redis.core.RedisTemplate;
 
 import java.util.concurrent.TimeUnit;
 
-/**
- * @Description
- * @Author liuziye
- * @Date 2021/11/29 10:26
- */
 public class RedisUtil {
     private static RedisTemplate redisTemplate;
 

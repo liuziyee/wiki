@@ -6,11 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.stereotype.Component;
 
-/**
- * @Description
- * @Author liuziye
- * @Date 2021/11/29 14:55
- */
 @Component
 public class AutowireStaticInitializingSingleton implements SmartInitializingSingleton {
     @Autowired

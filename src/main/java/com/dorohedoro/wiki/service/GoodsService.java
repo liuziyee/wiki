@@ -24,11 +24,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/**
- * @Description
- * @Author liuziye
- * @Date 2021/11/4 9:45c 
- */
 @Service
 @Slf4j
 public class GoodsService {

@@ -2,11 +2,6 @@ package com.dorohedoro.wiki.exception;
 
 import com.dorohedoro.wiki.util.ResCode;
 
-/**
- * @Description
- * @Author liuziye
- * @Date 2021/11/26 8:49
- */
 public class BizException extends RuntimeException{
     private ResCode code;
 

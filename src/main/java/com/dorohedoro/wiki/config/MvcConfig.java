@@ -10,11 +10,6 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.socket.server.standard.ServerEndpointExporter;
 
-/**
- * @Description
- * @Author liuziye
- * @Date 2021/11/7 9:31
- */
 @Configuration
 public class MvcConfig implements WebMvcConfigurer {
     

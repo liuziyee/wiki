@@ -12,11 +12,6 @@ import org.springframework.scheduling.quartz.QuartzJobBean;
 
 import java.time.Instant;
 
-/**
- * @Description
- * @Author liuziye
- * @Date 2022/4/14 15:30
- */
 @DisallowConcurrentExecution
 @Slf4j
 public class CommentStatJob extends QuartzJobBean {

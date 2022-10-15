@@ -13,11 +13,6 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * @Description
- * @Author liuziye
- * @Date 2021/11/29 21:50
- */
 @Slf4j
 @Component
 public class AuthInterceptor implements HandlerInterceptor {

@@ -6,11 +6,6 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
-/**
- * @Description
- * @Author liuziye
- * @Date 2021/11/8 9:47
- */
 @Data
 public class PageBean<T> {
     @NotNull

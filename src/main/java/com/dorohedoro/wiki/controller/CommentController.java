@@ -12,11 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
-/**
- * @Description
- * @Author liuziye
- * @Date 2021/12/3 17:23
- */
 @RestController
 @RequestMapping("/comment")
 public class CommentController {

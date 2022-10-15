@@ -6,11 +6,6 @@ import lombok.Data;
 
 import java.io.Serializable;
 
-/**
- * @Description
- * @Author liuziye
- * @Date 2021/11/23 17:20
- */
 @Data
 public class UserVO implements Serializable {
     @JsonSerialize(using = ToStringSerializer.class)

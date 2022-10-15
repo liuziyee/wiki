@@ -8,11 +8,6 @@ import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-/**
- * @Description
- * @Author liuziye
- * @Date 2021/11/9 9:29
- */
 @RestControllerAdvice
 @Slf4j
 public class CommonExceptionHandler {

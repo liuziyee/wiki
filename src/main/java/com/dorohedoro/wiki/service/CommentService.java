@@ -21,11 +21,6 @@ import java.time.Instant;
 import java.util.*;
 import java.util.stream.Collectors;
 
-/**
- * @Description
- * @Author liuziye
- * @Date 2021/12/3 17:34
- */
 @Service
 @Slf4j
 public class CommentService extends BaseService {

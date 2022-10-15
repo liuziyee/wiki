@@ -10,11 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-/**
- * @Description
- * @Author liuziye
- * @Date 2021/11/4 9:45
- */
 @RestController
 @RequestMapping("/category")
 public class CategoryController{

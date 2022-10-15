@@ -1,10 +1,5 @@
 package com.dorohedoro.wiki.util;
 
-/**
- * @Description
- * @Author liuziye
- * @Date 2021/11/9 8:52
- */
 public class IDGenerator {
         private final static long START_STMP = 1480166465631L;
         

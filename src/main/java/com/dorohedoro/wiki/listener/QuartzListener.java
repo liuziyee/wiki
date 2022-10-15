@@ -8,11 +8,6 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
-/**
- * @Description
- * @Author liuziye
- * @Date 2022/4/14 16:03
- */
 @Component
 @Slf4j
 public class QuartzListener implements ApplicationListener<ContextRefreshedEvent> {

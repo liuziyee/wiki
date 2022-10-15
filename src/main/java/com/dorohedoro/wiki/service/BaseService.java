@@ -7,11 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
-/**
- * @Description
- * @Author liuziye
- * @Date 2021/12/5 9:15
- */
 public class BaseService {
 
     @Autowired

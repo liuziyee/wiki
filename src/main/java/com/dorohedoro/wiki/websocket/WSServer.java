@@ -9,39 +9,38 @@ import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
 import java.util.HashMap;
 
-
 @Component
 @ServerEndpoint("/ws/{token}")
 @Slf4j
 public class WSServer {
-    
+
     private String token = "";
 
     private static HashMap<String, Session> map = new HashMap<>();
-    
+
     @OnOpen
     public void onOpen(Session session, @PathParam("token") String token) {
         map.put(token, session);
         this.token = token;
         log.info("got a new websocket connection: [token:{}, session id:{}, current connections:{}]", token, session.getId(), map.size());
     }
-    
+
     @OnClose
     public void onClose(Session session) {
         map.remove(this.token);
         log.info("close a websocket connection: [token:{}, session id:{}, current connections:{}]", this.token, session.getId(), map.size());
     }
-    
+
     @OnMessage
     public void onMessage(String message, Session session) {
         log.info("got a message: [token:{}, msg:{}]", token, message);
     }
-    
+
     @OnError
     public void onError(Session session, Throwable error) {
         log.error("there is a problem", error);
     }
-    
+
     public void sendMsg(String message, String uniToken) {
         for (String token : map.keySet()) {
             if (token.equals(uniToken)) {

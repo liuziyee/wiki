@@ -8,11 +8,6 @@ import java.io.IOException;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-/**
- * @Description
- * @Author liuziye
- * @Date 2021/11/12 14:46
- */
 public class CommonUtil {
     private static Gson gson = new Gson();
     

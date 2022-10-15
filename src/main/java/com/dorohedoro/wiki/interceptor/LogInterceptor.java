@@ -8,11 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.time.Instant;
 
-/**
- * @Description
- * @Author liuziye
- * @Date 2021/11/7 15:05
- */
 @Slf4j
 public class LogInterceptor implements HandlerInterceptor {
     @Override
