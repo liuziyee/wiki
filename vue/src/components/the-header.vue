@@ -33,7 +33,7 @@
         </el-form-item>
       </el-form>
       <template #footer>
-        <el-check-tag style="margin-right: 5px" @change="dialogVisible = false">不了</el-check-tag>
+        <el-check-tag style="margin-right: 5px" @change="handleGithubLogin"><GithubFilled/></el-check-tag>
         <el-check-tag @change="handleLogin">登录</el-check-tag>
       </template>
     </el-dialog>
@@ -137,6 +137,10 @@ const TOKEN = 'TOKEN';
           })
         })
       };
+
+      const handleGithubLogin = () => {
+        console.log("前往github授权页");
+      };
       
       const checkSession = () => {
         let user = sessionStorage.getItem(USER);
@@ -168,7 +172,8 @@ const TOKEN = 'TOKEN';
         loginForm,
         rules,
         router,
-        handleLogin
+        handleLogin,
+        handleGithubLogin
       }
     }
   });
