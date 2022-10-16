@@ -11,7 +11,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.socket.server.standard.ServerEndpointExporter;
 
 @Configuration
-public class MvcConfig implements WebMvcConfigurer {
+public class WebMvcConfig implements WebMvcConfigurer {
     
     @Autowired
     AuthInterceptor authInterceptor;
@@ -30,7 +30,9 @@ public class MvcConfig implements WebMvcConfigurer {
                         "/category/tree",
                         "/user/all",
                         "/user/login",
-                        "/comment/all/*"
+                        "/comment/all/*",
+                        "/oauth/**", // 公开访问oauth端点
+                        "/error/**"
                 );
     }
 

@@ -121,7 +121,7 @@ const TOKEN = 'TOKEN';
             }
             let user = respBean.data;
             let token = respBean.token;
-            //put data into session and store
+            // 放入缓存
             sessionStorage.setItem(USER, JSON.stringify(user));
             sessionStorage.setItem(TOKEN, token);
             store.commit("setUser", user);
@@ -140,6 +140,15 @@ const TOKEN = 'TOKEN';
 
       const handleGithubLogin = () => {
         console.log("前往github授权页");
+        axios.get("https://github.com/login/oauth/authorize", {
+          params: {
+            client_id: "e45ae824184497e69d10",
+            redirect_uri: "http://localhost/oauth/authorization_code/github",
+            state: "随机字符串"
+          }
+        }).then((response) => {
+          console.log("这里访问github跨域了");
+        })
       };
       
       const checkSession = () => {

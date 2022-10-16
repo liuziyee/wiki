@@ -3,10 +3,10 @@ server:
 
 spring:
   datasource:
-    url: jdbc:mysql://192.168.1.2:3306/wiki?characterEncoding=UTF8&autoReconnect=true&serverTimezone=Hongkong
+    url: jdbc:mysql://192.168.1.5:3306/wiki?characterEncoding=UTF8&autoReconnect=true&serverTimezone=Hongkong
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
-    password: 123456
+    password: 12345
   redis:
     database: 0
     host: 192.168.1.2
@@ -19,6 +19,14 @@ spring:
         min-idel: 5
     timeout: 10000
 
+feign:
+  okhttp:
+    enabled: true
+  client:
+    config: 
+      default:
+        logger-level: FULL
+
 mybatis:
   mapper-locations: classpath:/mapper/**/*.xml
   configuration:
@@ -27,4 +35,5 @@ mybatis:
 logging:
   level: 
     com.dorohedoro.wiki.mapper: info
+    com.dorohedoro.wiki.service: debug
 

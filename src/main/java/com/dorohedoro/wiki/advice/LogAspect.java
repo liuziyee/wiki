@@ -51,7 +51,7 @@ public class LogAspect {
         }
 
         Gson gson = new Gson();
-        log.info("req data: {}", gson.toJson(arguments));
+        log.info("请求数据: {}", gson.toJson(arguments));
     }
 
     @Around("logPointCut()")
@@ -60,7 +60,7 @@ public class LogAspect {
         Object res = proceedingJoinPoint.proceed();
 
         Gson gson = new Gson();
-        log.info("res data: {}", gson.toJson(res));
+        log.info("响应数据: {}", gson.toJson(res));
         log.info("{}ms", Instant.now().toEpochMilli() - startTime);
         return res;
     }
