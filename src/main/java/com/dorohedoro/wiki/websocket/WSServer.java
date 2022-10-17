@@ -8,6 +8,7 @@ import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Map;
 
 @Component
 @ServerEndpoint("/ws/{token}")
@@ -16,7 +17,7 @@ public class WSServer {
 
     private String token = "";
 
-    private static HashMap<String, Session> map = new HashMap<>();
+    private static Map<String, Session> map = new HashMap<>();
 
     @OnOpen
     public void onOpen(Session session, @PathParam("token") String token) {
@@ -41,7 +42,8 @@ public class WSServer {
         log.error("there is a problem", error);
     }
 
-    public void sendMsg(String message, String uniToken) {
+    // 广播消息
+    public void broadcastMsg(String message, String uniToken) {
         for (String token : map.keySet()) {
             if (token.equals(uniToken)) {
                 continue;
@@ -61,5 +63,15 @@ public class WSServer {
         }
     }
 
+    // 单播消息
+    public void unicastMsg(String message, String uniToken) {
+        Session session = map.get(uniToken);
+        try {
+            session.getBasicRemote().sendText(message);
+            log.info("push a message: [token:{}, msg:{}]", token, message);
+        } catch (IOException e) {
+            log.error("failed to push a message: [token:{}, msg:{}]", token, message);
+        }
+    }
 }
 

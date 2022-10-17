@@ -94,6 +94,9 @@ const TOKEN = 'TOKEN';
           if (msg.indexOf("&") != -1) {
             let arr = msg.split("&");
             ElNotification({title: '消息', message: arr[0] + '评论了' + arr[1], type: 'info'});
+          } else if (msg.indexOf("login") != -1) {
+            let userDetails = JSON.parse(msg);
+            ElNotification({title: '消息', message: "github用户" + userDetails.login + "已授权", type: 'info'});
           } else {
             ElNotification({title: '消息', message: "推送时间戳: " + msg, type: 'info'});
           }
@@ -139,15 +142,17 @@ const TOKEN = 'TOKEN';
       };
 
       const handleGithubLogin = () => {
+        let uuid = "1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed";
         console.log("前往github授权页");
         console.log("这里访问github跨域了,要手动跳转到location里的地址");
         axios.get("https://github.com/login/oauth/authorize", {
           params: {
             client_id: "e45ae824184497e69d10",
             redirect_uri: "http://localhost/oauth/authorization_code/github",
-            state: "随机字符串"
+            state: uuid
           }
         })
+        openConnection(uuid);
       };
       
       const checkSession = () => {

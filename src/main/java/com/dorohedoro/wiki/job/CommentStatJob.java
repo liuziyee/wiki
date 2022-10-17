@@ -30,6 +30,6 @@ public class CommentStatJob extends QuartzJobBean {
         //    log.error(e.getMessage(), e);
         //}
         
-        wsServer.sendMsg(TimeUtil.getYMDHMS(Instant.now().toEpochMilli()), "");
+        wsServer.broadcastMsg(TimeUtil.getYMDHMS(Instant.now().toEpochMilli()), "");
     }
 }
