@@ -140,14 +140,13 @@ const TOKEN = 'TOKEN';
 
       const handleGithubLogin = () => {
         console.log("前往github授权页");
+        console.log("这里访问github跨域了,要手动跳转到location里的地址");
         axios.get("https://github.com/login/oauth/authorize", {
           params: {
             client_id: "e45ae824184497e69d10",
             redirect_uri: "http://localhost/oauth/authorization_code/github",
             state: "随机字符串"
           }
-        }).then((response) => {
-          console.log("这里访问github跨域了");
         })
       };
       
