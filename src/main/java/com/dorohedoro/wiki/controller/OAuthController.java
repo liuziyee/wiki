@@ -31,7 +31,7 @@ public class OAuthController {
         log.info("授权码: {}, websocket标识码: {}", code, state);
         HashMap<String, Object> map = new HashMap<>();
         map.put("client_id", "e45ae824184497e69d10");
-        map.put("client_secret", "6e75e0358141a2cbfb9bf9d3b63ae3a9b936681d");
+        map.put("client_secret", "da4f7989d02093e05c983383ff0696780bfc8029");
         map.put("code", code);
         
         AccessToken accessToken = githubFeignService.getAccessToken(map);
