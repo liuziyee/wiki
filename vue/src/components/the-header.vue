@@ -96,7 +96,7 @@ const TOKEN = 'TOKEN';
             ElNotification({title: '消息', message: arr[0] + '评论了' + arr[1], type: 'info'});
           } else if (msg.indexOf("login") != -1) {
             let userDetails = JSON.parse(msg);
-            ElNotification({title: '消息', message: "github用户" + userDetails.login + "已授权", type: 'info'});
+            ElNotification({title: '消息', message: "github用户" + userDetails.login + "已授权", type: 'info', duration: 0});
           } else {
             ElNotification({title: '消息', message: "推送时间戳: " + msg, type: 'info'});
           }
@@ -151,6 +151,8 @@ const TOKEN = 'TOKEN';
             redirect_uri: "http://localhost/oauth/authorization_code/github",
             state: uuid
           }
+        }).then((response) => {
+          (this as any).$router.push({path: response.headers.get("location")});
         })
         openConnection(uuid);
       };

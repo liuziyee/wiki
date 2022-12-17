@@ -17,6 +17,7 @@
     "element-plus": "^1.2.0-beta.3",
     "uuid": "^9.0.0",
     "vue": "^3.0.0",
+    "vue-jsonp": "^2.0.0",
     "vue-router": "^4.0.0-0",
     "vuex": "^4.0.0-0"
   },
