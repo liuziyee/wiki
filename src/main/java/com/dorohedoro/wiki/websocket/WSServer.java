@@ -10,9 +10,9 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+@Slf4j
 @Component
 @ServerEndpoint("/ws/{token}")
-@Slf4j
 public class WSServer {
 
     private String token = "";

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BeanUtil {
+    
     public static <T> T copy(Object source, Class<T> clazz) {
         if (source == null) {
             return null;

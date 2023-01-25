@@ -10,6 +10,7 @@ import java.time.Instant;
 
 @Slf4j
 public class LogInterceptor implements HandlerInterceptor {
+    
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         log.info("URL: {} {}", request.getRequestURL().toString(), request.getMethod());

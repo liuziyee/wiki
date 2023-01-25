@@ -3,6 +3,7 @@ package com.dorohedoro.wiki.exception;
 import com.dorohedoro.wiki.util.ResCode;
 
 public class BizException extends RuntimeException{
+    
     private ResCode code;
 
     public BizException(ResCode code) {

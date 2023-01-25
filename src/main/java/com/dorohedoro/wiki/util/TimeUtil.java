@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.HashMap;
 
 public class TimeUtil {
+    
     private static String YMDHMS = "yyyy-MM-dd HH:mm:ss";
 
     public static String getYMDHMS(Long timestamp) {
@@ -29,5 +30,4 @@ public class TimeUtil {
         map.put("te", tet);
         return map;
     }
-    
 }

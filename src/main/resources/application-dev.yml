@@ -18,6 +18,9 @@ spring:
         max-idle: 5
         min-idle: 5
     timeout: 10000
+  quartz:
+    job-store-type: memory
+    overwrite-existing-jobs: true
 
 feign:
   okhttp:

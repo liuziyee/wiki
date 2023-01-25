@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class CommonUtil {
+    
     private static Gson gson = new Gson();
     
     public static String[] split(String str, String... separators) {

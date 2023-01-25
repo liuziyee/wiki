@@ -1,6 +1,7 @@
 package com.dorohedoro.wiki.util;
 
 public enum ResCode {
+    
     success(0L, "成功"),
     valid(10L, "参数校验失败"),
     db(20L, "数据库异常"),

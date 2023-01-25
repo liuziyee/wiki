@@ -13,6 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/category")
 public class CategoryController{
+    
     @Autowired
     private CategoryService categoryService;
     
@@ -41,6 +42,4 @@ public class CategoryController{
         res.setCode(ResCode.success.getCode());
         return res;
     }
-    
-    
 }

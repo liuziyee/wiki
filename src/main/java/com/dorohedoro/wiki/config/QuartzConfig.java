@@ -8,6 +8,7 @@ import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 
 @Configuration
 public class QuartzConfig {
+    
     @Autowired
     private JobFactory jobFactory;
     
@@ -22,5 +23,4 @@ public class QuartzConfig {
     public Scheduler scheduler() {
         return schedulerFactoryBean().getScheduler();
     }
-    
 }

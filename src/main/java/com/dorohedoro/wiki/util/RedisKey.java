@@ -1,6 +1,7 @@
 package com.dorohedoro.wiki.util;
 
 public enum RedisKey {
+    
     token("token");
 
     private String key;
@@ -12,5 +13,4 @@ public enum RedisKey {
     public String getKey() {
         return this.key;
     }
-
 }

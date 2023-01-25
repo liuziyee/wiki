@@ -6,6 +6,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import java.util.concurrent.TimeUnit;
 
 public class RedisUtil {
+    
     private static RedisTemplate redisTemplate;
 
     @Autowired
@@ -28,5 +29,4 @@ public class RedisUtil {
     public static Object get(String key) {
         return redisTemplate.opsForValue().get(key);
     }
-    
 }

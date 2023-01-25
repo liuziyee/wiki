@@ -1,6 +1,7 @@
 package com.dorohedoro.wiki.util;
 
 public class AppEnum {
+    
     public enum YesOrNo {
         no  {public Long v() {return 0L;}},
         yes {public Long v() {return 1L;}},
