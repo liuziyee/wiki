@@ -20,7 +20,6 @@ spring:
     timeout: 10000
   quartz:
     job-store-type: memory
-    overwrite-existing-jobs: true
 
 feign:
   okhttp:
