@@ -1,27 +1,32 @@
 package com.dorohedoro.wiki.config;
 
-import com.dorohedoro.wiki.job.DemoJob;
-import org.quartz.*;
+import com.dorohedoro.wiki.listener.DemoTriggerListener;
+import lombok.SneakyThrows;
+import org.quartz.Scheduler;
+import org.quartz.spi.JobFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 
 @Configuration
 public class QuartzConfig {
+
+    @Autowired
+    private JobFactory jobFactory;
     
     @Bean
-    public JobDetail job() {
-        return JobBuilder.newJob(DemoJob.class)
-                .storeDurably(true)
-                .withIdentity(DemoJob.ID)
-                .build();
+    public SchedulerFactoryBean schedulerFactoryBean() {
+        SchedulerFactoryBean schedulerFactoryBean = new SchedulerFactoryBean();
+        schedulerFactoryBean.setJobFactory(jobFactory);
+        return schedulerFactoryBean;
     }
     
+    @SneakyThrows
     @Bean
-    public Trigger trigger() {
-        return TriggerBuilder.newTrigger()
-                .forJob(job())
-                .withSchedule(CronScheduleBuilder.cronSchedule("0/5 * * * * ?"))
-                .withIdentity(DemoJob.ID)
-                .build();
+    public Scheduler scheduler() {
+        Scheduler scheduler = schedulerFactoryBean().getScheduler();
+        scheduler.getListenerManager().addTriggerListener(new DemoTriggerListener());
+        return scheduler;
     }
 }
