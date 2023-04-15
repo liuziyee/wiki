@@ -20,6 +20,11 @@ spring:
     timeout: 10000
   quartz:
     job-store-type: memory
+  ldap:
+    embedded:
+      base-dn: dc=dorohedoro,dc=com
+      ldif: classpath:mock-ldap-server.ldif
+      port: 10000
 
 feign:
   okhttp:

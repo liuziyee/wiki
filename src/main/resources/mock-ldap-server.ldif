@@ -1,0 +1,7 @@
+dn: dc=dorohedoro,dc=com
+objectClass: top
+objectClass: domain
+
+dn: ou=ca,dc=dorohedoro,dc=com
+objectClass: organizationalUnit
+ou: ca
