@@ -5,4 +5,4 @@ ADD ./target/wiki.jar wiki.jar
 # 只会复制lib目录里的内容,不会复制lib目录
 ADD ./target/lib lib/
 EXPOSE 80
-ENTRYPOINT java -jar -Dspring.profiles.active=dev -Dloader.path=lib -Dserverd.port=80 wiki.jar
+ENTRYPOINT java -jar wiki.jar -Dloader.path=lib
