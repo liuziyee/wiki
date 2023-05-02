@@ -1,7 +1,7 @@
-dn: dc=dorohedoro,dc=com
+dn: dc=pki,dc=com
 objectClass: top
 objectClass: domain
 
-dn: ou=ca,dc=dorohedoro,dc=com
+dn: ou=ca,dc=pki,dc=com
 objectClass: organizationalUnit
 ou: ca

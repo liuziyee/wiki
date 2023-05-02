@@ -25,7 +25,7 @@ public class LDAPTest {
     public void add() {
         long serialNo = IDGenerator.nextId();
         LdapName dn = LdapNameBuilder.newInstance().add("dc", "com")
-                .add("dc", "dorohedoro")
+                .add("dc", "pki")
                 .add("ou", "ca")
                 .add("cn", serialNo + "")
                 .build();

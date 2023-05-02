@@ -22,7 +22,7 @@ spring:
     job-store-type: memory
   ldap:
     embedded:
-      base-dn: dc=dorohedoro,dc=com
+      base-dn: dc=pki,dc=com
       ldif: classpath:mock-ldap-server.ldif
       port: 10000
 
