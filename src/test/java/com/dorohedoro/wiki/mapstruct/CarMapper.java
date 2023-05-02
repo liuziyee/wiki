@@ -1,13 +1,10 @@
 package com.dorohedoro.wiki.mapstruct;
 
-import org.mapstruct.AfterMapping;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
+import org.mapstruct.*;
 
 import static java.util.stream.Collectors.joining;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface CarMapper extends BaseMapper<CarDTO, CarVO> {
 
     @Override
