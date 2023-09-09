@@ -20,7 +20,7 @@ public class AlchemyTest {
     
     @Test
     public void getAddressAllTxs() {
-        String address = "0xF5Fb27b912D987B5b6e02A1B1BE0C1F0740E2c6f";
+        String address = "0x3DdfA8eC3052539b6C9549F12cEA2C295cfF5296";
         List<TX> fromTxs = getAddressTxs(address, true, false);
         List<TX> toTxs = getAddressTxs(address, false, false);
         List<TX> bothTxs = getAddressTxs(address, false, true);
@@ -39,7 +39,7 @@ public class AlchemyTest {
             params.put("toAddress", address);
         }
         params.put("category", Arrays.asList("external", "internal", "erc20"));
-        params.put("excludeZeroValue", false); // 是否保留非0交易
+        params.put("excludeZeroValue", false);
         params.put("maxCount", "0x3e8");
 
         APIRequest apiRequest = new APIRequest();
