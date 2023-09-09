@@ -15,6 +15,7 @@
     "ant-design-vue": "^2.2.8",
     "axios": "^0.21.0",
     "element-plus": "^1.2.0-beta.3",
+    "ethers": "^5.7.2",
     "uuid": "^9.0.0",
     "vue": "^3.0.0",
     "vue-jsonp": "^2.0.0",

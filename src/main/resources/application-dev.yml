@@ -3,13 +3,13 @@ server:
 
 spring:
   datasource:
-    url: jdbc:mysql://192.168.1.5:3306/wiki?characterEncoding=UTF8&autoReconnect=true&serverTimezone=Hongkong
+    url: jdbc:mysql://localhost:3306/wiki?characterEncoding=UTF8&autoReconnect=true&serverTimezone=Hongkong
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: 12345
   redis:
     database: 0
-    host: 192.168.1.5
+    host: 192.168.1.25
     password:
     lettuce:
       pool:
@@ -20,11 +20,11 @@ spring:
     timeout: 10000
   quartz:
     job-store-type: memory
-  ldap:
-    embedded:
-      base-dn: dc=pki,dc=com
-      ldif: classpath:mock-ldap-server.ldif
-      port: 10000
+#  ldap:
+#    embedded:
+#      base-dn: dc=pki,dc=com
+#      ldif: classpath:mock-ldap-server.ldif
+#      port: 10000
 
 feign:
   okhttp:
@@ -43,4 +43,5 @@ logging:
   level: 
     com.dorohedoro.wiki.mapper: info
     com.dorohedoro.wiki.service: debug
+  
 

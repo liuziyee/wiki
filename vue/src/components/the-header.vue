@@ -34,6 +34,7 @@
       </el-form>
       <template #footer>
         <el-check-tag style="margin-right: 5px" @change="handleGithubLogin"><GithubFilled/></el-check-tag>
+        <el-check-tag style="margin-right: 5px" @change="doWalletLogin">连接钱包</el-check-tag>
         <el-check-tag @change="handleLogin">登录</el-check-tag>
       </template>
     </el-dialog>
@@ -59,6 +60,7 @@ import {ElNotification} from "element-plus";
 import axios from "axios";
 import store from "@/store";
 import {useRouter} from 'vue-router';
+import {ethers} from 'ethers';
 
 declare let hexMd5: any;
 declare let KEY: any;
@@ -83,6 +85,7 @@ const TOKEN = 'TOKEN';
       });
       let router = useRouter();
       let websocket: any;
+      let address;
       
       const initWebSocket = () => {
         websocket.onopen = () => {
@@ -157,6 +160,14 @@ const TOKEN = 'TOKEN';
         openConnection(uuid);
       };
       
+      const doWalletLogin = () => {
+        let web3 = new ethers.providers.Web3Provider((window as any).ethereum);
+        // 钱包授权
+        web3.send("eth_requestAccounts", []).then((address) => {
+          ElNotification({ title: '钱包地址', message: address[0], type: 'success'});
+        })
+      };
+      
       const checkSession = () => {
         let user = sessionStorage.getItem(USER);
         if (user) {
@@ -188,7 +199,8 @@ const TOKEN = 'TOKEN';
         rules,
         router,
         handleLogin,
-        handleGithubLogin
+        handleGithubLogin,
+        doWalletLogin
       }
     }
   });
